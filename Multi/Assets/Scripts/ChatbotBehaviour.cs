@@ -21,16 +21,10 @@ public class ChatbotBehaviour : MonoBehaviour {
         return response;
     }
 
-    // Use this for initialization
     void Start() {
         text = "";
         response = "Waiting for text";
         DontDestroyOnLoad(gameObject);
-    }
-
-    // Update is called once per frame
-    void Update() {
-
     }
 
     string sanitizePandoraResponse(string wwwText) {
@@ -40,7 +34,7 @@ public class ChatbotBehaviour : MonoBehaviour {
         int endIndex = wwwText.IndexOf("],");
         responseString = wwwText.Substring(startIndex, endIndex - startIndex);
 
-        Debug.Log("Sanitized response: " + responseString);
+        //Debug.Log("Sanitized response: " + responseString);
         return responseString;
     }
 
@@ -63,16 +57,16 @@ public class ChatbotBehaviour : MonoBehaviour {
         string url = "https://api.pandorabots.com/talk?botkey=RssstjtodsmGn5b1IstcJtNZI9khFR8B6xS0_Qvmtrrq5dalb0KYSIeonmRa15PUOL2I-8EtsPdp9rI_1dsWOQ~~&input=";
         url += UnityWebRequest.EscapeURL(text);
 
-        Debug.Log(url);
+        //Debug.Log(url);
 
         UnityWebRequest wr = UnityWebRequest.Post(url, ""); //You cannot do POST with empty post data, new byte is just dummy data to solve this problem
 
         yield return wr.SendWebRequest();
 
         if (wr.error == null) {
-            Debug.Log(wr.downloadHandler.text);
+            //Debug.Log(wr.downloadHandler.text);
             getSessionIdOfPandoraResponse(wr.downloadHandler.text);
-            Debug.Log("SessionId:" + sessionId + ".");
+            //Debug.Log("SessionId:" + sessionId + ".");
 
             string r = sanitizePandoraResponse(wr.downloadHandler.text);//Where we get our chatbots response message
             Response response = new Response(chatroomID, r);
