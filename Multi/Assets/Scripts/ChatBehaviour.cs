@@ -79,14 +79,9 @@ public class ChatBehaviour : NetworkBehaviour {
 
     [Client]
     public void Send(string message) {
-
         if (string.IsNullOrWhiteSpace(message)) return;
-
         CmdSendMessage(message, chatroomID, networkPlayer.GetDisplayName());
-
         if (chatbotRoomsIndex[chatroomID]) CmdSendMessageToChatbot(message);
-
-
         inputFields[chatroomID].text = string.Empty;
     }
 
@@ -124,6 +119,7 @@ public class ChatBehaviour : NetworkBehaviour {
         RpcHandleMessage(r, id);
     }
 
+    //----------------------------------------------------------------------------------------------------------------
     public void UpdateUI(int id, bool leftFree, bool rightFree, string leftName, string rightName) {
         check = true;
         // manzgöggeli, name uswertig
@@ -135,31 +131,6 @@ public class ChatBehaviour : NetworkBehaviour {
         Debug.Log(cdc.leftPerson.gameObject.activeInHierarchy + ", " + cdc.rightPerson.gameObject.activeInHierarchy + ", " + cdc.leftName.text + " , " + cdc.rightName.text);
 
         // join button uswertig
-
-
-        //foreach (ChatDisplayContent newCdc in chatDisplayContents) {
-        //    newCdc.joinButton.interactable = true;
-        //    if (!leftFree && !rightFree) newCdc.joinButton.interactable = false;
-        //}
-
-        //// angezeigt wenn spieler nicht drin
-        //if (!(leftName == myFakeName || rightName == myFakeName) && id == chatroomID) {
-        //    cdc.leaveButton.gameObject.SetActive(false);
-
-        //}
-
-        //// angezeigt wenn voll, nicht angezeigt wenn nicht voll
-        ////cdc.joinButton.interactable = !(leftFree && rightFree);
-
-
-        //// nicht angezeigt wenn spieler drin
-        //if (leftName == myFakeName || rightName == myFakeName) {
-        //    cdc.leaveButton.gameObject.SetActive(true);
-        //    foreach (ChatDisplayContent newCdc in chatDisplayContents) {
-        //        newCdc.joinButton.interactable = false;
-        //    }
-        //}
-
         foreach (ChatDisplayContent newCdc in chatDisplayContents) {
             newCdc.joinButton.interactable = true;
             newCdc.leaveButton.gameObject.SetActive(false);
