@@ -19,9 +19,10 @@ public class NetworkManagerAT : NetworkManager {
     public static event Action OnClientConnected;
     public static event Action OnClientDisconnected;
 
-    public List<NetworkRoomPlayerAT> RoomPlayers { get; } = new List<NetworkRoomPlayerAT>();
-    public List<NetworkGamePlayerAT> GamePlayers { get; } = new List<NetworkGamePlayerAT>();
+    public List<NetworkRoomPlayerAT> RoomPlayers = new List<NetworkRoomPlayerAT>();
+    public List<NetworkGamePlayerAT> GamePlayers = new List<NetworkGamePlayerAT>();
     private bool[] roleIndex;
+
 
     public override void OnStartServer() => spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList<GameObject>();
 
@@ -38,7 +39,6 @@ public class NetworkManagerAT : NetworkManager {
         foreach (GameObject prefab in spawnablePrefabs) {
             ClientScene.RegisterPrefab(prefab);
         }
-
         
     }
 
@@ -69,12 +69,15 @@ public class NetworkManagerAT : NetworkManager {
 
     // is called in OnStartClient
     public override void OnServerAddPlayer(NetworkConnection conn) {
+        Debug.Log("on server add player, roomplayers count: " + RoomPlayers.Count);
         if ("Assets/Scenes/" + SceneManager.GetActiveScene().name + ".unity" == menuScene) {
             bool isLeader = RoomPlayers.Count == 0;
+            Debug.Log(isLeader);
             NetworkRoomPlayerAT roomPlayerInstance = Instantiate(roomPlayerPrefab);
-            roomPlayerInstance.IsLeader = isLeader;
             NetworkServer.AddPlayerForConnection(conn, roomPlayerInstance.gameObject);
+            roomPlayerInstance.SetLeader(isLeader);
         }
+        Debug.Log("room players count: " + RoomPlayers.Count);
     }
 
     public override void OnServerDisconnect(NetworkConnection conn) {

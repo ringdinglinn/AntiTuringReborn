@@ -22,14 +22,22 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
     [SyncVar]
     public int nrInvestigators;
 
-    private bool isLeader;
+    public bool isLeader;
     public bool isInvestigator;
 
     public bool[] roleIndex;
 
+    [SyncVar]
+    public int nrOfPlayers;
+
     public override void OnStartAuthority() {
         CmdSetDisplayName(PlayerNameInput.DisplayName);
         lobbyUI.SetActive(true);
+    }
+
+    public void SetLeader(bool value) {
+        IsLeader = value;
+        if (value) RpcSetAsLeader();
     }
 
     public bool IsLeader {
@@ -37,7 +45,21 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
             isLeader = value;
             startGameButton.gameObject.SetActive(value);
             gameSettings.SetActive(value);
+            Debug.Log(value);
         }
+    }
+
+    [Command]
+    private void CmdSetAsLeader() {
+        IsLeader = true;
+        RpcSetAsLeader();
+
+    }
+
+    [ClientRpc]
+    private void RpcSetAsLeader() {
+        Debug.Log("rpc set as leader");
+        IsLeader = true;
     }
 
     private NetworkManagerAT room;
@@ -53,7 +75,19 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
 
     public override void OnStartClient() {
         Room.RoomPlayers.Add(this);
+        CmdChangeNrOfPlayers(Room.RoomPlayers.Count);
         UpdateDisplay();
+        CmdAddToRoomPlayers();
+    }
+
+    [Command]
+    private void CmdAddToRoomPlayers() {
+        Room.RoomPlayers.Add(this);
+    }
+
+    [Command]
+    private void CmdChangeNrOfPlayers(int n) {
+        nrOfPlayers = n;
     }
 
     public override void OnNetworkDestroy() {

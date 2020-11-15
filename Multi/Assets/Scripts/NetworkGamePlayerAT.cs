@@ -13,6 +13,8 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     [SyncVar]
     private string displayName = "Loading...";
 
+    public string fakeName;
+
     private NetworkManagerAT room;
     public ChatBehaviour chatBehaviour;
 
@@ -103,6 +105,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
             }
         }
     }
+
     [Command]
     public void CmdRequestJoinRoom(int chatroomID)
     {

@@ -11,5 +11,10 @@ public class MainMenu : MonoBehaviour {
     public void HostLobby() {
         networkManager.StartHost();
         landingPagePanel.SetActive(false);
-    }   
+    }
+
+    public void StartNewServer() {
+        networkManager.StartServer();
+        landingPagePanel.SetActive(false);
+    }
 }
