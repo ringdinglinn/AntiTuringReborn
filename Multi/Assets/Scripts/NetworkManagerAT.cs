@@ -31,12 +31,15 @@ public class NetworkManagerAT : NetworkManager {
 
     public ChatbotBehaviour chatbot;
 
+
     public override void OnStartClient() {
         var spawnablePrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs");
 
         foreach (GameObject prefab in spawnablePrefabs) {
             ClientScene.RegisterPrefab(prefab);
         }
+
+        
     }
 
     public override void OnClientConnect(NetworkConnection conn) {
@@ -111,6 +114,8 @@ public class NetworkManagerAT : NetworkManager {
             nrAwareAI = nrPlayers - nrInvestigators;
             ServerChangeScene("SampleScene");
         }
+
+      
     }
 
 
