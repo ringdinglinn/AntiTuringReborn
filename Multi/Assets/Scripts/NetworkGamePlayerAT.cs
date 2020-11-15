@@ -23,6 +23,8 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     public List<GameObject> joinButtonsList = new List<GameObject>();
     public List<GameObject> leaveButtonsList = new List<GameObject>();
 
+    public MoveView moveView;
+
     public class ChatroomState {
         public int id;
         public bool leftFree;
@@ -104,6 +106,10 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     [Command]
     public void CmdRequestJoinRoom(int chatroomID)
     {
+        if (chatroomStates[chatroomID].leftFree || chatroomStates[chatroomID].rightFree) {
+            RpcOpenChatroom();
+        }
+
         foreach (NetworkGamePlayerAT player in room.GamePlayers)
         {
             string fakeName = displayName;
@@ -128,26 +134,26 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
                 Debug.Log("this should not happen");
             }
         }
+
+    }
+
+    [ClientRpc]
+    private void RpcOpenChatroom() {
+        moveView.MoveViewRight();
     }
 
     //-------------------------------------------------------------------------------------------------
     //Start a Player Leaves a Chatroom logic 
     public void CheckRequestFromLeaveButton()
     {
-        for (int x = 0; leaveButtonsList.Count > x; x++)
-        {
-            if (EventSystem.current.currentSelectedGameObject == leaveButtonsList[x])
-            {
-                chatroomID = x;
-                chatBehaviour.chatroomID = x;
-                CmdLeaveChatroom(chatroomID);
-                return;
-            }
-        }
+       CmdLeaveChatroom(chatroomID);
     }
+
     [Command]
     public void CmdLeaveChatroom(int chatroomID)
     {
+        RpcCloseChatroom();
+
         string fakeName = displayName;
         if (chatroomStates[chatroomID].leftName == fakeName)
         {
@@ -167,6 +173,11 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         {
             Debug.Log("this shouldn't happen");
         }
+    }
+
+    [ClientRpc]
+    private void RpcCloseChatroom() {
+        moveView.MoveViewLeft();
     }
 
     //------------------------------------------------------------------------------------------------- :-)

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 
 public class NetworkManagerAT : NetworkManager {
-    [SerializeField] private int minPlayers = 2;
+    [SerializeField] private int minPlayers = 1;
     [Scene] [SerializeField] private string menuScene;
 
     [Header("Room")]

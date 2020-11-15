@@ -133,12 +133,10 @@ public class ChatBehaviour : NetworkBehaviour {
         // join button uswertig
         foreach (ChatDisplayContent newCdc in chatDisplayContents) {
             newCdc.joinButton.interactable = true;
-            newCdc.leaveButton.gameObject.SetActive(false);
         }
 
         foreach (ChatDisplayContent newCdc in chatDisplayContents) {
             if (newCdc.rightName.text == myFakeName || newCdc.leftName.text == myFakeName) {
-                newCdc.leaveButton.gameObject.SetActive(true);
                 foreach (ChatDisplayContent newCdc2 in chatDisplayContents) {
                     newCdc2.joinButton.interactable = false;
                 }
