@@ -16,5 +16,6 @@ public class MainMenu : MonoBehaviour {
     public void StartNewServer() {
         networkManager.StartServer();
         landingPagePanel.SetActive(false);
+        networkManager.isSeverOnly = true;
     }
 }

@@ -29,17 +29,20 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
 
     [SyncVar]
     public int nrOfPlayers;
+    
+    private NetworkManagerAT room;
 
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public override void OnStartAuthority() {
         CmdSetDisplayName(PlayerNameInput.DisplayName);
         lobbyUI.SetActive(true);
     }
 
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public void SetLeader(bool value) {
         IsLeader = value;
         if (value) RpcSetAsLeader();
     }
-
     public bool IsLeader {
         set {
             isLeader = value;
@@ -48,22 +51,17 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
             Debug.Log(value);
         }
     }
-
     [Command]
     private void CmdSetAsLeader() {
         IsLeader = true;
         RpcSetAsLeader();
-
     }
-
     [ClientRpc]
-    private void RpcSetAsLeader() {
-        Debug.Log("rpc set as leader");
+    private void RpcSetAsLeader() {      
         IsLeader = true;
     }
 
-    private NetworkManagerAT room;
-
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     // this returns and sometimes assigns the network manager to out player
     // maybe this is because we can't assign it to the prefab, since it exists in the scene
     public NetworkManagerAT Room {
@@ -72,33 +70,28 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
             return room = NetworkManager.singleton as NetworkManagerAT;
         }
     }
-
-    public override void OnStartClient() {
+    public override void OnStartClient() {      
         Room.RoomPlayers.Add(this);
+        CmdAddToRoomPlayers(); // Hier muss man checken ob es Localhost gibt oder nicht, wenn server dann ausführen
         CmdChangeNrOfPlayers(Room.RoomPlayers.Count);
-        UpdateDisplay();
-        CmdAddToRoomPlayers();
+        UpdateDisplay();      
     }
-
     [Command]
     private void CmdAddToRoomPlayers() {
         Room.RoomPlayers.Add(this);
     }
-
     [Command]
     private void CmdChangeNrOfPlayers(int n) {
         nrOfPlayers = n;
     }
-
     public override void OnNetworkDestroy() {
         Room.RoomPlayers.Remove(this);
         UpdateDisplay();
     }
 
-
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     public void HandleReadyStatusChanged(bool oldValue, bool newValue) => UpdateDisplay();
     public void HandleDisplayNameChanged(string oldValue, string newValue) => UpdateDisplay();
-
     private void UpdateDisplay() {
         if (!isLocalPlayer) {
             // i dont understand this. this method is called by a sync var. if it is called
@@ -128,25 +121,21 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
         }
     }
 
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     public void HandleReadyToStart(bool readyToStart) {
         if (!isLeader) return;
 
         startGameButton.interactable = readyToStart;
     }
-
-
     [Command]
     private void CmdSetDisplayName(string displayName) {
         DisplayName = displayName;
     }
-
     [Command]
     public void CmdReadyUp() {
         IsReady = !IsReady;
-
         Room.NotifyPlayersOfReadyState();
     }
-
     [Command]
     public void CmdStartGame() {
         DistributeRoles();
@@ -154,7 +143,6 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
         if (Room.RoomPlayers[0].connectionToClient != connectionToClient) return;
         Room.StartGame();
     }
-
     [Server]
     private void DistributeRoles() {
         roleIndex = new bool[Room.RoomPlayers.Count];
@@ -165,7 +153,6 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
         HandleRoleIndexChanged();
         RpcRoleIndexChanged(roleIndex);
     }
-
     static bool[] RandomizeArray(bool[] arr) {
         for (var i = arr.Length - 1; i > 0; i--) {
             var r = Random.Range(0, arr.Length);
@@ -175,17 +162,16 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
         }
         return arr;
     }
-
     [ClientRpc]
     public void RpcRoleIndexChanged(bool[] newIndex) {
         roleIndex = newIndex;
         HandleRoleIndexChanged();
     }
-
     private void HandleRoleIndexChanged() {
         Room.SetRoleIndex(roleIndex);
     }
 
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     public void ChangeNrInvestigators(string input) {
         if (isLeader) {
             if (int.TryParse(input, out int result)) {
@@ -196,11 +182,9 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
             }
         }
     }
-
     public void SetColorBlack(string input) {
         nrInvestigatorsText.color = Color.black;
     }
-
     [Command]
     public void CmdSetNrInvestigators(int n) {
         nrInvestigators = n;

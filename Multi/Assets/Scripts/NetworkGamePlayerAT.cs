@@ -15,7 +15,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
     public string fakeName;
 
-    private NetworkManagerAT room;
+    public NetworkManagerAT room;
     public ChatBehaviour chatBehaviour;
 
     public bool isInvestigator = false;
@@ -26,38 +26,38 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     public List<GameObject> leaveButtonsList = new List<GameObject>();
 
     public MoveView moveView;
-
-    public class ChatroomState {
-        public int id;
-        public bool leftFree;
-        public bool rightFree;
-        public string leftName;
-        public string rightName;
-        public ChatroomState(int id, bool leftFree, bool rightFree, string leftName, string rightName) {
-            this.id = id;
-            this.leftFree = leftFree;
-            this.rightFree = rightFree;
-            this.leftName = leftName;
-            this.rightName = rightName;
-        }
-    }
-
-    private List<ChatroomState> chatroomStates = new List<ChatroomState>();
-
+    public List<ChatroomStates> chatroomStates = new List<ChatroomStates>();
+ 
+    public GameObject chatroomStatePrefab;
     public int chatroomID;
 
+    public int nrOfChatrooms = 4;
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     private void InitializeChatroomStates() {
         for (int i = 0; i < chatBehaviour.chatDisplays.Count; i++) {
-            ChatroomState newCS = new ChatroomState(i, true, true, "", "");
+            GameObject newState = Instantiate(chatroomStatePrefab);          
+            ChatroomStates newCS = newState.GetComponent<ChatroomStates>();
             chatroomStates.Add(newCS);
+            DontDestroyOnLoad(newState);         
+        }
+            CmdUpdateChatroomState(chatBehaviour.chatDisplays.Count);       
+    }
+    [Command]
+    public void CmdUpdateChatroomState(int x)
+    {
+        if (chatroomStates.Count < nrOfChatrooms)
+        {
+            for (int i = 0; i < chatBehaviour.chatDisplays.Count; i++)
+            {
+                GameObject newState = Instantiate(chatroomStatePrefab);
+                ChatroomStates newCS = newState.GetComponent<ChatroomStates>();
+                chatroomStates.Add(newCS);
+            }
         }
     }
 
-    public override void OnStartServer() {
-        base.OnStartServer();    
-    }
-
-   
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     // this returns and sometimes assigns the network manager to our player
     // maybe this is because we can't assign it to the prefab, since it exists in the scene
     public NetworkManagerAT Room {
@@ -67,18 +67,25 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         }
     }
 
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     public override void OnStartClient() {
         DontDestroyOnLoad(gameObject);
-        Room.GamePlayers.Add(this);
+        Room.GamePlayers.Add(this);      
         isInvestigator = Room.GetRole(Room.GamePlayers.Count - 1);
         investigatorText.SetActive(isInvestigator);
         InitializeChatroomStates();
+        CmdAddToGamePlayers();       
     }
-
+    [Command]
+    private void CmdAddToGamePlayers()
+    {       
+        Room.GamePlayers.Add(this);
+    }
     public override void OnNetworkDestroy() {
         Room.GamePlayers.Remove(this);
     }
 
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     [Server]
     public void SetDisplayName(string displayName) {
         this.displayName = displayName;
@@ -86,11 +93,13 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     public string GetDisplayName() {
         return displayName;
     }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     public void ReceiveMessageFromChatbot(string r, int id) {
         chatBehaviour.ReceiveChatbotMessageFromPlayer(r, id);
     }
 
-    //-------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     //Start a Player Joins a Chatroom logic 
     public void CheckRequestFromJoinButton()
     {
@@ -105,7 +114,6 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
             }
         }
     }
-
     [Command]
     public void CmdRequestJoinRoom(int chatroomID)
     {
@@ -139,19 +147,17 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         }
 
     }
-
     [ClientRpc]
     private void RpcOpenChatroom() {
         moveView.MoveViewRight();
     }
 
-    //-------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     //Start a Player Leaves a Chatroom logic 
     public void CheckRequestFromLeaveButton()
     {
        CmdLeaveChatroom(chatroomID);
     }
-
     [Command]
     public void CmdLeaveChatroom(int chatroomID)
     {
@@ -162,32 +168,38 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         {
             foreach (NetworkGamePlayerAT player in room.GamePlayers)
             {
+                player.UpdateChatroomStatesEvent(chatroomID, true, chatroomStates[chatroomID].rightFree, "", chatroomStates[chatroomID].rightName);
                 player.RpcUpdateChatroomStates(chatroomID, true, player.chatroomStates[chatroomID].rightFree, "", player.chatroomStates[chatroomID].rightName);
             }
+           
         }
         else if (chatroomStates[chatroomID].rightName == fakeName)
         {
             foreach (NetworkGamePlayerAT player in room.GamePlayers)
             {
+                player.UpdateChatroomStatesEvent(chatroomID, chatroomStates[chatroomID].leftFree, true, chatroomStates[chatroomID].leftName, "");
                 player.RpcUpdateChatroomStates(chatroomID, player.chatroomStates[chatroomID].leftFree, true, player.chatroomStates[chatroomID].leftName, "");
             }
+            
         }
         else
         {
             Debug.Log("this shouldn't happen");
         }
     }
-
     [ClientRpc]
     private void RpcCloseChatroom() {
         moveView.MoveViewLeft();
     }
 
-    //------------------------------------------------------------------------------------------------- :-)
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     [ClientRpc]
     private void RpcUpdateChatroomStates(int id, bool leftFree, bool rightFree, string leftName, string rightName)
     {
-        UpdateChatroomStatesEvent(id, leftFree, rightFree, leftName, rightName);
+        if (isClientOnly)
+        {
+            UpdateChatroomStatesEvent(id, leftFree, rightFree, leftName, rightName);
+        }
     }   
     private void UpdateChatroomStatesEvent(int id, bool leftFree, bool rightFree, string leftName, string rightName)
     {
@@ -198,4 +210,8 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
         GetComponent<ChatBehaviour>().UpdateUI(id, leftFree, rightFree, leftName, rightName);
     } 
-} 
+}
+
+
+
+
