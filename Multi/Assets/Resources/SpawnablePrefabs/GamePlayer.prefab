@@ -77,7 +77,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2670843692477481640
 RectTransform:
   m_ObjectHideFlags: 0
@@ -275,6 +275,7 @@ MonoBehaviour:
   chatroomStatePrefab: {fileID: 6510676897624712809, guid: 40c6a2358de857d4ca9a7fbe773d009a,
     type: 3}
   chatroomID: 0
+  nrOfChatrooms: 4
 --- !u!1 &2944222209742755328
 GameObject:
   m_ObjectHideFlags: 0
