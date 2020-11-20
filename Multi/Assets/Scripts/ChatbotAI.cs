@@ -56,7 +56,7 @@ public class ChatbotAI : MonoBehaviour
 
     IEnumerator WaitToJointCoroutine(float s) {
         yield return new WaitForSeconds(s);
-        JoinChatroom();
+        //JoinChatroom();
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ public class ChatbotAI : MonoBehaviour
         }
         if (indeces.Count > 0) {
             chatroomID = indeces[Random.Range(0, indeces.Count)];
-            networkManager.GamePlayers[0].RequestJoinRoom(chatroomID);
+            networkManager.GamePlayers[0].RequestJoinRoom(chatroomID, fakeName);
             currentSessionID = chatbotBehaviour.nextSessionID++;
             chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left);
         }

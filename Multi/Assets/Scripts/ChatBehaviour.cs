@@ -73,7 +73,6 @@ public class ChatBehaviour : NetworkBehaviour {
     [Command]
     private void CmdChatbotRoomsIndex() {
         for (int i = 1; i < inputFields.Count; i++) chatbotRoomsIndex.Add(i, false);       
-        RpcChatbotRoomsIndex();
     }
     [Command]
     private void CmdSetup(int indexOfPlayer)
@@ -84,10 +83,6 @@ public class ChatBehaviour : NetworkBehaviour {
 
         }
         Debug.Log("Nr of Lists in listOfChatroomLists =" + listOfChatroomLists.Count);
-    }
-    [ClientRpc]
-    private void RpcChatbotRoomsIndex() {
-        for (int i = 1; i < inputFields.Count; i++) chatbotRoomsIndex.Add(i, false);    
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -249,7 +244,6 @@ public class ChatBehaviour : NetworkBehaviour {
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public void UpdateUI(int id, bool leftFree, bool rightFree, string leftName, string rightName) {
         check = true;
-
         // manzgöggeli, name uswertig
         ChatDisplayContent cdc = chatDisplayContents[id].GetComponent<ChatDisplayContent>();
         cdc.leftPerson.gameObject.SetActive(!leftFree);

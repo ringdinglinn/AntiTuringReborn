@@ -125,7 +125,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
             if (EventSystem.current.currentSelectedGameObject == joinButtonsList[x]) {
                 chatroomID = x;
                 chatBehaviour.chatroomID = x;
-                CmdRequestJoinRoom(chatroomID);
+                CmdRequestJoinRoom(chatroomID, fakeName);
                 return;
             }
         }
@@ -133,12 +133,12 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
  
     [Command]
-    public void CmdRequestJoinRoom(int chatroomID) {
-        RequestJoinRoom(chatroomID);
+    public void CmdRequestJoinRoom(int chatroomID, string fakeName) {
+        RequestJoinRoom(chatroomID, fakeName);
     }
 
     [Server]
-    public void RequestJoinRoom(int roomID) {
+    public void RequestJoinRoom(int roomID, string fakeName) {
         // will have to pass name in the future
         if (chatroomStates[roomID].leftFree || chatroomStates[roomID].rightFree) {
             RpcOpenChatroom();
@@ -189,15 +189,15 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     //Start a Player Leaves a Chatroom logic 
     public void CheckRequestFromLeaveButton() {
-        CmdLeaveChatroom(chatroomID);
+        CmdLeaveChatroom(chatroomID, fakeName);
     }
     [Command]
-    public void CmdLeaveChatroom(int ID)
+    public void CmdLeaveChatroom(int ID, string fakeName)
     {
         RpcCloseChatroom();
        
      
-        string fakeName = displayName;
+        //string fakeName = displayName;
         if (chatroomStates[ID].leftName == fakeName)
         {
             foreach (NetworkGamePlayerAT player in room.GamePlayers)

@@ -132,7 +132,7 @@ public class NetworkManagerAT : NetworkManager {
             nrOfWaitingClients = nrPlayers;
             nrAwareAI = nrPlayers - nrInvestigators;
             nrOfChatbots = nrAwareAI * 2 + 2; // PLACE HOLDER: TO BE BALANCED!!!
-            chatbot.GameStart();
+            //chatbot.GameStart();
             ServerChangeScene("SampleScene");
         }     
     }
