@@ -2775,6 +2775,7 @@ MonoBehaviour:
   RoomPlayers: []
   GamePlayers: []
   chatbot: {fileID: 802153548}
+  isSeverOnly: 0
 --- !u!4 &1650212203
 Transform:
   m_ObjectHideFlags: 0
