@@ -139,46 +139,52 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
     [Server]
     public void RequestJoinRoom(int roomID, string fakeName) {
-        // will have to pass name in the future
-        if (chatroomStates[roomID].leftFree || chatroomStates[roomID].rightFree) {
+
+        if (chatroomStates[roomID].leftFree || chatroomStates[roomID].rightFree)
+        {
             RpcOpenChatroom();
             chatroomID = roomID;
+
+
+            foreach (NetworkGamePlayerAT player in Room.GamePlayers)
+            {
+                if (player.chatroomStates[roomID].leftFree || player.chatroomStates[roomID].rightFree)
+                {
+                    if (player.chatroomStates[roomID].leftFree)
+                    {
+                        player.chatroomStates[roomID].leftFree = false;
+                        player.chatroomStates[roomID].leftName = fakeName;
+                        player.RpcUpdateChatroomStates(roomID, false, chatroomStates[roomID].rightFree, fakeName, chatroomStates[roomID].rightName);
+
+                        if (player.chatroomID == chatroomID)
+                        {
+                            Debug.Log("In 1");
+
+                            player.GetComponent<ChatBehaviour>().RpcFillUpMainCanvasOnlyUI(roomID, chatroomStates[roomID].leftFree, chatroomStates[roomID].rightFree, chatroomStates[roomID].leftName, chatroomStates[roomID].rightName);
+                        }
+
+                    }
+                    else if (player.chatroomStates[roomID].rightFree)
+                    {
+                        player.chatroomStates[roomID].rightFree = false;
+                        player.chatroomStates[roomID].rightName = fakeName;
+                        player.RpcUpdateChatroomStates(roomID, player.chatroomStates[roomID].leftFree, false, player.chatroomStates[roomID].leftName, fakeName);
+                        if (player.chatroomID == chatroomID)
+                        {
+                            Debug.Log("In 2");
+                            player.GetComponent<ChatBehaviour>().RpcFillUpMainCanvasOnlyUI(roomID, chatroomStates[roomID].leftFree, chatroomStates[roomID].rightFree, chatroomStates[roomID].leftName, chatroomStates[roomID].rightName);
+                        }
+                    }
+                }
+                else
+                {
+                    //room is full message
+                    Debug.Log("this should not happen");
+                }
+            }
             GetComponent<ChatBehaviour>().RpcFillUpMainCanvasTextAndUI(roomID, chatroomStates[roomID].leftFree, chatroomStates[roomID].rightFree, chatroomStates[roomID].leftName, chatroomStates[roomID].rightName);
         }
-        foreach(NetworkGamePlayerAT player in Room.GamePlayers){
-                        if (player.chatroomStates[roomID].leftFree || player.chatroomStates[roomID].rightFree)
-            {
-                if (player.chatroomStates[roomID].leftFree)
-                {
-                    player.chatroomStates[roomID].leftFree = false;
-                    player.chatroomStates[roomID].leftName = fakeName;
-                    player.RpcUpdateChatroomStates(roomID, false, chatroomStates[roomID].rightFree, fakeName, chatroomStates[roomID].rightName);
 
-                    if (player.chatroomID == chatroomID)
-                    {
-                        Debug.Log("In 1");
-
-                        player.GetComponent<ChatBehaviour>().RpcFillUpMainCanvasOnlyUI(roomID, chatroomStates[roomID].leftFree, chatroomStates[roomID].rightFree, chatroomStates[roomID].leftName, chatroomStates[roomID].rightName);
-                    }
-
-                }
-                else if (player.chatroomStates[roomID].rightFree)
-                {
-                    player.chatroomStates[roomID].rightFree = false;
-                    player.chatroomStates[roomID].rightName = fakeName;
-                    player.RpcUpdateChatroomStates(roomID, player.chatroomStates[roomID].leftFree, false, player.chatroomStates[roomID].leftName, fakeName);
-                    if (player.chatroomID == chatroomID)
-                    {
-                        Debug.Log("In 2");
-                        player.GetComponent<ChatBehaviour>().RpcFillUpMainCanvasOnlyUI(roomID, chatroomStates[roomID].leftFree, chatroomStates[roomID].rightFree, chatroomStates[roomID].leftName, chatroomStates[roomID].rightName);
-                    }
-                }
-            }
-            else {
-                //room is full message
-                Debug.Log("this should not happen");
-            }
-        }
     }
 
     [ClientRpc]
@@ -247,7 +253,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     private void RpcUpdateChatroomStates(int id, bool leftFree, bool rightFree, string leftName, string rightName)
     {
         
-            UpdateChatroomStatesEvent(id, leftFree, rightFree, leftName, rightName);
+       UpdateChatroomStatesEvent(id, leftFree, rightFree, leftName, rightName);
          
     }   
     private void UpdateChatroomStatesEvent(int id, bool leftFree, bool rightFree, string leftName, string rightName)

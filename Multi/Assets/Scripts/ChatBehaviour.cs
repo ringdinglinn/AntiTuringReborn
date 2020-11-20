@@ -23,7 +23,7 @@ public class ChatBehaviour : NetworkBehaviour {
     public int chatroomID;
     public Dictionary<int, bool> chatbotRoomsIndex = new Dictionary<int, bool>();
 
-    public bool check = false;
+ 
 
     //botname placeholder
     string botname = "???";
@@ -53,8 +53,8 @@ public class ChatBehaviour : NetworkBehaviour {
 
 
 
-        //CmdServerAddNetworkPlayerAndShit();
-        StartCoroutine(ShortDelay());
+        CmdServerAddNetworkPlayerAndShit();
+       // StartCoroutine(ShortDelay());
 
     }
 
@@ -88,8 +88,9 @@ public class ChatBehaviour : NetworkBehaviour {
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public override void OnStartClient() {
         base.OnStartClient();
-        myFakeName = networkPlayer.GetDisplayName();
         networkPlayer = GetComponent<NetworkGamePlayerAT>();
+        myFakeName = networkPlayer.fakeName;
+       
         for (int x = 0; 4 > x; x++)
         {
             listOfChatroomLists.Add(new List<GameObject>());
@@ -188,7 +189,7 @@ public class ChatBehaviour : NetworkBehaviour {
         if (string.IsNullOrWhiteSpace(message)) return;
 
 
-        CmdSendMessage(message, chatroomID, networkPlayer.GetDisplayName());
+        CmdSendMessage(message, chatroomID, networkPlayer.fakeName);
 
 
         if (chatbotRoomsIndex[chatroomID]) CmdSendMessageToChatbot(message);
@@ -243,14 +244,16 @@ public class ChatBehaviour : NetworkBehaviour {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public void UpdateUI(int id, bool leftFree, bool rightFree, string leftName, string rightName) {
-        check = true;
+       
         // manzgöggeli, name uswertig
         ChatDisplayContent cdc = chatDisplayContents[id].GetComponent<ChatDisplayContent>();
+        
+
         cdc.leftPerson.gameObject.SetActive(!leftFree);
         cdc.rightPerson.gameObject.SetActive(!rightFree);
         cdc.leftName.text = leftName;
         cdc.rightName.text = rightName;
-
+       
         // join button uswertig
         foreach (GameObject x in chatDisplayContents)
         {
@@ -261,7 +264,7 @@ public class ChatBehaviour : NetworkBehaviour {
         foreach (GameObject x in chatDisplayContents) {
 
             ChatDisplayContent newCdc = x.GetComponent<ChatDisplayContent>();
-            if (newCdc.rightName.text == myFakeName || newCdc.leftName.text == myFakeName) {
+            if (newCdc.rightName.text == networkPlayer.fakeName || newCdc.leftName.text == networkPlayer.fakeName) {
                 foreach (GameObject y in chatDisplayContents) {
                     ChatDisplayContent newCdc2 = y.GetComponent<ChatDisplayContent>();
                     newCdc2.joinButton.interactable = false;
