@@ -11,4 +11,5 @@ public class ChatDisplayContent : MonoBehaviour
     public Image leftPerson;
     public Image rightPerson;
     public Button joinButton;
+    public GameObject scrollPanelContent;
 }
