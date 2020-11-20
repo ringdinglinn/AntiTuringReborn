@@ -1041,6 +1041,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99da04e385aaf4160a976f0dd2118b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chatbotAIs: []
   botid: rabidrosie
   appid: una2165008
   userkey: 2a901bdef12f158b9b6e9bd277d04766
@@ -2772,9 +2773,66 @@ MonoBehaviour:
     type: 3}
   gamePlayerPrefab: {fileID: 2598132078515685881, guid: a3ec35a00c5be413db6e61f1a81b3c95,
     type: 3}
+  chatbotAIPrefab: {fileID: 7368766220363461795, guid: 7c1656c8b19df4fb886261201336d942,
+    type: 3}
   RoomPlayers: []
   GamePlayers: []
+  nrInvestigators: 0
+  nrAwareAI: 0
+  nrPlayers: 0
+  nrOfChatbots: 0
   chatbot: {fileID: 802153548}
+  isSeverOnly: 0
+  randomNames:
+  - Hildebrand
+  - Neko
+  - Mica
+  - "J\xF9lian"
+  - Berthold
+  - Maximus
+  - Dirk
+  - Gaia
+  - Veronica
+  - Bob
+  - Susan
+  - Bernard
+  - Augustus
+  - Klaus
+  - Mortimer
+  - Yusuke
+  randomColors:
+  - serializedVersion: 2
+    rgba: 4280150015
+  - serializedVersion: 2
+    rgba: 4288479033
+  - serializedVersion: 2
+    rgba: 4294938154
+  - serializedVersion: 2
+    rgba: 4294916584
+  - serializedVersion: 2
+    rgba: 4281074431
+  - serializedVersion: 2
+    rgba: 4278227199
+  - serializedVersion: 2
+    rgba: 4294964736
+  - serializedVersion: 2
+    rgba: 4294901904
+  - serializedVersion: 2
+    rgba: 4279428439
+  - serializedVersion: 2
+    rgba: 4290084863
+  - serializedVersion: 2
+    rgba: 4294912574
+  - serializedVersion: 2
+    rgba: 4281946367
+  - serializedVersion: 2
+    rgba: 4281008089
+  - serializedVersion: 2
+    rgba: 4286841087
+  - serializedVersion: 2
+    rgba: 4294531968
+  - serializedVersion: 2
+    rgba: 4282829829
 --- !u!4 &1650212203
 Transform:
   m_ObjectHideFlags: 0

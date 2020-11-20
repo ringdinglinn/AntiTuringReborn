@@ -5,6 +5,11 @@ using UnityEngine.Networking;
 
 public class ChatbotBehaviour : MonoBehaviour {
 
+    public List<int[]> chatroomBotIndex = new List<int[]>();
+    public List<ChatbotAI> chatbotAIs = new List<ChatbotAI>();
+
+    public int nextSessionID;
+
     protected string text, response;
     protected string sessionId; // Remains null until after first message is parsed
     protected bool waiting;
@@ -27,6 +32,30 @@ public class ChatbotBehaviour : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
+    public void GameStart() {
+        InitializeChatroomBotIndex();
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Chatbot Management
+
+    private void InitializeChatroomBotIndex() {
+        for (int i = 0; i < networkManager.GamePlayers[0].nrOfChatrooms; i++) {
+            int[] newArr = { -1, -1 };
+            chatroomBotIndex.Add(newArr);
+        }
+    }
+
+    public void ChangeChatroomBotIndex(int chatroomID, int chatbotID, bool left) {
+        int i = 0;
+        if (!left) i = 1;
+        chatroomBotIndex[chatroomID][i] = chatbotID;
+    }
+
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Pandora Bot API
+
     string sanitizePandoraResponse(string wwwText) {
         string responseString = "";
 
@@ -46,27 +75,16 @@ public class ChatbotBehaviour : MonoBehaviour {
     }
 
     private IEnumerator PandoraBotRequestCoRoutine(string text, int chatroomID) {
-        //string url = "https://api.pandorabots.com/atalk/" + appid;
-        //url = url + "/" + botid;
-        //url = url + "&user_key=" + userkey;
-        //url = url + "?input=" + UnityWebRequest.EscapeURL(text);
-        //if (sessionId != null) {
-        //    url = url + "&sessionid=" + sessionId;
-        //}
 
         string url = "https://api.pandorabots.com/talk?botkey=RssstjtodsmGn5b1IstcJtNZI9khFR8B6xS0_Qvmtrrq5dalb0KYSIeonmRa15PUOL2I-8EtsPdp9rI_1dsWOQ~~&input=";
         url += UnityWebRequest.EscapeURL(text);
-
-        //Debug.Log(url);
 
         UnityWebRequest wr = UnityWebRequest.Post(url, ""); //You cannot do POST with empty post data, new byte is just dummy data to solve this problem
 
         yield return wr.SendWebRequest();
 
         if (wr.error == null) {
-            //Debug.Log(wr.downloadHandler.text);
             getSessionIdOfPandoraResponse(wr.downloadHandler.text);
-            //Debug.Log("SessionId:" + sessionId + ".");
 
             string r = sanitizePandoraResponse(wr.downloadHandler.text);//Where we get our chatbots response message
             Response response = new Response(chatroomID, r);
@@ -86,22 +104,6 @@ public class ChatbotBehaviour : MonoBehaviour {
         public int chatroomID;
         public string text;
     }
-
-    //void OnGUI() {
-    //    int label_width = 90;
-    //    int edit_width = 250;
-
-    //    text = GUI.TextArea(new Rect(10, Screen.height - 60, edit_width + label_width, 50), text, 512);
-
-    //    if (text.Contains("\n") || text.Contains("...")) // ... is so I can send messages on my android device after building a .apk
-    //    {
-
-    //        StartCoroutine(PandoraBotRequestCoRoutine(text));
-    //        text = "";
-    //    }
-    //    GUI.Label(new Rect(10, Screen.height - 80, 300, 20), "Type something below and hit enter!");
-
-    //}
 
     public void SendTextToChatbot(string text, int chatroomID) {
         StartCoroutine(PandoraBotRequestCoRoutine(text, chatroomID));

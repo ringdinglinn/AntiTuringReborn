@@ -17,6 +17,8 @@ public class NetworkManagerAT : NetworkManager {
     [SerializeField] private NetworkRoomPlayerAT roomPlayerPrefab;
     [Header("Game")]
     [SerializeField] private NetworkGamePlayerAT gamePlayerPrefab;
+    [Header("ChatbotAI")]
+    [SerializeField] private GameObject chatbotAIPrefab;
 
     //Actions
     public static event Action OnClientConnected;
@@ -28,10 +30,10 @@ public class NetworkManagerAT : NetworkManager {
   
     //Related to Roles
     private bool[] roleIndex;
-    private int nrInvestigators;
-    private int nrAwareAI;
-    private int nrPlayers;
-
+    public int nrInvestigators;
+    public int nrAwareAI;
+    public int nrPlayers;
+    public int nrOfChatbots;
 
     //ChatBotRelated
     public ChatbotBehaviour chatbot;
@@ -39,19 +41,27 @@ public class NetworkManagerAT : NetworkManager {
     //Server Status
     public bool isSeverOnly = false;
 
+    //Client Connections
+    private int nrOfWaitingClients;
+    public event Action OnAllPlayersConnected;
+
+    //Game State
+    public event Action OnGameStart;
+
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public override void OnStartClient() {
         var spawnablePrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs");
 
         foreach (GameObject prefab in spawnablePrefabs) {
             ClientScene.RegisterPrefab(prefab);
-        }       
+        }     
     }
+
     public override void OnClientConnect(NetworkConnection conn) {
-      
         base.OnClientConnect(conn);
-        OnClientConnected?.Invoke();
+        Debug.Log("onclientconnect");
     }
+
     public override void OnClientDisconnect(NetworkConnection conn) {
         base.OnClientDisconnect(conn);
         OnClientDisconnected?.Invoke();
@@ -60,6 +70,7 @@ public class NetworkManagerAT : NetworkManager {
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public override void OnStartServer() => spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList<GameObject>();
     public override void OnServerConnect(NetworkConnection conn) {
+
        
         if (numPlayers >= maxConnections) {
             conn.Disconnect();
@@ -70,6 +81,10 @@ public class NetworkManagerAT : NetworkManager {
             conn.Disconnect();
             return;
         }
+
+        OnClientConnected?.Invoke();
+        RandomizeNameAndColorLists(randomNames, randomColors);
+        base.OnServerConnect(conn);
     }
     public override void OnServerAddPlayer(NetworkConnection conn) {      
         if ("Assets/Scenes/" + SceneManager.GetActiveScene().name + ".unity" == menuScene) {
@@ -78,6 +93,7 @@ public class NetworkManagerAT : NetworkManager {
             NetworkRoomPlayerAT roomPlayerInstance = Instantiate(roomPlayerPrefab);
             NetworkServer.AddPlayerForConnection(conn, roomPlayerInstance.gameObject);
             roomPlayerInstance.SetLeader(isLeader);
+            roomPlayerInstance.SyncNameAndColorLists();
         }    
     }
     public override void OnServerDisconnect(NetworkConnection conn) {
@@ -113,7 +129,10 @@ public class NetworkManagerAT : NetworkManager {
             if (!IsReadyToStart()) return;
 
             nrPlayers = RoomPlayers.Count;
+            nrOfWaitingClients = nrPlayers;
             nrAwareAI = nrPlayers - nrInvestigators;
+            nrOfChatbots = nrAwareAI * 2 + 2; // PLACE HOLDER: TO BE BALANCED!!!
+            chatbot.GameStart();
             ServerChangeScene("SampleScene");
         }     
     }
@@ -128,6 +147,12 @@ public class NetworkManagerAT : NetworkManager {
                 NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance.gameObject);
 
                 DontDestroyOnLoad(gamePlayerInstance.gameObject);        
+            }
+            for (int i = 0; i < nrOfChatbots; i++) {
+                Debug.Log("instantiate chatbot");
+                var chatbotAIinstance = Instantiate(chatbotAIPrefab);
+                chatbotAIinstance.GetComponent<ChatbotAI>().chatbotBehaviour = chatbot;
+                DontDestroyOnLoad(chatbotAIinstance);
             }
         }
         base.ServerChangeScene(newSceneName);
@@ -144,6 +169,45 @@ public class NetworkManagerAT : NetworkManager {
     }
     public void SetNrInvestigators(int n) {
         nrInvestigators = n;
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Random name and color
+    private int maxNrOfChatParticitpants = 16;
+    public List<string> randomNames = new List<string>() { "Hildebrand", "Neko", "Mica", "Jùlian",
+                                                           "Berthold", "Maximus", "Dirk", "Gaia",
+                                                           "Veronica", "Bob", "Susan", "Bernard",
+                                                           "Augustus", "Klaus", "Mortimer", "Yusuke" };
+    public List<Color32> randomColors = new List<Color32>()    { new Color32(255, 231, 29, 255), new Color32( 57, 255, 156, 255), new Color32( 42, 142, 255, 255), new Color32(232,  57, 255, 255),
+                                                                 new Color32(255,   2, 44, 255), new Color32(255, 144,   0, 255), new Color32(  0, 246, 255, 255), new Color32(144,   0, 255, 255),
+                                                                 new Color32( 87, 229, 18, 255), new Color32(255, 127, 181, 255), new Color32( 62,  42, 255, 255), new Color32(255,  80,  57, 255),
+                                                                 new Color32(217, 255, 42, 255), new Color32(255,   0, 132, 255), new Color32(128,  91, 249, 255), new Color32(  5, 204,  70, 255)};
+
+
+    public void GamePlayerConnected() {
+        nrOfWaitingClients--;
+        Debug.Log("nrOfWaitingClients = " + nrOfWaitingClients);
+        if (nrOfWaitingClients <= 0) {
+             OnAllPlayersConnected?.Invoke();
+        }
+    }
+
+    public static void RandomizeNameAndColorLists(List<string> names, List<Color32> colors) {
+        int n = names.Count;
+        for (var i = n - 1; i > 0; i--) {
+            var r = UnityEngine.Random.Range(0, n);
+            var tmp = names[i];
+            names[i] = names[r];
+            names[r] = tmp;
+        }
+
+        int m = colors.Count;
+        for (var i = m - 1; i > 0; i--) {
+            var r = UnityEngine.Random.Range(0, m);
+            var tmp = colors[i];
+            colors[i] = colors[r];
+            colors[r] = tmp;
+        }
     }
 }
 
