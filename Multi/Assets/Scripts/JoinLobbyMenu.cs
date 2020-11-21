@@ -30,6 +30,8 @@ public class JoinLobbyMenu : MonoBehaviour
         networkManager.StartClient();
 
         joinButton.interactable = false;
+        gameObject.SetActive(false);
+        landingPagePanel.SetActive(false);
     }
 
     private void HandleClientConnected() {
