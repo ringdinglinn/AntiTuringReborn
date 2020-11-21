@@ -319,8 +319,8 @@ public class ChatBehaviour : NetworkBehaviour {
 
         cdc.leftPerson.gameObject.SetActive(!leftFree);
         cdc.rightPerson.gameObject.SetActive(!rightFree);
-        cdc.leftName.text = networkPlayer.chatroomStates[id].leftName;
-        cdc.rightName.text = networkPlayer.chatroomStates[id].rightName;
+        cdc.leftName.text = leftName;
+        cdc.rightName.text = rightName;
         
         networkPlayer.chatroomID = id;
     }
@@ -345,10 +345,7 @@ public class ChatBehaviour : NetworkBehaviour {
         cdc.leftPerson.gameObject.SetActive(!networkPlayer.chatroomStates[id].leftFree);
         cdc.rightPerson.gameObject.SetActive(!networkPlayer.chatroomStates[id].rightFree);
         cdc.leftName.text = networkPlayer.chatroomStates[id].leftName;
-        cdc.rightName.text = networkPlayer.chatroomStates[id].rightName;
-
-       
-
+        cdc.rightName.text = networkPlayer.chatroomStates[id].rightName;  
     }
     [ClientRpc]
     public void RpcClearMainCanvas(int id, bool leftFree, bool rightFree, string leftName, string rightName)

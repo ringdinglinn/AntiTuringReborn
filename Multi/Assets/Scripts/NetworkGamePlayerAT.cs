@@ -160,7 +160,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
                         {
                             Debug.Log("In 1");
 
-                            player.GetComponent<ChatBehaviour>().RpcFillUpMainCanvasOnlyUI(roomID, chatroomStates[roomID].leftFree, chatroomStates[roomID].rightFree, chatroomStates[roomID].leftName, chatroomStates[roomID].rightName);
+                            player.GetComponent<ChatBehaviour>().RpcFillUpMainCanvasOnlyUI(roomID, false, chatroomStates[roomID].rightFree, fakeName, chatroomStates[roomID].rightName);
                         }
 
                     }
@@ -172,7 +172,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
                         if (player.chatroomID == chatroomID)
                         {
                             Debug.Log("In 2");
-                            player.GetComponent<ChatBehaviour>().RpcFillUpMainCanvasOnlyUI(roomID, chatroomStates[roomID].leftFree, chatroomStates[roomID].rightFree, chatroomStates[roomID].leftName, chatroomStates[roomID].rightName);
+                            player.GetComponent<ChatBehaviour>().RpcFillUpMainCanvasOnlyUI(roomID, player.chatroomStates[roomID].leftFree, false, player.chatroomStates[roomID].leftName, fakeName);
                         }
                     }
                 }
@@ -201,9 +201,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     public void CmdLeaveChatroom(int ID, string fakeName)
     {
         RpcCloseChatroom();
-       
-     
-        //string fakeName = displayName;
+         
         if (chatroomStates[ID].leftName == fakeName)
         {
             foreach (NetworkGamePlayerAT player in room.GamePlayers)
@@ -213,9 +211,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
                 if (player.chatroomID == ID)
                 {
                     Debug.Log("Out 1");
-                    player.GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, true, player.chatroomStates[ID].rightFree, "", player.chatroomStates[ID].rightName);
-                 
-                   
+                    player.GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, true, player.chatroomStates[ID].rightFree, "", player.chatroomStates[ID].rightName);                                 
                 }
             }
             chatroomID = 99;
@@ -230,9 +226,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
                 if (player.chatroomID == ID)
                 {
                     Debug.Log("Out 2");
-                    player.GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, player.chatroomStates[ID].leftFree, true, player.chatroomStates[ID].leftName, "");
-                   
-                   
+                    player.GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, player.chatroomStates[ID].leftFree, true, player.chatroomStates[ID].leftName, "");                                    
                 }
             }
 
