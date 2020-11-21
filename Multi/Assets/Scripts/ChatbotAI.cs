@@ -23,8 +23,10 @@ public class ChatbotAI : MonoBehaviour
     public string fakeName;
     public Color32 color;
 
-    private int chatroomID = 0;
-    private int currentSessionID = 0;
+    public int chatroomID = 99;
+    public int currentSessionID = 0;
+
+    private bool left;
 
     private void Start() {
         networkManager = chatbotBehaviour.networkManager;
@@ -56,7 +58,7 @@ public class ChatbotAI : MonoBehaviour
 
     IEnumerator WaitToJointCoroutine(float s) {
         yield return new WaitForSeconds(s);
-        //JoinChatroom();
+        JoinChatroom();
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -65,19 +67,34 @@ public class ChatbotAI : MonoBehaviour
     private void JoinChatroom() {
         chatroomStates = networkManager.GamePlayers[0].chatroomStates;
         List<int> indeces = new List<int>();
-        bool left = false;
+        left = false;
         for (int i = 0; i < chatroomStates.Count; i++) {
             if (chatroomStates[i].leftFree || chatroomStates[i].rightFree) {
                 indeces.Add(i);
             }
-            left = chatroomStates[i].leftFree;
         }
         if (indeces.Count > 0) {
             chatroomID = indeces[Random.Range(0, indeces.Count)];
-            networkManager.GamePlayers[0].RequestJoinRoom(chatroomID, fakeName);
+            left = chatroomStates[chatroomID].leftFree;
+            networkManager.GamePlayers[0].RequestJoinRoom(chatroomID, fakeName, true);
             currentSessionID = chatbotBehaviour.nextSessionID++;
+            Debug.Log(fakeName +"\n change chatroom bot index: " + chatroomID + ", " + chatbotAiID + ", " + left);
             chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left);
         }
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // In Chatroom
+
+    private void StartWaitToLeave() {
+
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Leave Chatroom
+
+    private void LeaveChatroom() {
+        chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left);
     }
 
 

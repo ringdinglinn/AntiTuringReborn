@@ -20,7 +20,7 @@ public class ChatBehaviour : NetworkBehaviour {
 
     private static event Action<String, String, int> OnMessage;
 
-    public int chatroomID;
+    public int chatroomID = 99;
     public Dictionary<int, bool> chatbotRoomsIndex = new Dictionary<int, bool>();
 
  
@@ -33,6 +33,8 @@ public class ChatBehaviour : NetworkBehaviour {
     public GameObject textPrefab;
     public List<List<GameObject>> listOfChatroomLists = new List<List<GameObject>>();
     public List<GameObject> mainChatDisplayContentList = new List<GameObject>();
+
+    private bool left;
 
     public NetworkManagerAT networkManagerAT;
     public override void OnStartAuthority()
@@ -191,8 +193,6 @@ public class ChatBehaviour : NetworkBehaviour {
 
         CmdSendMessage(message, chatroomID, networkPlayer.fakeName);
 
-
-        if (chatbotRoomsIndex[chatroomID]) CmdSendMessageToChatbot(message);
         inputFields[chatroomID].text = string.Empty;
     }
     [Command]
@@ -201,12 +201,21 @@ public class ChatBehaviour : NetworkBehaviour {
         GameObject newMessage = Instantiate(textPrefab, chatDisplayContents[chatroomID].GetComponent<ChatDisplayContent>().scrollPanelContent.transform);
         newMessage.GetComponent<Text>().text = name + "" + message;
 
-      
-
         listOfChatroomLists[chatroomID].Add(newMessage);
 
 
         RpcHandleMessage(message, name, chatroomID);
+
+        var chatroomBotIndex = networkPlayer.Room.chatbot.chatroomBotIndex;
+        if (chatroomBotIndex[chatroomID][0] != -1 || chatroomBotIndex[chatroomID][1] != -1) {
+            int chatbotID;
+            if (!networkPlayer.left) {
+                chatbotID = chatroomBotIndex[chatroomID][0];
+            } else {
+                chatbotID = chatroomBotIndex[chatroomID][1];
+            }
+            SendMessageToChatbot(message, chatbotID, chatroomID);
+        }
     }
     [ClientRpc]
     private void RpcHandleMessage(string message, string name,  int chatroomID) {
@@ -221,25 +230,28 @@ public class ChatBehaviour : NetworkBehaviour {
 
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    [Command]
-    public void CmdSendMessageToChatbot(string text) {
+    public void SendMessageToChatbot(string text, int chatbotID, int chatroomID) {
         networkPlayer = GetComponent<NetworkGamePlayerAT>();
        
-        networkPlayer.Room.chatbot.SendTextToChatbot(text, chatroomID);      
+        networkPlayer.Room.chatbot.SendTextToChatbot(text, chatroomID, chatbotID);
+        Debug.Log("ChatBehaviour, ReceiveChatbotMessageFromPlayer, chatroom id = " + chatroomID);
+
     }
 
     [Command]
-    public void CmdSendOutResponseFromChatbot(string r, int id) {
-        RpcHandleMessage(r,"nameOFBot", id);
+    public void CmdSendOutResponseFromChatbot(string r, int id, string chatbotName) {
+        RpcHandleMessage(r,chatbotName, id);
     }
 
-    public void ReceiveChatbotMessageFromPlayer(string r, int id) {
-        r = $"[{botname}]: {r}";
+    public void ReceiveChatbotMessageFromPlayer(string r, int id, string chatbotName) {
+        Debug.Log("ChatBehaviour, ReceiveChatbotMessageFromPlayer, chatroom id = " + id);
+        r.Remove(0, 1);
+        r.Remove(r.Length - 1, 1);
         if (isClientOnly) {
-            CmdSendOutResponseFromChatbot(r, id);
+            CmdSendOutResponseFromChatbot(r, id, chatbotName);
             return;
         }
-        RpcHandleMessage(r, "nameOFBot", id);
+        RpcHandleMessage(r, chatbotName, id);
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -324,6 +336,7 @@ public class ChatBehaviour : NetworkBehaviour {
         
         networkPlayer.chatroomID = id;
     }
+
 
 
 

@@ -48,6 +48,8 @@ public class NetworkManagerAT : NetworkManager {
     //Game State
     public event Action OnGameStart;
 
+    public int nrChatrooms = 4;
+
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public override void OnStartClient() {
         var spawnablePrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs");
@@ -132,7 +134,7 @@ public class NetworkManagerAT : NetworkManager {
             nrOfWaitingClients = nrPlayers;
             nrAwareAI = nrPlayers - nrInvestigators;
             nrOfChatbots = nrAwareAI * 2 + 2; // PLACE HOLDER: TO BE BALANCED!!!
-            //chatbot.GameStart();
+            chatbot.GameStart();
             ServerChangeScene("SampleScene");
         }     
     }

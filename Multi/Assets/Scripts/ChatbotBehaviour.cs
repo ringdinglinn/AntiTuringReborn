@@ -40,16 +40,19 @@ public class ChatbotBehaviour : MonoBehaviour {
     // Chatbot Management
 
     private void InitializeChatroomBotIndex() {
-        for (int i = 0; i < networkManager.GamePlayers[0].nrOfChatrooms; i++) {
+        for (int i = 0; i < networkManager.nrChatrooms; i++) {
             int[] newArr = { -1, -1 };
             chatroomBotIndex.Add(newArr);
         }
     }
 
     public void ChangeChatroomBotIndex(int chatroomID, int chatbotID, bool left) {
+        Debug.Log("change chatroom bot index: " + chatroomID + ", " + chatbotID + ", " + left);
         int i = 0;
         if (!left) i = 1;
         chatroomBotIndex[chatroomID][i] = chatbotID;
+        foreach (ChatbotAI c in chatbotAIs) Debug.Log(c.fakeName);
+        foreach (int[] arr in chatroomBotIndex) Debug.Log(arr[0] + ", " + arr[1]);
     }
 
 
@@ -67,27 +70,29 @@ public class ChatbotBehaviour : MonoBehaviour {
         return responseString;
     }
 
-    void getSessionIdOfPandoraResponse(string wwwText) {
-        int startIndex = wwwText.IndexOf("sessionid") + 12;
-        int endIndex = wwwText.IndexOf("}") - 1;
+    //void getSessionIdOfPandoraResponse(string wwwText) {
+    //    int startIndex = wwwText.IndexOf("sessionid") + 12;
+    //    int endIndex = wwwText.IndexOf("}") - 1;
 
-        sessionId = wwwText.Substring(startIndex, endIndex - startIndex);
-    }
+    //    sessionId = wwwText.Substring(startIndex, endIndex - startIndex);
+    //}
 
-    private IEnumerator PandoraBotRequestCoRoutine(string text, int chatroomID) {
+    private IEnumerator PandoraBotRequestCoRoutine(string text, int chatroomID, int sessionID, int chatbotID) {
 
         string url = "https://api.pandorabots.com/talk?botkey=RssstjtodsmGn5b1IstcJtNZI9khFR8B6xS0_Qvmtrrq5dalb0KYSIeonmRa15PUOL2I-8EtsPdp9rI_1dsWOQ~~&input=";
         url += UnityWebRequest.EscapeURL(text);
-
+        //url += "sessionid=" + sessionID;
+        //session id gives weird results somehow
+        
         UnityWebRequest wr = UnityWebRequest.Post(url, ""); //You cannot do POST with empty post data, new byte is just dummy data to solve this problem
 
         yield return wr.SendWebRequest();
 
         if (wr.error == null) {
-            getSessionIdOfPandoraResponse(wr.downloadHandler.text);
+            //getSessionIdOfPandoraResponse(wr.downloadHandler.text);
 
-            string r = sanitizePandoraResponse(wr.downloadHandler.text);//Where we get our chatbots response message
-            Response response = new Response(chatroomID, r);
+            string r = sanitizePandoraResponse(wr.downloadHandler.text); //Where we get our chatbots response message
+            Response response = new Response(chatroomID, r, chatbotAIs[chatbotID].fakeName);
             responses.Add(response);
             SendResponseToServer(response);
         }
@@ -97,23 +102,24 @@ public class ChatbotBehaviour : MonoBehaviour {
     }
 
     public struct Response {
-        public Response(int id, string t) {
+        public Response(int id, string t, string n) {
             chatroomID = id;
             text = t;
+            fakeName = n;
         }
         public int chatroomID;
         public string text;
+        public string fakeName;
     }
 
-    public void SendTextToChatbot(string text, int chatroomID) {
-        StartCoroutine(PandoraBotRequestCoRoutine(text, chatroomID));
+    public void SendTextToChatbot(string text, int chatroomID, int chatbotID) {
+        Debug.Log("ChatbotBehaviour, SendTextToChatbot, chatroom id = " + chatroomID);
+        int sessionID = chatbotAIs[chatbotID].currentSessionID;
+        StartCoroutine(PandoraBotRequestCoRoutine(text, chatroomID, sessionID, chatbotID));
     }
 
     private void SendResponseToServer(Response response) {
-        Debug.Log(networkManager);
-        Debug.Log(networkManager.GamePlayers[0]);
-        Debug.Log(networkManager.GamePlayers[0].chatBehaviour);
-        Debug.Log("SendResponseToServer");
-        networkManager.GamePlayers[0].ReceiveMessageFromChatbot(response.text, response.chatroomID);
+        Debug.Log("ChatbotBehaviour, SendResponseToServer, chatroom id = " + response.chatroomID);
+        networkManager.GamePlayers[0].ReceiveMessageFromChatbot(response.text, response.chatroomID, response.fakeName);
     }
 }

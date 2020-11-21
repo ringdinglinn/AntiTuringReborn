@@ -31,11 +31,13 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     public List<ChatroomStates> chatroomStates = new List<ChatroomStates>();
 
     public GameObject chatroomStatePrefab;
-    public int chatroomID;
+    public int chatroomID = 99;
 
     public int nrOfChatrooms = 4;
 
     public int playerID;
+
+    public bool left;
 
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
@@ -114,17 +116,20 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
-    public void ReceiveMessageFromChatbot(string r, int id) {
-        chatBehaviour.ReceiveChatbotMessageFromPlayer(r, id);
+    public void ReceiveMessageFromChatbot(string r, int id, string chatbotName) {
+        Debug.Log("GamePlayer, ReceiveMessageFromChatbot, chatroom id = " + id);
+        chatBehaviour.ReceiveChatbotMessageFromPlayer(r, id, chatbotName);
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     //Start a Player Joins a Chatroom logic 
     public void CheckRequestFromJoinButton() {
+        Debug.Log("check request from join button");
         for (int x = 0; joinButtonsList.Count > x; x++) {
             if (EventSystem.current.currentSelectedGameObject == joinButtonsList[x]) {
                 chatroomID = x;
                 chatBehaviour.chatroomID = x;
+                Debug.Log("chatroom index = " + x);
                 CmdRequestJoinRoom(chatroomID, fakeName);
                 return;
             }
@@ -134,42 +139,49 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
  
     [Command]
     public void CmdRequestJoinRoom(int chatroomID, string fakeName) {
-        RequestJoinRoom(chatroomID, fakeName);
+        RequestJoinRoom(chatroomID, fakeName, false);
     }
 
     [Server]
-    public void RequestJoinRoom(int roomID, string fakeName) {
+    public void RequestJoinRoom(int roomID, string fakeName, bool isChatbot) {
 
         if (chatroomStates[roomID].leftFree || chatroomStates[roomID].rightFree)
         {
-            RpcOpenChatroom();
-            chatroomID = roomID;
+            if (!isChatbot) {
+                RpcOpenChatroom();
+                chatroomID = roomID;
+            }
+
+            left = chatroomStates[roomID].leftFree;
 
 
             foreach (NetworkGamePlayerAT player in Room.GamePlayers)
             {
                 if (player.chatroomStates[roomID].leftFree || player.chatroomStates[roomID].rightFree)
                 {
+                    Debug.Log(fakeName + ", " + player.fakeName);
+                    Debug.Log("left free = " + player.chatroomStates[roomID].leftFree);
+                    Debug.Log("left = " + player.left);
                     if (player.chatroomStates[roomID].leftFree)
                     {
                         player.chatroomStates[roomID].leftFree = false;
                         player.chatroomStates[roomID].leftName = fakeName;
-                        player.RpcUpdateChatroomStates(roomID, false, chatroomStates[roomID].rightFree, fakeName, chatroomStates[roomID].rightName);
+                        player.RpcUpdateChatroomStates(roomID, false, chatroomStates[roomID].rightFree, fakeName, chatroomStates[roomID].rightName, left);
 
-                        if (player.chatroomID == chatroomID)
+                        if (player.chatroomID == roomID) 
                         {
                             Debug.Log("In 1");
 
                             player.GetComponent<ChatBehaviour>().RpcFillUpMainCanvasOnlyUI(roomID, false, chatroomStates[roomID].rightFree, fakeName, chatroomStates[roomID].rightName);
                         }
-
                     }
                     else if (player.chatroomStates[roomID].rightFree)
                     {
                         player.chatroomStates[roomID].rightFree = false;
                         player.chatroomStates[roomID].rightName = fakeName;
-                        player.RpcUpdateChatroomStates(roomID, player.chatroomStates[roomID].leftFree, false, player.chatroomStates[roomID].leftName, fakeName);
-                        if (player.chatroomID == chatroomID)
+                        player.RpcUpdateChatroomStates(roomID, player.chatroomStates[roomID].leftFree, false, player.chatroomStates[roomID].leftName, fakeName, left);
+
+                        if (player.chatroomID == roomID) 
                         {
                             Debug.Log("In 2");
                             player.GetComponent<ChatBehaviour>().RpcFillUpMainCanvasOnlyUI(roomID, player.chatroomStates[roomID].leftFree, false, player.chatroomStates[roomID].leftName, fakeName);
@@ -182,7 +194,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
                     Debug.Log("this should not happen");
                 }
             }
-            GetComponent<ChatBehaviour>().RpcFillUpMainCanvasTextAndUI(roomID, chatroomStates[roomID].leftFree, chatroomStates[roomID].rightFree, chatroomStates[roomID].leftName, chatroomStates[roomID].rightName);
+            if (!isChatbot) GetComponent<ChatBehaviour>().RpcFillUpMainCanvasTextAndUI(roomID, chatroomStates[roomID].leftFree, chatroomStates[roomID].rightFree, chatroomStates[roomID].leftName, chatroomStates[roomID].rightName);
         }
 
     }
@@ -206,8 +218,8 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         {
             foreach (NetworkGamePlayerAT player in room.GamePlayers)
             {
-                player.UpdateChatroomStatesEvent(ID, true, chatroomStates[ID].rightFree, "", chatroomStates[ID].rightName);
-                player.RpcUpdateChatroomStates(ID, true, player.chatroomStates[ID].rightFree, "", player.chatroomStates[ID].rightName);
+                player.UpdateChatroomStatesEvent(ID, true, chatroomStates[ID].rightFree, "", chatroomStates[ID].rightName, player.left);
+                player.RpcUpdateChatroomStates(ID, true, player.chatroomStates[ID].rightFree, "", player.chatroomStates[ID].rightName, player.left);
                 if (player.chatroomID == ID)
                 {
                     Debug.Log("Out 1");
@@ -221,8 +233,8 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         {
             foreach (NetworkGamePlayerAT player in room.GamePlayers)
             {
-                player.UpdateChatroomStatesEvent(ID, chatroomStates[ID].leftFree, true, chatroomStates[ID].leftName, "");
-                player.RpcUpdateChatroomStates(ID, player.chatroomStates[ID].leftFree, true, player.chatroomStates[ID].leftName, "");
+                player.UpdateChatroomStatesEvent(ID, chatroomStates[ID].leftFree, true, chatroomStates[ID].leftName, "", player.left);
+                player.RpcUpdateChatroomStates(ID, player.chatroomStates[ID].leftFree, true, player.chatroomStates[ID].leftName, "", player.left);
                 if (player.chatroomID == ID)
                 {
                     Debug.Log("Out 2");
@@ -244,18 +256,21 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     [ClientRpc]
-    private void RpcUpdateChatroomStates(int id, bool leftFree, bool rightFree, string leftName, string rightName)
+    private void RpcUpdateChatroomStates(int id, bool leftFree, bool rightFree, string leftName, string rightName, bool left)
     {
         
-       UpdateChatroomStatesEvent(id, leftFree, rightFree, leftName, rightName);
+       UpdateChatroomStatesEvent(id, leftFree, rightFree, leftName, rightName, left);
+        this.left = left;
          
     }   
-    private void UpdateChatroomStatesEvent(int id, bool leftFree, bool rightFree, string leftName, string rightName)
+    private void UpdateChatroomStatesEvent(int id, bool leftFree, bool rightFree, string leftName, string rightName, bool left)
     {
         chatroomStates[id].leftFree = leftFree;
         chatroomStates[id].rightFree = rightFree;
         chatroomStates[id].leftName = leftName;
         chatroomStates[id].rightName = rightName;
+
+        this.left = left;
 
         GetComponent<ChatBehaviour>().UpdateUI(id, leftFree, rightFree, leftName, rightName);
     }
