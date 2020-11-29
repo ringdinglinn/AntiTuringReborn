@@ -48,7 +48,7 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
             isLeader = value;
             startGameButton.gameObject.SetActive(value);
             gameSettings.SetActive(value);
-            Debug.Log(value);
+           // Debug.Log(value);
         }
     }
     [Command]

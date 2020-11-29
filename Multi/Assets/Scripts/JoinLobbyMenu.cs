@@ -15,13 +15,13 @@ public class JoinLobbyMenu : MonoBehaviour
     private void Start() {
         NetworkManagerAT.OnClientConnected += HandleClientConnected;
         NetworkManagerAT.OnClientDisconnected += HandleClientDisconnected;
-        Debug.Log("listens to on client connected");
+      //  Debug.Log("listens to on client connected");
     }
 
     private void OnDisable() {
         NetworkManagerAT.OnClientConnected -= HandleClientConnected;
         NetworkManagerAT.OnClientDisconnected -= HandleClientDisconnected;
-        Debug.Log("doesn't listen to on client connected");
+     //   Debug.Log("doesn't listen to on client connected");
     }
 
     public void JoinLobby() {
@@ -37,7 +37,7 @@ public class JoinLobbyMenu : MonoBehaviour
     }
 
     private void HandleClientConnected() {
-        Debug.Log("handle client connected");
+      //  Debug.Log("handle client connected");
         joinButton.interactable = true;
         gameObject.SetActive(false);
         landingPagePanel.SetActive(false);

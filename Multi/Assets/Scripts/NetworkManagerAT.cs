@@ -5,6 +5,7 @@ using Mirror;
 using System;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using UnityEngine.UI;
 
 public class NetworkManagerAT : NetworkManager {
 
@@ -27,7 +28,7 @@ public class NetworkManagerAT : NetworkManager {
     //Lists
     public List<NetworkRoomPlayerAT> RoomPlayers = new List<NetworkRoomPlayerAT>();
     public List<NetworkGamePlayerAT> GamePlayers = new List<NetworkGamePlayerAT>();
-  
+    public List<Sprite> playerVisualList = new List<Sprite>();
     //Related to Roles
     private bool[] roleIndex;
     public int nrInvestigators;
@@ -53,7 +54,7 @@ public class NetworkManagerAT : NetworkManager {
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public override void OnStartClient() {
         var spawnablePrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs");
-
+   
         foreach (GameObject prefab in spawnablePrefabs) {
             ClientScene.RegisterPrefab(prefab);
         }     
@@ -61,7 +62,7 @@ public class NetworkManagerAT : NetworkManager {
 
     public override void OnClientConnect(NetworkConnection conn) {
         base.OnClientConnect(conn);
-        Debug.Log("onclientconnect");
+        //Debug.Log("onclientconnect");
     }
 
     public override void OnClientDisconnect(NetworkConnection conn) {
@@ -144,7 +145,7 @@ public class NetworkManagerAT : NetworkManager {
                 var conn = RoomPlayers[i].connectionToClient;
                 var gamePlayerInstance = Instantiate(gamePlayerPrefab);
                 gamePlayerInstance.SetDisplayName(RoomPlayers[i].DisplayName);
-               
+                        
                 NetworkServer.Destroy(conn.identity.gameObject);             
                 NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance.gameObject);
 
@@ -159,13 +160,22 @@ public class NetworkManagerAT : NetworkManager {
         }
         base.ServerChangeScene(newSceneName);
     }
+    public Sprite GetRandomPic()
+    {
+        int randomPictureNumber = UnityEngine.Random.Range(0, playerVisualList.Count);
 
+        Sprite spriteReferene = playerVisualList[randomPictureNumber];
+        playerVisualList.RemoveAt(randomPictureNumber);
+    //    Debug.Log(spriteReferene);
+        return spriteReferene;
+    }
+  
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public bool GetRole(int i) {
         return roleIndex[i];
     }
     public void SetRoleIndex(bool[] newIndex) {
-        Debug.Log("SetRoleIndex()");
+       // Debug.Log("SetRoleIndex()");
         roleIndex = new bool[RoomPlayers.Count];
         roleIndex = newIndex;
     }
@@ -188,7 +198,7 @@ public class NetworkManagerAT : NetworkManager {
 
     public void GamePlayerConnected() {
         nrOfWaitingClients--;
-        Debug.Log("nrOfWaitingClients = " + nrOfWaitingClients);
+     //   Debug.Log("nrOfWaitingClients = " + nrOfWaitingClients);
         if (nrOfWaitingClients <= 0) {
              OnAllPlayersConnected?.Invoke();
         }
@@ -209,6 +219,15 @@ public class NetworkManagerAT : NetworkManager {
             var tmp = colors[i];
             colors[i] = colors[r];
             colors[r] = tmp;
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public void UpdateBotListForAllTagManagementsOnClients()
+    {
+        foreach (NetworkGamePlayerAT x in GamePlayers)
+        {
+            x.tagManagement.allTagableBotPlayersList.AddRange(chatbot.chatbotAIs);
         }
     }
 }

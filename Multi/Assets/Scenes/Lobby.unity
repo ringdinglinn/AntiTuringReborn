@@ -2778,12 +2778,22 @@ MonoBehaviour:
     type: 3}
   RoomPlayers: []
   GamePlayers: []
+  playerVisualList:
+  - {fileID: 21300000, guid: 5f7fa9a7940a64e79b5a42d9f661d42c, type: 3}
+  - {fileID: 21300000, guid: c4c548a339b4d41a590928c0c98934a7, type: 3}
+  - {fileID: 21300000, guid: ef31bc3f46d6047b29ff513e55daf05b, type: 3}
+  - {fileID: 21300000, guid: 492b9988436bd45049a9a6bc52ac8fb0, type: 3}
+  - {fileID: 21300000, guid: 5ab8c572086ea4fce9f475594d61177d, type: 3}
+  - {fileID: 21300000, guid: 70141d51621e24facbca9196bbde84b4, type: 3}
+  - {fileID: 21300000, guid: cea2c9bf87b0c4dfdafb697a3ff00959, type: 3}
+  - {fileID: 21300000, guid: b8aaa707027cc4f79af3439c5dbc9652, type: 3}
   nrInvestigators: 0
   nrAwareAI: 0
   nrPlayers: 0
   nrOfChatbots: 0
   chatbot: {fileID: 802153548}
   isSeverOnly: 0
+  nrChatrooms: 4
   randomNames:
   - Hildebrand
   - Neko

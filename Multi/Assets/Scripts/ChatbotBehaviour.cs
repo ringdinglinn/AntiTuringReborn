@@ -47,12 +47,12 @@ public class ChatbotBehaviour : MonoBehaviour {
     }
 
     public void ChangeChatroomBotIndex(int chatroomID, int chatbotID, bool left) {
-        Debug.Log("change chatroom bot index: " + chatroomID + ", " + chatbotID + ", " + left);
+      //  Debug.Log("change chatroom bot index: " + chatroomID + ", " + chatbotID + ", " + left);
         int i = 0;
         if (!left) i = 1;
         chatroomBotIndex[chatroomID][i] = chatbotID;
-        foreach (ChatbotAI c in chatbotAIs) Debug.Log(c.fakeName);
-        foreach (int[] arr in chatroomBotIndex) Debug.Log(arr[0] + ", " + arr[1]);
+        foreach (ChatbotAI c in chatbotAIs) //ebug.Log(c.fakeName);
+            foreach (int[] arr in chatroomBotIndex) ;//Debug.Log(arr[0] + ", " + arr[1]);
     }
 
 
