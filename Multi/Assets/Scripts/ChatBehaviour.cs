@@ -24,7 +24,7 @@ public class ChatBehaviour : NetworkBehaviour
     public int chatroomID = 99;
     public Dictionary<int, bool> chatbotRoomsIndex = new Dictionary<int, bool>();
 
-
+    public GameManagerAT gameManagerAT;
 
     //botname placeholder
     string botname = "???";
@@ -270,7 +270,7 @@ public class ChatBehaviour : NetworkBehaviour
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    public void UpdateUI(int id, bool leftFree, bool rightFree, string leftName, string rightName)
+    public void UpdateUI(int id, bool leftFree, bool rightFree, string leftName, string rightName, int leftVisualID, int rightVisualID)
     {
         // manzgöggeli, name uswertig
         ChatDisplayContent cdc = chatDisplayContents[id].GetComponent<ChatDisplayContent>();
@@ -279,6 +279,24 @@ public class ChatBehaviour : NetworkBehaviour
         cdc.rightPerson.gameObject.SetActive(!rightFree);
         cdc.leftName.text = leftName;
         cdc.rightName.text = rightName;
+
+        if (leftVisualID != 99)
+        {
+            cdc.leftPerson.sprite = gameManagerAT.playerVisualPalletsList[leftVisualID].playerSmall;
+        }
+        else
+        {
+            cdc.leftPerson.sprite = null;
+        }
+        if (rightVisualID != 99)
+        {
+            cdc.leftPerson.sprite = gameManagerAT.playerVisualPalletsList[rightVisualID].playerSmall;
+        }
+        else
+        {
+            cdc.leftPerson.sprite = null;
+        }
+
 
         // join button uswertig
         foreach (GameObject x in chatDisplayContents)
@@ -331,7 +349,7 @@ public class ChatBehaviour : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RpcFillUpMainCanvasTextAndUI(int id, bool leftFree, bool rightFree, string leftName, string rightName)
+    public void RpcFillUpMainCanvasTextAndUI(int id, bool leftFree, bool rightFree, string leftName, string rightName, int leftVisualID, int rightVisualID)
     {
         ChatDisplayContent cdc = mainChatDisplay.GetComponent<ChatDisplayContent>();
 
@@ -339,6 +357,23 @@ public class ChatBehaviour : NetworkBehaviour
         cdc.rightPerson.gameObject.SetActive(!rightFree);
         cdc.leftName.text = networkPlayer.chatroomStates[id].leftName;
         cdc.rightName.text = networkPlayer.chatroomStates[id].rightName;
+        if (leftVisualID != 99)
+        {
+            cdc.leftPerson.sprite = gameManagerAT.playerVisualPalletsList[leftVisualID].playerAliveBig;
+        }
+        else
+        {
+            cdc.leftPerson.sprite = null;
+        }
+        if (rightVisualID != 99)
+        {
+            cdc.leftPerson.sprite = gameManagerAT.playerVisualPalletsList[rightVisualID].playerAliveBig;
+        }
+        else
+        {
+            cdc.leftPerson.sprite = null;
+        }
+
         for (int x = 0; listOfChatroomLists[id].Count > x; x++)
         {
             GameObject newMessage = Instantiate(textPrefab, mainChatDisplay.GetComponent<ChatDisplayContent>().scrollPanelContent.transform);
@@ -366,7 +401,7 @@ public class ChatBehaviour : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RpcFillUpMainCanvasOnlyUI(int id, bool leftFree, bool rightFree, string leftName, string rightName)
+    public void RpcFillUpMainCanvasOnlyUI(int id, bool leftFree, bool rightFree, string leftName, string rightName, int leftVisualID, int rightVisualID)
     {
         ChatDisplayContent cdc = mainChatDisplay.GetComponent<ChatDisplayContent>();
 
@@ -375,6 +410,22 @@ public class ChatBehaviour : NetworkBehaviour
         cdc.leftName.text = leftName;
         cdc.rightName.text = rightName;
 
+        if (leftVisualID != 99)
+        {
+            cdc.leftPerson.sprite = gameManagerAT.playerVisualPalletsList[leftVisualID].playerAliveBig;
+        }
+        else
+        {
+            cdc.leftPerson.sprite = null;
+        }
+        if (rightVisualID != 99)
+        {
+            cdc.leftPerson.sprite = gameManagerAT.playerVisualPalletsList[rightVisualID].playerAliveBig;
+        }
+        else
+        {
+            cdc.leftPerson.sprite = null;
+        }
         networkPlayer.chatroomID = id;
 
         if (networkPlayer.isInvestigator == true)

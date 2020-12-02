@@ -196,9 +196,9 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
 
     [Server]
     public void SyncNameAndColorLists() {
-        for (int i = 0; i < Room.randomColors.Count; i++) {
+        for (int i = 0; i < Room.randomNames.Count; i++) {
             RpcUpdateRndName(Room.randomNames[i], i);
-            RpcUpdateRndColor(Room.randomColors[i].r, Room.randomColors[i].g, Room.randomColors[i].b, i);
+          
         }
     }
 
@@ -207,8 +207,5 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
         Room.randomNames[index] = rndName;
     }
 
-    [ClientRpc]
-    private void RpcUpdateRndColor(byte r, byte g, byte b, int index) {
-        Room.randomColors[index] = new Color32(r, g, b, 255);
-    }
+    
 } 

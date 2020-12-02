@@ -51,6 +51,9 @@ public class NetworkManagerAT : NetworkManager {
 
     public int nrChatrooms = 4;
 
+    //Visual Pallet List
+    public List<PlayerVisualPallet> playerVisualPalletsList = new List<PlayerVisualPallet>();
+
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public override void OnStartClient() {
         var spawnablePrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs");
@@ -86,7 +89,7 @@ public class NetworkManagerAT : NetworkManager {
         }
 
         OnClientConnected?.Invoke();
-        RandomizeNameAndColorLists(randomNames, randomColors);
+        RandomizeNameAndColorLists(randomNames);
         base.OnServerConnect(conn);
     }
     public override void OnServerAddPlayer(NetworkConnection conn) {      
@@ -134,7 +137,7 @@ public class NetworkManagerAT : NetworkManager {
             nrPlayers = RoomPlayers.Count;
             nrOfWaitingClients = nrPlayers;
             nrAwareAI = nrPlayers - nrInvestigators;
-            nrOfChatbots = 1; // PLACE HOLDER: TO BE BALANCED!!!
+            nrOfChatbots = 7; // PLACE HOLDER: TO BE BALANCED!!!
             chatbot.GameStart();
             ServerChangeScene("SampleScene");
         }     
@@ -190,11 +193,13 @@ public class NetworkManagerAT : NetworkManager {
                                                            "Berthold", "Maximus", "Dirk", "Gaia",
                                                            "Veronica", "Bob", "Susan", "Bernard",
                                                            "Augustus", "Klaus", "Mortimer", "Yusuke" };
-    public List<Color32> randomColors = new List<Color32>()    { new Color32(255, 231, 29, 255), new Color32( 57, 255, 156, 255), new Color32( 42, 142, 255, 255), new Color32(232,  57, 255, 255),
-                                                                 new Color32(255,   2, 44, 255), new Color32(255, 144,   0, 255), new Color32(  0, 246, 255, 255), new Color32(144,   0, 255, 255),
-                                                                 new Color32( 87, 229, 18, 255), new Color32(255, 127, 181, 255), new Color32( 62,  42, 255, 255), new Color32(255,  80,  57, 255),
-                                                                 new Color32(217, 255, 42, 255), new Color32(255,   0, 132, 255), new Color32(128,  91, 249, 255), new Color32(  5, 204,  70, 255)};
-
+  
+    public int GetRandomPlayerVisualPalletID()
+    {
+        int playerVisualPalletID = UnityEngine.Random.Range(0, playerVisualPalletsList.Count);      
+        playerVisualPalletsList.RemoveAt(playerVisualPalletID);
+        return playerVisualPalletID;
+    }
 
     public void GamePlayerConnected() {
         nrOfWaitingClients--;
@@ -204,7 +209,7 @@ public class NetworkManagerAT : NetworkManager {
         }
     }
 
-    public static void RandomizeNameAndColorLists(List<string> names, List<Color32> colors) {
+    public static void RandomizeNameAndColorLists(List<string> names) {
         int n = names.Count;
         for (var i = n - 1; i > 0; i--) {
             var r = UnityEngine.Random.Range(0, n);
@@ -213,13 +218,7 @@ public class NetworkManagerAT : NetworkManager {
             names[r] = tmp;
         }
 
-        int m = colors.Count;
-        for (var i = m - 1; i > 0; i--) {
-            var r = UnityEngine.Random.Range(0, m);
-            var tmp = colors[i];
-            colors[i] = colors[r];
-            colors[r] = tmp;
-        }
+     
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

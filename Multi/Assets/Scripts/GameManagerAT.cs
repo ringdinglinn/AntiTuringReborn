@@ -17,19 +17,38 @@ public class GameManagerAT : NetworkBehaviour
     public Sprite testSprite;
 
     [Header("Core Mechanic")]
-    public int totalHumanBots;
-    public int currentHumanBotsAlive;
-    public int minHumanBotsNeededAliveToWin;
-    public int currentNrOfMadeConncetions;
-    public int investigatorsFailedConnnections;
+    [SerializeField] private int totalHumanBots;
+    [SerializeField] private int currentHumanBotsAlive;
+    [SerializeField] private int minHumanBotsNeededAliveToWin;
+    [SerializeField] private int minNeededConnectionsForAIToWin;
+
+    [SerializeField] private int currentNrOfMadeAIConncetions;
+   
+    [SerializeField] private int maxNrOfAllowedFailedConnectionAttemptsAIPlayers = 3;
+    public int currentNrOfAiPlayerFailedConnectionsAttempts = 3;
+
+    [SerializeField] private int investigatorsFailedConnections;
+    [SerializeField] private int investigatorsMaxAllowedFailedConnections = 3;
+
+
+    [Header("Detemind When Win And Loses States Should be called")]      
+    [SerializeField] private List<int> minConnectionsNeededForAIToWinList = new List<int>(); // Here we can put in based on nr Of Bots Playing what the min value of Possible connectionns is -> If current min possible value falls underneath AI Lose  
+    [SerializeField] private List<int> minHumanBotsNeededAliveToStillWinList = new List<int>(); // Here we can put in based on nr Of Bots Playing what the min value of Possible connectionns is
 
     [Header("You Died Window")]
     [SerializeField] private GameObject youDiedWindow;
     [SerializeField] private GameObject youAreDeadLobbyText;
 
-    public List<TagsBetweenPlayersHolder> playerTagsOverviewList = new List<TagsBetweenPlayersHolder>();
-    #region Start Setup
+    [Header("Game Over Visuals")]
+    [SerializeField] private GameObject investigatorsWonVisual;
+    [SerializeField] private GameObject aiWonVisual;
 
+    public List<TagsBetweenPlayersHolder> playerTagsOverviewList = new List<TagsBetweenPlayersHolder>();
+
+    [Header("Player Visual Pallets")]
+    public List<PlayerVisualPallet> playerVisualPalletsList = new List<PlayerVisualPallet>();
+
+    #region Start Setup
     public override void OnStartClient()
     {
         tagManagement.StartSetup();
@@ -37,20 +56,15 @@ public class GameManagerAT : NetworkBehaviour
         StartSetup();
         base.OnStartClient();
     }
-
     public void StartSetup()
     {
         StartCoroutine(ShortSetupDelay());
     }
     IEnumerator ShortSetupDelay() 
     {
-        yield return new WaitForSeconds(0.2f);
-     //   Debug.Log("Message kommt an 1");
-        CmdStartSetup();
-       // ConnectionsOverviewSetup();
-       
+        yield return new WaitForSeconds(1f);  
+        CmdStartSetup();       
     }
-
     [Command]
     private void CmdStartSetup()
     {
@@ -64,40 +78,10 @@ public class GameManagerAT : NetworkBehaviour
     {       
         networkManagerAT = networkGamePlayerAT.room;
         ConnectionsOverviewSetup();
+        SetupOfWinAndLoseRequirements();
     }
-    #endregion
-
-
-    public void ValidateNewTagRequest(string tagedPlayerRealName, string playerWhoTagedRealNamen, bool isInvestigatorTagRequest)
-    {    
-        if(isInvestigatorTagRequest == true)//Check ob ein Investigator jmd Getagged hat.
-        {
-            foreach (NetworkGamePlayerAT playerAT in networkManagerAT.GamePlayers)
-            {
-                if (playerAT.realName == tagedPlayerRealName)//Check ob getagted Person eine  Human Ai ist oder Bot.           
-                {
-                    CmdMessageInvestigatorsDestroyedHumanPlayer(tagedPlayerRealName);
-                    //Investigators Found a Human Player!!! Dam dam dam
-                }
-            }
-        }
-        if (isInvestigatorTagRequest == false)//Check ob eine Human Ai jmd Getagged hat.
-        {
-            foreach (NetworkGamePlayerAT playerAT in networkManagerAT.GamePlayers)
-            {
-                if (playerAT.realName == tagedPlayerRealName)//Check ob getagted Person eine andere Human Ai ist oder Bot.           
-                {
-                    //Update Connections
-                    CmdHandleNewConnections(tagedPlayerRealName, playerWhoTagedRealNamen);                 
-                }
-            }
-        }
-    }
-
-    #region Handle All Connnations
     private void ConnectionsOverviewSetup()
-    { //Kreiere eine Liste mit allen Möglichen Connections
-       // Debug.Log("Message kommt an 4");
+    { //Kreiere eine Liste mit allen Möglichen Connections      
         foreach (NetworkGamePlayerAT gamePlayerAT1 in tagManagement.allTagableHumanPlayersList)
         {
             foreach (NetworkGamePlayerAT gamePlayerAT2 in tagManagement.allTagableHumanPlayersList)
@@ -128,8 +112,53 @@ public class GameManagerAT : NetworkBehaviour
                 }
             }
         }
-      
+
     }
+
+    private void SetupOfWinAndLoseRequirements()
+    {
+         //Regarding Bots
+         totalHumanBots = tagManagement.allTagableHumanPlayersList.Count;
+         currentHumanBotsAlive = totalHumanBots;
+         minHumanBotsNeededAliveToWin = minHumanBotsNeededAliveToStillWinList[totalHumanBots];
+
+        //Regarding Connections   
+        minNeededConnectionsForAIToWin = minConnectionsNeededForAIToWinList[totalHumanBots];
+        currentNrOfMadeAIConncetions = 0;
+       
+        //Regarding Investigators
+        investigatorsFailedConnections = 0;               
+    }
+    #endregion
+
+    public void ValidateNewTagRequest(string tagedPlayerRealName, string playerWhoTagedRealNamen, bool isInvestigatorTagRequest)
+    {    
+        if(isInvestigatorTagRequest == true)//Check ob ein Investigator jmd Getagged hat.
+        {
+            foreach (NetworkGamePlayerAT playerAT in networkManagerAT.GamePlayers)
+            {
+                if (playerAT.realName == tagedPlayerRealName)//Check ob getagted Person eine  Human Ai ist oder Bot.           
+                {
+                    CmdMessageInvestigatorsDestroyedHumanPlayer(tagedPlayerRealName);
+                    //Investigators Found a Human Player!!! Dam dam dam
+                }
+            }
+        }
+        if (isInvestigatorTagRequest == false)//Check ob eine Human Ai jmd Getagged hat.
+        {
+            foreach (NetworkGamePlayerAT playerAT in networkManagerAT.GamePlayers)
+            {
+                if (playerAT.realName == tagedPlayerRealName)//Check ob getagted Person eine andere Human Ai ist oder Bot.           
+                {
+                    //Update Connections
+                    CmdHandleNewConnections(tagedPlayerRealName, playerWhoTagedRealNamen);                 
+                }
+            }
+        }
+    }
+
+    #region Handle All Connections
+   
     [Command]
     private void CmdHandleNewConnections(string tagedPlayerRealName, string playerWhoTagedRealNamen)
     {
@@ -138,26 +167,23 @@ public class GameManagerAT : NetworkBehaviour
 
     [ClientRpc]
     private void RpcHandleNewConnections(string tagedPlayerRealName, string playerWhoTagedRealNamen)
-    {
-      //  Debug.Log("tagedPlayerRealName " + tagedPlayerRealName);
-      //  Debug.Log("playerWhoTagedRealNamen " + playerWhoTagedRealNamen);
+    { 
         foreach (NetworkGamePlayerAT player in networkManagerAT.GamePlayers)
         {
-            foreach (TagsBetweenPlayersHolder alreadyExsitingHolder in player.gameManagerAT. playerTagsOverviewList)
+            foreach (TagsBetweenPlayersHolder alreadyExsitingHolder in player.gameManagerAT.playerTagsOverviewList)
             {
                 if (alreadyExsitingHolder.connectionMade == false && alreadyExsitingHolder.connectionDead == false)
                 {
                     if (alreadyExsitingHolder.player1realName == playerWhoTagedRealNamen && alreadyExsitingHolder.player2realName == tagedPlayerRealName)
                     {
-                        alreadyExsitingHolder.connectionMade = true;                      
-                    }
-                  
+                        alreadyExsitingHolder.connectionMade = true;
+                      
+                    }                 
                 }            
-            }      
-        }
-       
-        int nrOfConnections = CalculateNrOfConnectionsBetweenPlayer(tagedPlayerRealName, playerWhoTagedRealNamen);
-       
+            }
+         
+        }     
+        int nrOfConnections = CalculateNrOfConnectionsBetweenPlayer(tagedPlayerRealName, playerWhoTagedRealNamen);       
         CmdHumanPlayerFoundOtherHumanPlayer(tagedPlayerRealName, playerWhoTagedRealNamen, nrOfConnections);
     }
  
@@ -180,12 +206,15 @@ public class GameManagerAT : NetworkBehaviour
         }
         return returnValue;
     }
-    private void HandleConnactionWhenPlayerDies()
+    private void HandleConnactionWhenPlayerDies(string playerWhoDiedRealName)
     {
+        foreach (NetworkGamePlayerAT player in networkManagerAT.GamePlayers)
+        {
+       
 
+        }
     }
     #endregion
-
 
     #region Investigator Destroys Human Player
     [Command]
@@ -213,6 +242,21 @@ public class GameManagerAT : NetworkBehaviour
 
             player.gameManagerAT.connectionDiagramManager.HandlePlayerDied(newDeadPlayerRealName);
             player.tagManagement.ChangePlayerTagToDead(newDeadPlayerRealName);
+
+            foreach (TagsBetweenPlayersHolder alreadyExsitingHolder in player.gameManagerAT.playerTagsOverviewList)
+            {
+                if (alreadyExsitingHolder.connectionMade == true)
+                {
+                    if (alreadyExsitingHolder.player1realName == newDeadPlayerRealName || alreadyExsitingHolder.player2realName == newDeadPlayerRealName)
+                    {
+                      
+                            player.gameManagerAT.currentNrOfMadeAIConncetions--;
+                       
+                    }
+                }
+            }
+            player.gameManagerAT.currentHumanBotsAlive--;
+            player.gameManagerAT.ValidateWinAndLoseState();
         }
 
       
@@ -220,8 +264,6 @@ public class GameManagerAT : NetworkBehaviour
     public void ShowYouDiedWindow()
     {
         youDiedWindow.SetActive(true);
-
-
     }
     public void YouDiedWindowWatchGameButton()
     {
@@ -262,11 +304,58 @@ public class GameManagerAT : NetworkBehaviour
             {
                 player.gameManagerAT.messagesHandler.HandleHumanPlayerConnectedWithAntoherHumanPlayer("Players established a Connection", playerWhoTagedRealNamen, foundPlayerRealName, numberOfConnections, playerWhoTagedRealNamen + " found " + foundPlayerRealName);
             }
+
             player.gameManagerAT.connectionDiagramManager.HandleNewConnection(foundPlayerRealName, playerWhoTagedRealNamen);
+            player.gameManagerAT.currentNrOfMadeAIConncetions++;
+            player.gameManagerAT.ValidateWinAndLoseState();
         }
 
         tagManagement.ChangePlayerTagToFound(foundPlayerRealName);
       
+    }
+    #endregion
+
+    #region Game Over Visual
+    public void ToggleInvestigatorWonVisual(bool status)
+    {
+        investigatorsWonVisual.SetActive(status);
+    }
+    public void ToggleAIWonVisual(bool status)
+    {
+        aiWonVisual.SetActive(status);
+    }
+    public void BackToLobbyAfterGameOver()
+    {
+        //Here We Would Go Out Of the Game Back To the Lobby
+        ToggleInvestigatorWonVisual(false);
+        ToggleAIWonVisual(false);
+    }
+    #endregion
+
+    #region ValidateWinAndLoseState
+    public void ValidateWinAndLoseState()
+    {
+        if(minNeededConnectionsForAIToWin <= currentNrOfMadeAIConncetions)
+        {
+            // AI Players Win due to enough Connections
+            ToggleAIWonVisual(true);
+        }
+
+
+        if (currentHumanBotsAlive <= minHumanBotsNeededAliveToWin)
+        {
+            //Investigators win due to enough dead AI Players
+            ToggleInvestigatorWonVisual(true);
+        }
+
+        if (investigatorsFailedConnections >= investigatorsMaxAllowedFailedConnections)
+        {
+            // AI Players Win due to too many failed connection of Investigators
+             ToggleAIWonVisual(true);
+        }
+
+
+
     }
     #endregion
 }

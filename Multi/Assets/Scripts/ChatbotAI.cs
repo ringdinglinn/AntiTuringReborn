@@ -21,7 +21,14 @@ public class ChatbotAI : MonoBehaviour
     private List<ChatroomStates> chatroomStates = new List<ChatroomStates>();
 
     public string fakeName;
-    public Color32 color;
+
+    //Chatbot Visual
+    public int playerVisualPalletID;
+    public Sprite playerAliveBig;
+    public Sprite playerAliveDead;
+    public Sprite playerSmall;
+    public Color playerColor;
+
 
     public int chatroomID = 99;
     public int currentSessionID = 0;
@@ -38,13 +45,13 @@ public class ChatbotAI : MonoBehaviour
     public void GameStart() {
         Debug.Log("game start");
         playerID = chatbotAiID + networkManager.nrAwareAI;
-        GetNameAndColor();
+        GetStartSetupNameAndVisuals();
         StartWaitToJoin();
     }
 
-    private void GetNameAndColor() {
+    private void GetStartSetupNameAndVisuals() {
         fakeName = networkManager.randomNames[playerID];
-        color = networkManager.randomColors[playerID];
+        playerVisualPalletID = networkManager.GetRandomPlayerVisualPalletID();    
     } 
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -76,7 +83,7 @@ public class ChatbotAI : MonoBehaviour
         if (indeces.Count > 0) {
             chatroomID = indeces[Random.Range(0, indeces.Count)];
             left = chatroomStates[chatroomID].leftFree;
-            networkManager.GamePlayers[0].RequestJoinRoom(chatroomID, fakeName, true);
+            networkManager.GamePlayers[0].RequestJoinRoom(chatroomID, fakeName, true, playerVisualPalletID);
             currentSessionID = chatbotBehaviour.nextSessionID++;
             Debug.Log(fakeName +"\n change chatroom bot index: " + chatroomID + ", " + chatbotAiID + ", " + left);
             chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left);

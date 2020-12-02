@@ -22,7 +22,7 @@ public class ConnectionDiagramManager : NetworkBehaviour
     }
     IEnumerator ShortSetupDelay()
     {
-        yield return new WaitForSeconds(2);        
+        yield return new WaitForSeconds(1f);        
         CmdStartSetup();      
     }
 

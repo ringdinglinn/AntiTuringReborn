@@ -49,7 +49,7 @@ public class TagManagement : NetworkBehaviour
 
     IEnumerator ShortSetupDelay()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
         CmdPopulateAllTagablePlayer();
     }
 
