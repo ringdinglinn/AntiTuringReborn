@@ -16,7 +16,9 @@ public class NetworkManagerAT : NetworkManager {
 
     //Sounds
     [Header("Sounds")]
-    [SerializeField] private StudioEventEmitter startGameSound;
+    public StudioEventEmitter startGameSound;
+    public StudioEventEmitter isReadySound;
+    public StudioEventEmitter isNotReadySound;
 
     //Prefabs
     [Header("Room")]

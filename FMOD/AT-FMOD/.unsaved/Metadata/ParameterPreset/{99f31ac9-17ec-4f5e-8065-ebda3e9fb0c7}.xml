@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="ParameterPreset" id="{99f31ac9-17ec-4f5e-8065-ebda3e9fb0c7}">
+		<property name="name">
+			<value>Investigator_Watching</value>
+		</property>
+		<relationship name="folder">
+			<destination>{f8f31145-692b-4365-9dd3-54a13cbd7416}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{ef7ff7f2-3028-4e27-97a9-5896e9880b12}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{ef7ff7f2-3028-4e27-97a9-5896e9880b12}">
+		<property name="parameterType">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>2</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
