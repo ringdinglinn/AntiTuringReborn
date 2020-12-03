@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using FMOD;
+using FMODUnity;
 
 public class PlayerNameInput : MonoBehaviour
 {
