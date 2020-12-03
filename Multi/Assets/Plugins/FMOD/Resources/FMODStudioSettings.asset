@@ -357,8 +357,8 @@ MonoBehaviour:
   SwitchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: ../../Sound/FMOD/AT-FMOD/AT-FMOD.fspro
-  sourceBankPath: ../../Sound/FMOD/AT-FMOD/Build
+  sourceProjectPath: ../FMOD/AT-FMOD/AT-FMOD.fspro
+  sourceBankPath: ..\FMOD\AT-FMOD\Build
   SourceBankPathUnformatted: 
   AutomaticEventLoading: 1
   BankLoadType: 0
