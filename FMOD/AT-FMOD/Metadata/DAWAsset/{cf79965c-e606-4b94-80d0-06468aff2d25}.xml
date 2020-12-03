@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="DAWAsset" id="{cf79965c-e606-4b94-80d0-06468aff2d25}">
+		<property name="assetPath">
+			<value>05_AT_Broadcasts.RPP.link/broadcast_ai_ai-connection-made.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.1906349206349205</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{04e4a58b-fb14-496f-9c96-3f242e8b8dc7}</destination>
+		</relationship>
+		<relationship name="project">
+			<destination>{066fb6b0-5f93-44e3-a705-d5e6741ea8c5}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="DAWAsset" id="{3b10e6f6-18a4-4ff2-ad56-af97c6c364c6}">
+		<property name="assetPath">
+			<value>02_AT_Chatroom.RPP.link/chatroom_send-message.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.581655328798186</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{04e4a58b-fb14-496f-9c96-3f242e8b8dc7}</destination>
+		</relationship>
+		<relationship name="project">
+			<destination>{01a8fb26-5097-44c2-8564-c3c7b0c53157}</destination>
+		</relationship>
+	</object>
+</objects>

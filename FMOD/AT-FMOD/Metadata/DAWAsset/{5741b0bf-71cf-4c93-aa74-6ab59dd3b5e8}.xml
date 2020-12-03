@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="DAWAsset" id="{5741b0bf-71cf-4c93-aa74-6ab59dd3b5e8}">
+		<property name="assetPath">
+			<value>06_AT_Game-States.RPP.link/AT_Game-States_victory.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>3.771315192743764</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{04e4a58b-fb14-496f-9c96-3f242e8b8dc7}</destination>
+		</relationship>
+		<relationship name="project">
+			<destination>{27cc1e79-53c1-4cfd-98b4-8f22484c33c8}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="DAWAsset" id="{c8b734d6-518d-4168-a3db-a0bc0488665f}">
+		<property name="assetPath">
+			<value>03_04_AT_Overview.RPP.link/overview_close-player-list.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.15047619047619049</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{04e4a58b-fb14-496f-9c96-3f242e8b8dc7}</destination>
+		</relationship>
+		<relationship name="project">
+			<destination>{afde1476-602e-4497-8149-7ce65b228a14}</destination>
+		</relationship>
+	</object>
+</objects>

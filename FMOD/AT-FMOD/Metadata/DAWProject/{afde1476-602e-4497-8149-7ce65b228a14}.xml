@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="DAWProject" id="{afde1476-602e-4497-8149-7ce65b228a14}">
+		<property name="assetPath">
+			<value>03_04_AT_Overview.RPP.link/</value>
+		</property>
+		<property name="dawProjectPath">
+			<value>/Users/linn/Documents/01 ZHdK/Semester V/Kollaborative Welten/Sound/Reaper Projects/03 Overview/03_04_AT_Overview.RPP</value>
+		</property>
+		<property name="renderedAssetsPath">
+			<value>output</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{04e4a58b-fb14-496f-9c96-3f242e8b8dc7}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="DAWProject" id="{c4c349ad-991e-4c38-b9c0-e82bc6faa6eb}">
+		<property name="assetPath">
+			<value>01_AT_Lobby.RPP.link/</value>
+		</property>
+		<property name="dawProjectPath">
+			<value>/Users/linn/Documents/01 ZHdK/Semester V/Kollaborative Welten/Sound/Reaper Projects/01 Lobby/01_AT_Lobby.RPP</value>
+		</property>
+		<property name="renderedAssetsPath">
+			<value>output</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{04e4a58b-fb14-496f-9c96-3f242e8b8dc7}</destination>
+		</relationship>
+	</object>
+</objects>

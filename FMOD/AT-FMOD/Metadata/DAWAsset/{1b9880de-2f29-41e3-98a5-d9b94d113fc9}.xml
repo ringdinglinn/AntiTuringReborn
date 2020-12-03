@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="DAWAsset" id="{1b9880de-2f29-41e3-98a5-d9b94d113fc9}">
+		<property name="assetPath">
+			<value>03_04_AT_Overview.RPP.link/tagging_close-tagging-window.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.49417233560090701</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{04e4a58b-fb14-496f-9c96-3f242e8b8dc7}</destination>
+		</relationship>
+		<relationship name="project">
+			<destination>{afde1476-602e-4497-8149-7ce65b228a14}</destination>
+		</relationship>
+	</object>
+</objects>
