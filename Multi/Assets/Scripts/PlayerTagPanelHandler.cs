@@ -11,14 +11,16 @@ public class PlayerTagPanelHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerFakeName;
     [SerializeField] private Image playerVisual;
 
+    public int visualID;
     private TagManagement tagManagement;
     private string playerRealName;
-   public void StartSetup(string newPlayerFakeName, string newPlayerRealName, Sprite newPlayerSprite, TagManagement myManagement)
+   public void StartSetup(string newPlayerFakeName, string newPlayerRealName, Sprite newPlayerSprite, TagManagement myManagement, int visualID)
    {
         playerFakeName.text = newPlayerFakeName;
         playerRealName = newPlayerRealName;
         playerVisual.sprite = newPlayerSprite;
         tagManagement = myManagement;
+        this.visualID = visualID;
    }
 
     public void ButtonClick()

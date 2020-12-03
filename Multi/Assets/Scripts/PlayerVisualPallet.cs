@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerVisualPallet : MonoBehaviour
 {
     public Sprite playerAliveBig;
-    public Sprite playerAliveDead;
+    public Sprite playerDeadBig;
     public Sprite playerSmall;
     public Color playerColor;
 }

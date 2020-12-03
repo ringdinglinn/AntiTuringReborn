@@ -19,10 +19,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     public string fakeName;
     public string realName;
     public string newName;
-    public Sprite playerVisualSprite;
-
-
-
+    
     public Color32 color;
 
     public NetworkManagerAT room;
@@ -53,7 +50,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     public int maxNrOfAllowedConnetionsAttempts = 3;
     public int failedConnectionAttempts = 0;
 
-
+   
     public int playerVisualPalletID;
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     private void InitializeChatroomStates() {
@@ -94,7 +91,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         DontDestroyOnLoad(gameObject);
 
         playerID = Room.GamePlayers.Count;
-
+    
         Room.GamePlayers.Add(this);
         isInvestigator = Room.GetRole(Room.GamePlayers.Count - 1);
         CmdUpdateRoleOnServer(isInvestigator);
@@ -102,16 +99,21 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         InitializeChatroomStates();
 
         CmdGamePlayerConnected();
-        GetNameAndColor(Room.GamePlayers.Count - 1);
+       
 
         CmdAddToGamePlayers();
-
+      
+        GetNameAndColor(Room.GamePlayers.Count - 1);
         realName = displayName;
-        playerVisualSprite = room.GetRandomPic();
+    }
 
+    
 
-
-
+    private void GetNameAndColor(int index)
+    {
+        fakeName = Room.randomNames[index];
+        playerVisualPalletID = Room.randomPalletsInt[index];
+        StartCoroutine(ShortDelay());
     }
 
 
@@ -153,12 +155,13 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     //Start a Player Joins a Chatroom logic 
     public void CheckRequestFromJoinButton() {
-        Debug.Log("check request from join button");
+     
         for (int x = 0; joinButtonsList.Count > x; x++) {
             if (EventSystem.current.currentSelectedGameObject == joinButtonsList[x]) {
                 chatroomID = x;
                 chatBehaviour.chatroomID = x;
-                Debug.Log("chatroom index = " + x);
+             
+             //   Debug.Log("Stage 1:" + "LeftVisualID:" + chatroomStates[chatroomID].leftVisualID + "rightVisualID:" + chatroomStates[chatroomID].rightVisualID);
                 CmdRequestJoinRoom(chatroomID, fakeName, playerVisualPalletID);
                 return;
             }
@@ -170,11 +173,13 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     public void CmdRequestJoinRoom(int roomID, string fakeName, int playerVisualPalletID)
     {
         RequestJoinRoom(roomID, fakeName, false, playerVisualPalletID);
+       // Debug.Log("Stage 2:" + "LeftVisualID:" + chatroomStates[chatroomID].leftVisualID + "rightVisualID:" + chatroomStates[chatroomID].rightVisualID);
     }
 
     [Server]
     public void RequestJoinRoom(int roomID, string fakeName, bool isChatbot, int playerVisualPalletID)
     {
+     //  Debug.Log("Stage 3:" + "LeftVisualID:" + chatroomStates[roomID].leftVisualID + "rightVisualID:" + chatroomStates[roomID].rightVisualID);
         if (isInvestigator && !isChatbot)
         {
             //Coomunication Between Investigators and other Players
@@ -227,17 +232,19 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
                 {
                     if (player.chatroomStates[roomID].leftFree)
                     {
+                        chatroomStates[roomID].leftVisualID = playerVisualPalletID;
                         player.chatroomStates[roomID].leftFree = false;
                         player.chatroomStates[roomID].leftName = fakeName;
-                        player.RpcUpdateChatroomStates(roomID, false, chatroomStates[roomID].rightFree, fakeName, chatroomStates[roomID].rightName, left, playerVisualPalletID, player.chatroomStates[roomID].rightVisualID);
+                        player.RpcUpdateChatroomStates(roomID, false, player.chatroomStates[roomID].rightFree, fakeName, player.chatroomStates[roomID].rightName, left, playerVisualPalletID, player.chatroomStates[roomID].rightVisualID);
 
                         if (player.chatroomID == roomID)
                         {
-                            player.GetComponent<ChatBehaviour>().RpcFillUpMainCanvasOnlyUI(roomID, false, chatroomStates[roomID].rightFree, fakeName, chatroomStates[roomID].rightName,  playerVisualPalletID, player.chatroomStates[roomID].rightVisualID);
+                            player.GetComponent<ChatBehaviour>().RpcFillUpMainCanvasOnlyUI(roomID, false, player.chatroomStates[roomID].rightFree, fakeName, player.chatroomStates[roomID].rightName,  playerVisualPalletID, player.chatroomStates[roomID].rightVisualID);
                         }
                     }
                     else if (player.chatroomStates[roomID].rightFree)
                     {
+                        chatroomStates[roomID].rightVisualID = playerVisualPalletID;
                         player.chatroomStates[roomID].rightFree = false;
                         player.chatroomStates[roomID].rightName = fakeName;
                         player.RpcUpdateChatroomStates(roomID, player.chatroomStates[roomID].leftFree, false, player.chatroomStates[roomID].leftName, fakeName, left, player.chatroomStates[roomID].leftVisualID, playerVisualPalletID);
@@ -336,10 +343,13 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     [ClientRpc]
     private void RpcUpdateChatroomStates(int id, bool leftFree, bool rightFree, string leftName, string rightName, bool left , int leftVisualID, int rightVisualID)
     {
+        CmdReUpdateToServer(id, leftFree, rightFree, leftName, rightName, left, leftVisualID, rightVisualID);
         UpdateChatroomStatesEvent(id, leftFree, rightFree, leftName, rightName, left, leftVisualID, rightVisualID);
         this.left = left;
     }
-    private void UpdateChatroomStatesEvent(int id, bool leftFree, bool rightFree, string leftName, string rightName, bool left, int leftVisualID, int rightVisualID)
+
+    [Command]
+   private void CmdReUpdateToServer(int id, bool leftFree, bool rightFree, string leftName, string rightName, bool left, int leftVisualID, int rightVisualID)
     {
         chatroomStates[id].leftFree = leftFree;
         chatroomStates[id].rightFree = rightFree;
@@ -347,8 +357,18 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         chatroomStates[id].rightName = rightName;
         chatroomStates[id].leftVisualID = leftVisualID;
         chatroomStates[id].rightVisualID = rightVisualID;
+    } 
+   private void UpdateChatroomStatesEvent(int id, bool leftFree, bool rightFree, string leftName, string rightName, bool left, int leftVisualID, int rightVisualID)
+    {
+        chatroomStates[id].leftFree = leftFree;
+        chatroomStates[id].rightFree = rightFree;
+        chatroomStates[id].leftName = leftName;
+        chatroomStates[id].rightName = rightName;
+        chatroomStates[id].leftVisualID = leftVisualID;
+        chatroomStates[id].rightVisualID = rightVisualID;
+      //  Debug.Log("Stage 4:" + "LeftVisualID:" + chatroomStates[id].leftVisualID + "rightVisualID:" + chatroomStates[id].rightVisualID);
         this.left = left;
-        GetComponent<ChatBehaviour>().UpdateUI(id, leftFree, rightFree, leftName, rightName ,  leftVisualID,  rightVisualID);
+        GetComponent<ChatBehaviour>().UpdateUI(id, leftFree, rightFree, leftName, rightName,  leftVisualID,  rightVisualID);
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -357,9 +377,25 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     private void CmdGamePlayerConnected() {
         Room.GamePlayerConnected();
     }
-    private void GetNameAndColor(int index) {
-        fakeName = Room.randomNames[index];      
-        playerVisualPalletID = room.GetRandomPlayerVisualPalletID();
+
+
+
+   
+    IEnumerator ShortDelay()
+    {
+        yield return new WaitForSeconds(3);
+        CmdSyncPlayerVisualPalletID(playerVisualPalletID);
+    }
+    [Command]
+    private void CmdSyncPlayerVisualPalletID(int newVisualID)
+    {
+        playerVisualPalletID = newVisualID;
+        RpcSyncPlayerVisualPalletID(newVisualID);
+    }
+    [ClientRpc]
+    private void RpcSyncPlayerVisualPalletID(int newVisualID)
+    {
+        playerVisualPalletID = newVisualID;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Investigator is watching

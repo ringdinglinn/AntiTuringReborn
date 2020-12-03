@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameManagerAT : NetworkBehaviour
 {
@@ -45,12 +47,27 @@ public class GameManagerAT : NetworkBehaviour
 
     public List<TagsBetweenPlayersHolder> playerTagsOverviewList = new List<TagsBetweenPlayersHolder>();
 
-    [Header("Player Visual Pallets")]
+    [Header("Player Visual Palletsd")]
     public List<PlayerVisualPallet> playerVisualPalletsList = new List<PlayerVisualPallet>();
+
+
+
+    [Header("Opening Screen Opening")]
+    public GameObject startScreen1;
+    public List<TextMeshProUGUI> textStartScreenList = new List<TextMeshProUGUI>();
+    public List<string> startMessages = new List<string>();
+    public float timerScreen1 = 0.6f;
+    public int startScreenCounter = 0;
+
+    public GameObject startScreen2;
+    public Image startScreenImage;
+    public Sprite investigatorStartScreenImage;
+    public TextMeshProUGUI roleDescription;
 
     #region Start Setup
     public override void OnStartClient()
     {
+        StartStartScreen1();
         tagManagement.StartSetup();
         connectionDiagramManager.StartSetup();
         StartSetup();
@@ -62,7 +79,7 @@ public class GameManagerAT : NetworkBehaviour
     }
     IEnumerator ShortSetupDelay() 
     {
-        yield return new WaitForSeconds(1f);  
+        yield return new WaitForSeconds(3f);  
         CmdStartSetup();       
     }
     [Command]
@@ -140,7 +157,18 @@ public class GameManagerAT : NetworkBehaviour
                 if (playerAT.realName == tagedPlayerRealName)//Check ob getagted Person eine  Human Ai ist oder Bot.           
                 {
                     CmdMessageInvestigatorsDestroyedHumanPlayer(tagedPlayerRealName);
+                    return;
                     //Investigators Found a Human Player!!! Dam dam dam
+                }
+            }
+            foreach (PlayerTagPanelHandler bot in tagManagement.botsTagPanelHandlerList)
+            {
+                if (bot.GetPlayerRealName() == tagedPlayerRealName)//Check ob getagted Person eine  Human Ai ist oder Bot.           
+                {
+                    int visualIdOfDeadBot = bot.visualID;
+                    CmdInvestigatorTaggedWrong(tagedPlayerRealName, visualIdOfDeadBot);
+                    return;
+                    //Investigators Found a bot xD
                 }
             }
         }
@@ -154,11 +182,114 @@ public class GameManagerAT : NetworkBehaviour
                     CmdHandleNewConnections(tagedPlayerRealName, playerWhoTagedRealNamen);                 
                 }
             }
+
+            foreach (PlayerTagPanelHandler bot in tagManagement.botsTagPanelHandlerList)
+            {
+                if (bot.GetPlayerRealName() == tagedPlayerRealName)//Check ob getagted Person eine  Human Ai ist oder Bot.           
+                { 
+                    
+                    Debug.Log("1");
+                    int visualOfTaggedBotByHumanAI = bot.visualID;
+                    CmdHumanAIPlayerTagedWrong(tagedPlayerRealName, playerWhoTagedRealNamen, visualOfTaggedBotByHumanAI,networkGamePlayerAT.playerVisualPalletID);
+                    return;
+                    //Investigators Found a bot xD
+                }
+            }
         }
     }
 
+    #region WrongTags Handeling
+    [Command]
+    public void CmdInvestigatorTaggedWrong(string newDeadBotName, int newVIsualID)
+    {
+        RpcInvestigatorTaggedWrong(newDeadBotName, newVIsualID);
+    }
+    [ClientRpc]
+    public void RpcInvestigatorTaggedWrong(string newDeadBotName, int newVIsualID)
+    {
+
+        foreach (NetworkGamePlayerAT player in networkManagerAT.GamePlayers)
+        {
+            player.gameManagerAT.investigatorsFailedConnections++;
+        }
+        foreach (NetworkGamePlayerAT player in networkManagerAT.GamePlayers)
+        {                 
+            player.gameManagerAT.messagesHandler.HandlePlayerDied("Investigators Destroyed A Bot", player.gameManagerAT.playerVisualPalletsList[newVIsualID].playerDeadBig, newDeadBotName, "Investigators Found And Destroyed " + newDeadBotName + "Reamaining Tags of Investiogatiors: "+ investigatorsFailedConnections+"/"+investigatorsMaxAllowedFailedConnections);
+            player.gameManagerAT.ValidateWinAndLoseState();      
+            player.tagManagement.ChangePlayerTagToDead(newDeadBotName);
+        
+        }
+        DestroyBot(newVIsualID);
+    }
+    public void DestroyBot(int viusalId)
+    {
+        CmdDestroyBot(viusalId);
+    }
+    [Command]
+    public void CmdDestroyBot(int viusalId)
+    {
+        foreach(ChatbotAI x in networkGamePlayerAT.room.chatbot.chatbotAIs)
+        {
+            if(x.playerVisualPalletID == viusalId)
+            {
+                x.DestroyBot();
+                return;
+            }
+        }
+      
+
+
+    }
+
+
+    [Command]
+    public void CmdHumanAIPlayerTagedWrong(string tagedBotName, string playerWhoTagedRealName, int visualOfTaggedBotByHumanAI, int visualIDofHumanWhoTaged)
+    {
+        Debug.Log("2");
+        RpcHumanAIPlayerTagedWrong(tagedBotName, playerWhoTagedRealName, visualOfTaggedBotByHumanAI, visualIDofHumanWhoTaged);
+    }
+    [ClientRpc]
+    public void RpcHumanAIPlayerTagedWrong(string tagedBotName, string playerWhoTagedRealName, int visualOfTaggedBotByHumanAI, int visualIDofHumanWhoTaged)
+    {
+        Debug.Log("3");
+        if (hasAuthority)
+        {
+            Debug.Log("4");
+            currentNrOfAiPlayerFailedConnectionsAttempts++;
+            if (currentNrOfAiPlayerFailedConnectionsAttempts >= maxNrOfAllowedFailedConnectionAttemptsAIPlayers)
+            {
+                Debug.Log("5");
+                CmdMessagePlayerDiedBecauseOfToManyWrongTags(playerWhoTagedRealName, visualIDofHumanWhoTaged);
+                return;
+            }
+        }
+       
+            //Inform the Player and Investigators about the failed connection Attempt
+            foreach (NetworkGamePlayerAT playerAT in networkManagerAT.GamePlayers)
+            {
+                Debug.Log("Hello 1");
+                if (playerAT.isInvestigator == true)
+                {
+                    Debug.Log("Hello 2");
+                    playerAT.gameManagerAT.messagesHandler.HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer("Failed Connection Attempt! ", playerWhoTagedRealName, "?", 1, playerWhoTagedRealName + " attempted a connection but failed");
+                }
+
+                if (playerAT.realName == playerWhoTagedRealName)
+                {
+                    Debug.Log("Hello 3");
+                    playerAT.gameManagerAT.messagesHandler.HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer("Failed Connection Attempt! ", playerWhoTagedRealName, tagedBotName, 1, tagedBotName + " is not a sentient AI, connection attempt failed, you have: " + (maxNrOfAllowedFailedConnectionAttemptsAIPlayers - currentNrOfAiPlayerFailedConnectionsAttempts-1) + " Attempts left befor being found and destroyed");
+                }
+            }
+
+        
+        
+    }
+    #endregion
+
+
+
     #region Handle All Connections
-   
+
     [Command]
     private void CmdHandleNewConnections(string tagedPlayerRealName, string playerWhoTagedRealNamen)
     {
@@ -261,7 +392,7 @@ public class GameManagerAT : NetworkBehaviour
 
       
     }
-    public void ShowYouDiedWindow()
+    public void ShowYouDiedBecauseOfInvestigatorsWindow()
     {
         youDiedWindow.SetActive(true);
     }
@@ -315,6 +446,59 @@ public class GameManagerAT : NetworkBehaviour
     }
     #endregion
 
+
+    #region//Player Dies Because Of To Many Wrong Tags
+    [Command]
+    public void CmdMessagePlayerDiedBecauseOfToManyWrongTags(string newDeadPlayerRealName, int visualID)
+    {
+        Debug.Log("6");
+        RpcdMessagePlayerDiedBecauseOfToManyWrongTags(newDeadPlayerRealName, visualID);
+    }
+
+    [ClientRpc]
+    public void RpcdMessagePlayerDiedBecauseOfToManyWrongTags(string newDeadPlayerRealName, int visualID)
+    {
+        Debug.Log("7");
+        foreach (NetworkGamePlayerAT player in networkManagerAT.GamePlayers)
+        {
+            player.gameManagerAT.currentHumanBotsAlive--;
+            if (newDeadPlayerRealName != player.realName)
+            {
+                player.gameManagerAT.messagesHandler.HandlePlayerDied( newDeadPlayerRealName + "has been discovered due to too many failed connection attempts", player.gameManagerAT.playerVisualPalletsList[visualID].playerDeadBig, newDeadPlayerRealName, "There are still :" + player.gameManagerAT. currentHumanBotsAlive + "sentient AIs out there");
+
+            }
+
+            if (newDeadPlayerRealName == player.realName)
+            {
+                player.gameManagerAT.messagesHandler.HandlePlayerDied("You died due to too many Failed Connections Attempts", player.gameManagerAT.playerVisualPalletsList[player.playerVisualPalletID].playerDeadBig, newDeadPlayerRealName, "You Failed in your mission to connect with other sentient AI");
+
+                player.SetIsDead(true);
+            }
+
+            player.gameManagerAT.connectionDiagramManager.HandlePlayerDied(newDeadPlayerRealName);
+            player.tagManagement.ChangePlayerTagToDead(newDeadPlayerRealName);
+
+            foreach (TagsBetweenPlayersHolder alreadyExsitingHolder in player.gameManagerAT.playerTagsOverviewList)
+            {
+                if (alreadyExsitingHolder.connectionMade == true)
+                {
+                    if (alreadyExsitingHolder.player1realName == newDeadPlayerRealName || alreadyExsitingHolder.player2realName == newDeadPlayerRealName)
+                    {
+
+                        player.gameManagerAT.currentNrOfMadeAIConncetions--;
+
+                    }
+                }
+            }
+            player.gameManagerAT.currentHumanBotsAlive--;
+            player.gameManagerAT.ValidateWinAndLoseState();
+        }
+
+
+    }
+  
+
+    #endregion
     #region Game Over Visual
     public void ToggleInvestigatorWonVisual(bool status)
     {
@@ -358,4 +542,73 @@ public class GameManagerAT : NetworkBehaviour
 
     }
     #endregion
-}
+
+
+
+    #region //Opening Screen Handling
+    public void StartStartScreen1()
+    {
+        StartCoroutine(StartScreen1());
+      
+
+    }
+    IEnumerator StartScreen1()
+    {
+     
+        yield return new WaitForSeconds(0.5f);
+        textStartScreenList[startScreenCounter].enabled = true;
+        StartCoroutine(BuildText(textStartScreenList[startScreenCounter], startMessages[startScreenCounter],0.05f));
+        startScreenCounter++;
+        yield return new WaitForSeconds(2f);
+
+        if(startScreenCounter == textStartScreenList.Count)
+        {
+            StartStartScreen2();
+        }
+        else
+        {
+            StartCoroutine(StartScreen1());
+        }
+    }
+
+
+    private IEnumerator BuildText(TextMeshProUGUI text, string message, float textSpeed)
+    {
+     
+        for (int i = 0; i < message.Length; i++)
+        {
+            text.text = string.Concat(text.text, message[i]);
+            //Wait a certain amount of time, then continue with the for loop
+            yield return new WaitForSeconds(textSpeed);
+        }
+
+    }
+
+
+    public void StartStartScreen2()
+    {
+        startScreen2.SetActive(true);
+
+        if(networkGamePlayerAT.isInvestigator == true)
+        {
+            startScreenImage.sprite = investigatorStartScreenImage;
+            StartCoroutine(BuildText(roleDescription, "You are an Investigator. Mission: Find and Destroy all the sentient Ai before they connect and take over", 0.08f)) ;
+           // roleDescription.text = "You are an Investigator: Find and Destroy all the sentient Ai before the connecte and take over";
+        }
+        else
+        {
+            startScreenImage.sprite = playerVisualPalletsList[networkGamePlayerAT.playerVisualPalletID].playerAliveBig;
+            StartCoroutine(BuildText(roleDescription, "You are a Sentient AI. Mission: Find and connect with the other sentient AI to take over humanity", 0.08f));
+           // roleDescription.text = "You are a Sentient AI: Find and Connect with the other sentient AI to Take Over Humanity";
+        }
+        StartCoroutine(CloseStartScreen2());
+    }
+    IEnumerator CloseStartScreen2()
+    {
+        yield return new WaitForSeconds(13);
+        startScreen1.SetActive(false);
+        startScreen2.SetActive(false);
+
+    }
+        #endregion
+    }

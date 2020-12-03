@@ -27,6 +27,7 @@ public class GameManagerMessagesHandler : MonoBehaviour
 
     [Header("Player Connected References")]
     [SerializeField] private GameObject connectionVisual;
+    [SerializeField] private GameObject failedConnectionVisual;
     public Image connectionVisualImage1;
     public Image connectionVisualImage2;
     public TextMeshProUGUI playerConnectName1;
@@ -45,7 +46,7 @@ public class GameManagerMessagesHandler : MonoBehaviour
 
         if(deadPlayerName.text == networkGamePlayerAT.realName)
         {
-            gameManagerAT.ShowYouDiedWindow();
+            gameManagerAT.ShowYouDiedBecauseOfInvestigatorsWindow();
         }
     }
     #endregion
@@ -60,6 +61,7 @@ public class GameManagerMessagesHandler : MonoBehaviour
         message.text = newMessage;
         messageField.SetActive(true);
         deadPlayerVisual.SetActive(true);
+        failedConnectionVisual.SetActive(false);
     }
     #endregion
 
@@ -85,6 +87,31 @@ public class GameManagerMessagesHandler : MonoBehaviour
             message.text = newMessage;
             messageField.SetActive(true);
      
+    }
+    #endregion
+
+    #region//Visual Handling When Human Player Connected With Another Human Player
+    public void HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer(string newTitle, string playerThatFoundTheOtherName, string tagedPlayerName, int numberOfConnections, string newMessage)
+    {
+        title.text = newTitle;
+        connectionVisual.SetActive(true);
+        failedConnectionVisual.SetActive(true);
+        playerConnectName1.text = playerThatFoundTheOtherName;
+        playerConnectName2.text = tagedPlayerName;
+
+        if (numberOfConnections == 1)
+        {
+            connectionVisualImage1.enabled = true;
+        }
+        else if (numberOfConnections == 2)
+        {
+            connectionVisualImage1.enabled = true;
+            connectionVisualImage2.enabled = true;
+        }
+
+        message.text = newMessage;
+        messageField.SetActive(true);
+
     }
     #endregion
 }

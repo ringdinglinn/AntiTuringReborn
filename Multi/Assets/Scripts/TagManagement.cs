@@ -19,6 +19,8 @@ public class TagManagement : NetworkBehaviour
     [SerializeField] private GameObject playerTagPanelPrefab;
     private List<PlayerTagPanelHandler> playerTagPanelHandlerList = new List<PlayerTagPanelHandler>();
 
+    public List<PlayerTagPanelHandler> botsTagPanelHandlerList = new List<PlayerTagPanelHandler>();
+
     [Header("GameManager")]
     public GameManagerAT gameManagerAT;
 
@@ -36,8 +38,8 @@ public class TagManagement : NetworkBehaviour
 
     [Header("Tag Management Lists")]
     public List<NetworkGamePlayerAT> allTagableHumanPlayersList = new List<NetworkGamePlayerAT>();
-    public List<ChatbotAI> allTagableBotPlayersList = new List<ChatbotAI>();
-
+    public List<ChatbotAI> allTagableRealBotsList = new List<ChatbotAI>();
+   
     private string tagedPlayerRealName;
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #region//Start Variables Setup
@@ -49,8 +51,9 @@ public class TagManagement : NetworkBehaviour
 
     IEnumerator ShortSetupDelay()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         CmdPopulateAllTagablePlayer();
+        CmdPopulateAllTagableBots();
     }
 
     [Command]
@@ -65,14 +68,27 @@ public class TagManagement : NetworkBehaviour
                 allTagableHumanPlayersList.Add(gamePlayerAT);
             }
         }
-
-        //Currently only Networmanager on Server Holds Bots informations
-        networkManagerAT.UpdateBotListForAllTagManagementsOnClients();
-        allTagableBotPlayersList.AddRange(networkManagerAT.chatbot.chatbotAIs);
-
         PopulateTagPanelWithPlayer();
         RpcPopulateAllTagablePlayer();
     }
+
+
+
+    [Command]
+    private void CmdPopulateAllTagableBots()
+    {
+        networkManagerAT = networkGamePlayerAT.room;
+
+        foreach (ChatbotAI x  in networkManagerAT.chatbot.chatbotAIs)
+        {
+            allTagableRealBotsList.Add(x);
+            RpcPopulateAllTagableBots(x.fakeName, x.fakeName, x.playerVisualPalletID);
+        }               
+    }
+
+
+
+
     [ClientRpc]
     private void RpcPopulateAllTagablePlayer()
     {
@@ -84,10 +100,23 @@ public class TagManagement : NetworkBehaviour
                 allTagableHumanPlayersList.Add(gamePlayerAT);
             }
         }
-        PopulateTagPanelWithPlayer();
-        allTagableBotPlayersList.AddRange(networkManagerAT.chatbot.chatbotAIs);
+        PopulateTagPanelWithPlayer();     
     }
 
+
+    [ClientRpc]
+    private void RpcPopulateAllTagableBots(string botFakeName, string realName, int botVisualPalletID)
+    {
+        //botsTagPanelHandlerList
+
+        GameObject newPlayerTagPanelObj = Instantiate(playerTagPanelPrefab, tagPanelContent.transform);
+        PlayerTagPanelHandler botTagPanelHandler = newPlayerTagPanelObj.GetComponent<PlayerTagPanelHandler>();
+       
+        botTagPanelHandler.StartSetup(botFakeName, realName, gameManagerAT.playerVisualPalletsList[botVisualPalletID].playerSmall, this, botVisualPalletID);
+
+       
+        botsTagPanelHandlerList.Add(botTagPanelHandler);
+    }
     #endregion
 
     #region //Opening And Closing Tag Panel
@@ -112,7 +141,8 @@ public class TagManagement : NetworkBehaviour
         {
             GameObject newPlayerTagPanelObj = Instantiate(playerTagPanelPrefab, tagPanelContent.transform);
             PlayerTagPanelHandler playerTagPanelHandler = newPlayerTagPanelObj.GetComponent<PlayerTagPanelHandler>();
-            playerTagPanelHandler.StartSetup(gamePlayerAT.fakeName, gamePlayerAT.realName, gamePlayerAT.playerVisualSprite, this);
+         
+            playerTagPanelHandler.StartSetup(gamePlayerAT.fakeName, gamePlayerAT.realName, gameManagerAT.playerVisualPalletsList[gamePlayerAT.playerVisualPalletID].playerSmall, this, gamePlayerAT.playerVisualPalletID);
 
             if (gamePlayerAT.realName == networkGamePlayerAT.realName) //So I can not accuse myself
             {
@@ -121,7 +151,22 @@ public class TagManagement : NetworkBehaviour
             playerTagPanelHandlerList.Add(playerTagPanelHandler);
         }
     }
+    public void PopulateTagPanelWithBots()
+    {
+        foreach (NetworkGamePlayerAT gamePlayerAT in allTagableHumanPlayersList)
+        {
+            GameObject newPlayerTagPanelObj = Instantiate(playerTagPanelPrefab, tagPanelContent.transform);
+            PlayerTagPanelHandler playerTagPanelHandler = newPlayerTagPanelObj.GetComponent<PlayerTagPanelHandler>();
+          
+            playerTagPanelHandler.StartSetup(gamePlayerAT.fakeName, gamePlayerAT.realName, gameManagerAT.playerVisualPalletsList[gamePlayerAT.playerVisualPalletID].playerSmall, this, gamePlayerAT.playerVisualPalletID);
 
+            if (gamePlayerAT.realName == networkGamePlayerAT.realName) //So I can not accuse myself
+            {
+                playerTagPanelHandler.DisableButton();
+            }
+            playerTagPanelHandlerList.Add(playerTagPanelHandler);
+        }
+    }
 
     #endregion
 
@@ -184,6 +229,14 @@ public class TagManagement : NetworkBehaviour
         foreach(PlayerTagPanelHandler x in playerTagPanelHandlerList)
         {
             if(x.GetPlayerRealName() == tagedPlayerRealName)
+            {
+                x.DisableButton();
+                x.SetButtonDisabledColor(Color.red);
+            }
+        }
+        foreach (PlayerTagPanelHandler x in botsTagPanelHandlerList)
+        {
+            if (x.GetPlayerRealName() == tagedPlayerRealName)
             {
                 x.DisableButton();
                 x.SetButtonDisabledColor(Color.red);
