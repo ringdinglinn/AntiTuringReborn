@@ -6,12 +6,17 @@ using System;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using UnityEngine.UI;
+using FMODUnity;
 
 public class NetworkManagerAT : NetworkManager {
 
     //Game Setup Related
     [SerializeField] private int minPlayers = 1;
     [Scene] [SerializeField] private string menuScene;
+
+    //Sounds
+    [Header("Sounds")]
+    [SerializeField] private StudioEventEmitter startGameSound;
 
     //Prefabs
     [Header("Room")]
@@ -121,10 +126,14 @@ public class NetworkManagerAT : NetworkManager {
         }
     }
     private bool IsReadyToStart() {
-        if (numPlayers < minPlayers) return false;
+        if (numPlayers < minPlayers) {
+            return false;
+        }
 
         foreach(var player in RoomPlayers) {
-            if (!player.IsReady) return false;
+            if (!player.IsReady) {
+                return false;
+            }
         }
         return true;
     }
@@ -134,6 +143,7 @@ public class NetworkManagerAT : NetworkManager {
         if (SceneManager.GetActiveScene().path == menuScene) {
             if (!IsReadyToStart()) return;
 
+            startGameSound.Play();
             nrPlayers = RoomPlayers.Count;
             nrOfWaitingClients = nrPlayers;
             nrAwareAI = nrPlayers - nrInvestigators;

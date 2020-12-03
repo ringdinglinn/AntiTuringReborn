@@ -8,6 +8,10 @@ public class MainMenu : MonoBehaviour {
     [Header("UI")]
     [SerializeField] private GameObject landingPagePanel;
 
+    [Header("Sound")]
+    [SerializeField] private GameObject soundFolder;
+
+
     public void HostLobby() {
         networkManager.StartHost();
         landingPagePanel.SetActive(false);
@@ -17,5 +21,9 @@ public class MainMenu : MonoBehaviour {
         networkManager.StartServer();
         landingPagePanel.SetActive(false);
         networkManager.isSeverOnly = true;
+    }
+
+    private void Start() {
+        DontDestroyOnLoad(soundFolder);
     }
 }
