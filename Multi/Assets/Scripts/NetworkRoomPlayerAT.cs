@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 using TMPro;
 using UnityEngine.UI;
+using FMODUnity;
 
 public class NetworkRoomPlayerAT : NetworkBehaviour
 {
@@ -11,10 +12,15 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
     [SerializeField] private GameObject lobbyUI;
     [SerializeField] private TMP_Text[] playerNameTexts = new TMP_Text[16];
     [SerializeField] private TMP_Text[] playerReadyTexts = new TMP_Text[16];
+    [SerializeField] private Image[] playerReadyIcons = new Image[16];
     [SerializeField] private Button startGameButton;
     [SerializeField] private GameObject gameSettings;
     [SerializeField] private TMP_Text nrInvestigatorsText;
+    [SerializeField] private Sprite readySprite;
+    [SerializeField] private Sprite notReadySprite;
+    [SerializeField] private GameObject warningSymbol;
 
+    [Header("Logic")]
     [SyncVar(hook = nameof(HandleDisplayNameChanged))]
     public string DisplayName = "Loading...";
     [SyncVar(hook = nameof(HandleReadyStatusChanged))]
@@ -84,7 +90,7 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
     private void CmdChangeNrOfPlayers(int n) {
         nrOfPlayers = n;
     }
-    public override void OnNetworkDestroy() {
+    public override void OnStopClient() {
         Room.RoomPlayers.Remove(this);
         UpdateDisplay();
     }
@@ -112,12 +118,16 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
         for (int i = 0; i < playerNameTexts.Length; i++) {
             playerNameTexts[i].text = "Waiting for player...";
             playerReadyTexts[i].text = string.Empty;
+            playerReadyIcons[i].sprite = null;
+            playerReadyIcons[i].gameObject.SetActive(false);
         }
 
         //for all the players set their current names and ready states
         for (int i = 0; i < Room.RoomPlayers.Count; i++) {
             playerNameTexts[i].text = Room.RoomPlayers[i].DisplayName;
-            playerReadyTexts[i].text = Room.RoomPlayers[i].IsReady ? "<color=green>Ready</color>" : "<color=red>Not Ready</color>";
+            playerReadyTexts[i].text = Room.RoomPlayers[i].IsReady ? "Ready" : "Not Ready";
+            playerReadyIcons[i].sprite = Room.RoomPlayers[i].IsReady ? readySprite : notReadySprite;
+            playerReadyIcons[i].gameObject.SetActive(true);
         }
     }
 
@@ -139,8 +149,11 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
     [Command]
     public void CmdStartGame() {
         DistributeRoles();
+        Debug.Log("start game");
         // Server ensures that this client connection is the leader
         if (Room.RoomPlayers[0].connectionToClient != connectionToClient) return;
+        Debug.Log("start game 2");
+
         Room.StartGame();
     }
     [Server]
@@ -176,14 +189,17 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
         if (isLeader) {
             if (int.TryParse(input, out int result)) {
                 CmdSetNrInvestigators(result);
-                nrInvestigatorsText.color = Color.black;
-            } else {
-                nrInvestigatorsText.color = Color.red;
+                warningSymbol.SetActive(false);
+                //nrInvestigatorsText.color = Color.white;
+            }
+            else {
+                //nrInvestigatorsText.color = Color.white;
+                warningSymbol.SetActive(true);
             }
         }
     }
     public void SetColorBlack(string input) {
-        nrInvestigatorsText.color = Color.black;
+        //nrInvestigatorsText.color = Color.white;
     }
     [Command]
     public void CmdSetNrInvestigators(int n) {
