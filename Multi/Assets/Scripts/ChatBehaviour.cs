@@ -160,10 +160,14 @@ public class ChatBehaviour : NetworkBehaviour
         if (networkPlayer.chatroomStates[chatroomID].rightName == name)
         {
             newMessage.GetComponent<Text>().alignment = TextAnchor.LowerRight;
+            newMessage.GetComponent<Text>().fontSize = 12;
+            newMessage.GetComponent<RectTransform>().sizeDelta = new Vector2(230, 30);
         }
         if (networkPlayer.chatroomStates[chatroomID].leftName == name)
         {
             newMessage.GetComponent<Text>().alignment = TextAnchor.LowerLeft;
+            newMessage.GetComponent<Text>().fontSize = 12;
+            newMessage.GetComponent<RectTransform>().sizeDelta = new Vector2(230, 30);
         }
 
         listOfChatroomLists[chatroomID].Add(newMessage);
@@ -177,11 +181,15 @@ public class ChatBehaviour : NetworkBehaviour
             //Set Left or right Bound
             if (networkPlayer.chatroomStates[chatroomID].rightName == name)
             {
-                newMessage1.GetComponent<Text>().alignment = TextAnchor.LowerRight;
+                newMessage1.GetComponent<Text>().alignment = TextAnchor.LowerRight; 
+                newMessage1.GetComponent<Text>().fontSize = 30;
+                newMessage1.GetComponent<RectTransform>().sizeDelta = new Vector2(230, 80);
             }
             if (networkPlayer.chatroomStates[chatroomID].leftName == name)
             {
                 newMessage1.GetComponent<Text>().alignment = TextAnchor.LowerLeft;
+                newMessage1.GetComponent<Text>().fontSize = 30;
+                newMessage1.GetComponent<RectTransform>().sizeDelta = new Vector2(230, 80);
             }
 
             mainChatDisplayContentList.Add(newMessage1);
@@ -208,7 +216,7 @@ public class ChatBehaviour : NetworkBehaviour
 
         listOfChatroomLists[chatroomID].Add(newMessage);
 
-
+         
         RpcHandleMessage(message, name, chatroomID);
 
         var chatroomBotIndex = networkPlayer.Room.chatbot.chatroomBotIndex;

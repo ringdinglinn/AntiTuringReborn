@@ -28,6 +28,15 @@ public class PlayerTagPanelHandler : MonoBehaviour
         tagManagement.PlayerInTagPanelHasBeenClickd(playerRealName, playerFakeName.text, playerVisual);
     }
 
+   public void ActivateHiglightVisual()
+   {
+        playerVisual.sprite = tagManagement.gameManagerAT.playerVisualPalletsList[visualID].playerSmallHover;
+
+   }
+    public void DeactivateHiglightVisual()
+    {
+        playerVisual.sprite = tagManagement.gameManagerAT.playerVisualPalletsList[visualID].playerSmall;
+    }
 
     public void DisableButton()
     {
