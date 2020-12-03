@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: feeefd40c9f4b4ed78271c384f5db9d8
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: AVHershey Simplex
+  fontNames:
+  - AVHershey Simplex
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 92238729e0ff04b7e8785d089c485fab, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
