@@ -53,7 +53,7 @@ public class NetworkManagerAT : NetworkManager {
 
     //Visual Pallet List
     public List<PlayerVisualPallet> playerVisualPalletsList = new List<PlayerVisualPallet>();
-
+  
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public override void OnStartClient() {
         var spawnablePrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs");
@@ -89,7 +89,7 @@ public class NetworkManagerAT : NetworkManager {
         }
 
         OnClientConnected?.Invoke();
-        RandomizeNameAndColorLists(randomNames);
+        RandomizeNameAndColorLists(randomNames, randomPalletsInt);
         base.OnServerConnect(conn);
     }
     public override void OnServerAddPlayer(NetworkConnection conn) {      
@@ -99,7 +99,7 @@ public class NetworkManagerAT : NetworkManager {
             NetworkRoomPlayerAT roomPlayerInstance = Instantiate(roomPlayerPrefab);
             NetworkServer.AddPlayerForConnection(conn, roomPlayerInstance.gameObject);
             roomPlayerInstance.SetLeader(isLeader);
-            roomPlayerInstance.SyncNameAndColorLists();
+            roomPlayerInstance.SyncNameAndColorAndAiBotsLists();
         }    
     }
     public override void OnServerDisconnect(NetworkConnection conn) {
@@ -137,7 +137,7 @@ public class NetworkManagerAT : NetworkManager {
             nrPlayers = RoomPlayers.Count;
             nrOfWaitingClients = nrPlayers;
             nrAwareAI = nrPlayers - nrInvestigators;
-            nrOfChatbots = 7; // PLACE HOLDER: TO BE BALANCED!!!
+            nrOfChatbots = 6; // PLACE HOLDER: TO BE BALANCED!!!
             chatbot.GameStart();
             ServerChangeScene("SampleScene");
         }     
@@ -148,7 +148,7 @@ public class NetworkManagerAT : NetworkManager {
                 var conn = RoomPlayers[i].connectionToClient;
                 var gamePlayerInstance = Instantiate(gamePlayerPrefab);
                 gamePlayerInstance.SetDisplayName(RoomPlayers[i].DisplayName);
-                        
+         
                 NetworkServer.Destroy(conn.identity.gameObject);             
                 NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance.gameObject);
 
@@ -163,15 +163,7 @@ public class NetworkManagerAT : NetworkManager {
         }
         base.ServerChangeScene(newSceneName);
     }
-    public Sprite GetRandomPic()
-    {
-        int randomPictureNumber = UnityEngine.Random.Range(0, playerVisualList.Count);
 
-        Sprite spriteReferene = playerVisualList[randomPictureNumber];
-        playerVisualList.RemoveAt(randomPictureNumber);
-    //    Debug.Log(spriteReferene);
-        return spriteReferene;
-    }
   
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public bool GetRole(int i) {
@@ -193,13 +185,9 @@ public class NetworkManagerAT : NetworkManager {
                                                            "Berthold", "Maximus", "Dirk", "Gaia",
                                                            "Veronica", "Bob", "Susan", "Bernard",
                                                            "Augustus", "Klaus", "Mortimer", "Yusuke" };
-  
-    public int GetRandomPlayerVisualPalletID()
-    {
-        int playerVisualPalletID = UnityEngine.Random.Range(0, playerVisualPalletsList.Count);      
-        playerVisualPalletsList.RemoveAt(playerVisualPalletID);
-        return playerVisualPalletID;
-    }
+
+    public List<int> randomPalletsInt = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+
 
     public void GamePlayerConnected() {
         nrOfWaitingClients--;
@@ -209,7 +197,7 @@ public class NetworkManagerAT : NetworkManager {
         }
     }
 
-    public static void RandomizeNameAndColorLists(List<string> names) {
+    public static void RandomizeNameAndColorLists(List<string> names, List<int> randomPallets) {
         int n = names.Count;
         for (var i = n - 1; i > 0; i--) {
             var r = UnityEngine.Random.Range(0, n);
@@ -218,16 +206,17 @@ public class NetworkManagerAT : NetworkManager {
             names[r] = tmp;
         }
 
-     
+        int x = randomPallets.Count;
+        for (var i = x - 1; i > 0; i--)
+        {
+            var r = UnityEngine.Random.Range(0, x);
+            var tmp = randomPallets[i];
+            randomPallets[i] = randomPallets[r];
+            randomPallets[r] = tmp;
+        }
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    public void UpdateBotListForAllTagManagementsOnClients()
-    {
-        foreach (NetworkGamePlayerAT x in GamePlayers)
-        {
-            x.tagManagement.allTagableBotPlayersList.AddRange(chatbot.chatbotAIs);
-        }
-    }
+  
 }
 

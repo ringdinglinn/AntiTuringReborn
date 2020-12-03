@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAliveBig: {fileID: 21300000, guid: b7f3acced7a48d841bf60cfbeafd97d5, type: 3}
-  playerAliveDead: {fileID: 21300000, guid: f3ea35adcba44d24f8cdcca093a650af, type: 3}
+  playerDeadBig: {fileID: 21300000, guid: f3ea35adcba44d24f8cdcca093a650af, type: 3}
   playerSmall: {fileID: 21300000, guid: 0236b1eb7550daf40aaf4dae864e6b9d, type: 3}
   playerColor: {r: 1, g: 0, b: 0.5176471, a: 0}
 --- !u!1 &83929444
@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAliveBig: {fileID: 21300000, guid: 790416a0467cb024eb6e96534f94624f, type: 3}
-  playerAliveDead: {fileID: 21300000, guid: 4cf1e688a571c3c409f5d41aadf05649, type: 3}
+  playerDeadBig: {fileID: 21300000, guid: 4cf1e688a571c3c409f5d41aadf05649, type: 3}
   playerSmall: {fileID: 21300000, guid: 1a65b17c99bffa04781a564905375bff, type: 3}
   playerColor: {r: 0.96470594, g: 0.909804, b: 0.25490198, a: 0}
 --- !u!1 &265672130
@@ -548,7 +548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAliveBig: {fileID: 21300000, guid: 19c29eeb20b73de4cae3ef530cb73a4c, type: 3}
-  playerAliveDead: {fileID: 21300000, guid: 34690d34395a0e843bb1bcca825190f0, type: 3}
+  playerDeadBig: {fileID: 21300000, guid: 5a6465a29be6c344e98e712dd3fbb118, type: 3}
   playerSmall: {fileID: 21300000, guid: c3353d790eb9a9e4da1ea7884097c637, type: 3}
   playerColor: {r: 0.5019608, g: 0.35686275, b: 0.97647065, a: 0}
 --- !u!1 &332313518
@@ -823,7 +823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAliveBig: {fileID: 21300000, guid: bd818deabcce29542ae18e89e41316e0, type: 3}
-  playerAliveDead: {fileID: 21300000, guid: 965055104bd02184f9b9ad6dcc735f1d, type: 3}
+  playerDeadBig: {fileID: 21300000, guid: 965055104bd02184f9b9ad6dcc735f1d, type: 3}
   playerSmall: {fileID: 21300000, guid: 8390a25cf8462c54d8841d8ec533b1ce, type: 3}
   playerColor: {r: 0.5019608, g: 0.35686275, b: 0.97647065, a: 0}
 --- !u!1 &394214995
@@ -1045,7 +1045,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAliveBig: {fileID: 21300000, guid: a00b25662633e5f42a6f8f3a0e7ef843, type: 3}
-  playerAliveDead: {fileID: 21300000, guid: 4928f8345880d4846bb8328ed23f5cea, type: 3}
+  playerDeadBig: {fileID: 21300000, guid: 5a6465a29be6c344e98e712dd3fbb118, type: 3}
   playerSmall: {fileID: 21300000, guid: ce8a3b3b92335b04ba2131ba6cd2e234, type: 3}
   playerColor: {r: 0.5647059, g: 0, b: 1, a: 0}
 --- !u!1 &581851857
@@ -1092,7 +1092,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAliveBig: {fileID: 21300000, guid: d8b2fd71ae842b94f9434410507b70eb, type: 3}
-  playerAliveDead: {fileID: 21300000, guid: a03df66a36519604ba853c89fb0df947, type: 3}
+  playerDeadBig: {fileID: 21300000, guid: a03df66a36519604ba853c89fb0df947, type: 3}
   playerSmall: {fileID: 21300000, guid: 2eec878dcbdfd8849b3a43fcd2ada391, type: 3}
   playerColor: {r: 0.43137258, g: 0.9176471, b: 0.19607845, a: 0}
 --- !u!1 &618432000
@@ -1354,7 +1354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAliveBig: {fileID: 21300000, guid: d04bf343d414de3479dbc777ba314646, type: 3}
-  playerAliveDead: {fileID: 21300000, guid: 097d1f7bb3247304c917352694250145, type: 3}
+  playerDeadBig: {fileID: 21300000, guid: 097d1f7bb3247304c917352694250145, type: 3}
   playerSmall: {fileID: 21300000, guid: 3decca44fc6170c4faa1e67a23570229, type: 3}
   playerColor: {r: 0.22352943, g: 1, b: 0.6117647, a: 0}
 --- !u!1 &802153542
@@ -1960,7 +1960,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAliveBig: {fileID: 21300000, guid: 4be1b6bbfbe16f446a0d8d3d52a9ebad, type: 3}
-  playerAliveDead: {fileID: 21300000, guid: 00ed42befb08e03478544dd4d93d6bdb, type: 3}
+  playerDeadBig: {fileID: 21300000, guid: 00ed42befb08e03478544dd4d93d6bdb, type: 3}
   playerSmall: {fileID: 21300000, guid: 1c35ab256b3dc1a4eb1fcc96385594f0, type: 3}
   playerColor: {r: 0, g: 0.36862746, b: 1, a: 0}
 --- !u!1 &953293711
@@ -2407,7 +2407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAliveBig: {fileID: 21300000, guid: 7604b8cd00452ed49b257177d9ccb05c, type: 3}
-  playerAliveDead: {fileID: 21300000, guid: 55e96a2927217474b90aa4792370eead, type: 3}
+  playerDeadBig: {fileID: 21300000, guid: 55e96a2927217474b90aa4792370eead, type: 3}
   playerSmall: {fileID: 21300000, guid: 938bc3a9bbf45fc4f8e1cb254c5f65b1, type: 3}
   playerColor: {r: 0.909804, g: 0.22352943, b: 1, a: 0}
 --- !u!1 &1218691517
@@ -2454,7 +2454,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAliveBig: {fileID: 21300000, guid: 564becc555c648647a94397beb91ff49, type: 3}
-  playerAliveDead: {fileID: 21300000, guid: 5a6465a29be6c344e98e712dd3fbb118, type: 3}
+  playerDeadBig: {fileID: 21300000, guid: 5a6465a29be6c344e98e712dd3fbb118, type: 3}
   playerSmall: {fileID: 21300000, guid: fdbda9ca930201e43af83f214c98dc52, type: 3}
   playerColor: {r: 0.24313727, g: 0.16470589, b: 1, a: 0}
 --- !u!1 &1236081517
@@ -2501,7 +2501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAliveBig: {fileID: 21300000, guid: e7b3ea9bd813c4d48be41b49893f4e92, type: 3}
-  playerAliveDead: {fileID: 21300000, guid: c14b263cd9b29784c935981d90ea2e89, type: 3}
+  playerDeadBig: {fileID: 21300000, guid: c14b263cd9b29784c935981d90ea2e89, type: 3}
   playerSmall: {fileID: 21300000, guid: 8c01cbf17b164c4438e8b21648f92cf3, type: 3}
   playerColor: {r: 0.019607844, g: 0.8000001, b: 0.27450982, a: 0}
 --- !u!1 &1270234726
@@ -2727,7 +2727,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAliveBig: {fileID: 21300000, guid: 2a4c4c2f24bd11346b07b197903f2cd5, type: 3}
-  playerAliveDead: {fileID: 21300000, guid: 98d6908598d7b814286d9dc6c2d51ed3, type: 3}
+  playerDeadBig: {fileID: 21300000, guid: 98d6908598d7b814286d9dc6c2d51ed3, type: 3}
   playerSmall: {fileID: 21300000, guid: 1a9fa6600c647e1448dcd255ed6144c6, type: 3}
   playerColor: {r: 1, g: 0.3137255, b: 0.22352943, a: 0}
 --- !u!1 &1361510117
@@ -2929,7 +2929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAliveBig: {fileID: 21300000, guid: d8d8842841836594184d0e88c941c63f, type: 3}
-  playerAliveDead: {fileID: 21300000, guid: ab1ee0f3630c81545bdeff43c6a8f112, type: 3}
+  playerDeadBig: {fileID: 21300000, guid: ab1ee0f3630c81545bdeff43c6a8f112, type: 3}
   playerSmall: {fileID: 21300000, guid: 0dae043cbc1bed04390e785c99ab6cc2, type: 3}
   playerColor: {r: 1, g: 0.49803925, b: 0.70980394, a: 0}
 --- !u!1 &1392256404
@@ -2976,7 +2976,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAliveBig: {fileID: 21300000, guid: f767c1e6c826fcd44a8f38a1c1a975c5, type: 3}
-  playerAliveDead: {fileID: 21300000, guid: c73b205e0af4f3248a37325d53b904ae, type: 3}
+  playerDeadBig: {fileID: 21300000, guid: c73b205e0af4f3248a37325d53b904ae, type: 3}
   playerSmall: {fileID: 21300000, guid: cda89d86cfd01d64b9af7f35e2fa499b, type: 3}
   playerColor: {r: 1, g: 0.5647059, b: 0, a: 0}
 --- !u!1 &1425838265
@@ -3407,7 +3407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAliveBig: {fileID: 21300000, guid: ad69f43a53b8e7545aa967aa9c01995d, type: 3}
-  playerAliveDead: {fileID: 21300000, guid: ea00f64550d601145a5bbfafd0f5e3c8, type: 3}
+  playerDeadBig: {fileID: 21300000, guid: ea00f64550d601145a5bbfafd0f5e3c8, type: 3}
   playerSmall: {fileID: 21300000, guid: 2311d7b613b762147916e03dc9977bff, type: 3}
   playerColor: {r: 0.85098046, g: 1, b: 0.16470589, a: 0}
 --- !u!1 &1623976018
@@ -3807,6 +3807,7 @@ MonoBehaviour:
   - Klaus
   - Mortimer
   - Yusuke
+  randomPalletsInt: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000
 --- !u!4 &1650212203
 Transform:
   m_ObjectHideFlags: 0
@@ -4842,7 +4843,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAliveBig: {fileID: 21300000, guid: 42c424342961e3f4b824ca37dae758cc, type: 3}
-  playerAliveDead: {fileID: 21300000, guid: 0fe899c63dd29a943a4f3009994d7395, type: 3}
+  playerDeadBig: {fileID: 21300000, guid: 0fe899c63dd29a943a4f3009994d7395, type: 3}
   playerSmall: {fileID: 21300000, guid: e2728a1842a766042aae7ed0dd1360d3, type: 3}
   playerColor: {r: 1, g: 0.007843138, b: 0.17254902, a: 0}
 --- !u!1 &2144554435

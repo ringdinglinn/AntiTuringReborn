@@ -195,17 +195,32 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
     // Random name and color
 
     [Server]
-    public void SyncNameAndColorLists() {
+    public void SyncNameAndColorAndAiBotsLists() {
         for (int i = 0; i < Room.randomNames.Count; i++) {
-            RpcUpdateRndName(Room.randomNames[i], i);
-          
+            RpcUpdateRndName(Room.randomNames[i], i);          
+        }
+
+        for (int i = 0; i < Room.randomPalletsInt.Count; i++)
+        {
+            RpcUpdateRndVisualIDs(Room.randomPalletsInt[i], i);
+        }
+
+        for (int i = 0; i < Room.randomPalletsInt.Count; i++)
+        {
+            RpcUpdateRndVisualIDs(Room.randomPalletsInt[i], i);
         }
     }
 
     [ClientRpc]
     private void RpcUpdateRndName(string rndName, int index) {
         Room.randomNames[index] = rndName;
+
+
+    }
+    [ClientRpc]
+    private void RpcUpdateRndVisualIDs(int value, int index)
+    {
+        Room.randomPalletsInt[index] = value;
     }
 
-    
 } 

@@ -43,7 +43,6 @@ public class ChatbotAI : MonoBehaviour
     }
 
     public void GameStart() {
-        Debug.Log("game start");
         playerID = chatbotAiID + networkManager.nrAwareAI;
         GetStartSetupNameAndVisuals();
         StartWaitToJoin();
@@ -51,7 +50,8 @@ public class ChatbotAI : MonoBehaviour
 
     private void GetStartSetupNameAndVisuals() {
         fakeName = networkManager.randomNames[playerID];
-        playerVisualPalletID = networkManager.GetRandomPlayerVisualPalletID();    
+        playerVisualPalletID = networkManager.randomPalletsInt[playerID];
+        //playerVisualPalletID = networkManager.GetRandomPlayerVisualPalletID();    
     } 
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -85,7 +85,6 @@ public class ChatbotAI : MonoBehaviour
             left = chatroomStates[chatroomID].leftFree;
             networkManager.GamePlayers[0].RequestJoinRoom(chatroomID, fakeName, true, playerVisualPalletID);
             currentSessionID = chatbotBehaviour.nextSessionID++;
-            Debug.Log(fakeName +"\n change chatroom bot index: " + chatroomID + ", " + chatbotAiID + ", " + left);
             chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left);
         }
     }
@@ -117,5 +116,13 @@ public class ChatbotAI : MonoBehaviour
                     break;
                 }
         }
+    }
+
+    //Destroy Bot
+    public void DestroyBot()
+    {
+        LeaveChatroom();
+        chatbotBehaviour.chatbotAIs.Remove(this);
+        Destroy(this.gameObject);
     }
 }

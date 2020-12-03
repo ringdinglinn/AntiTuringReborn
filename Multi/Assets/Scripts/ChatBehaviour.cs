@@ -272,6 +272,7 @@ public class ChatBehaviour : NetworkBehaviour
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public void UpdateUI(int id, bool leftFree, bool rightFree, string leftName, string rightName, int leftVisualID, int rightVisualID)
     {
+      
         // manzgöggeli, name uswertig
         ChatDisplayContent cdc = chatDisplayContents[id].GetComponent<ChatDisplayContent>();
 
@@ -282,19 +283,24 @@ public class ChatBehaviour : NetworkBehaviour
 
         if (leftVisualID != 99)
         {
+            cdc.leftPerson.enabled = true;
+         
             cdc.leftPerson.sprite = gameManagerAT.playerVisualPalletsList[leftVisualID].playerSmall;
         }
         else
         {
+            cdc.leftPerson.enabled = false;
             cdc.leftPerson.sprite = null;
         }
         if (rightVisualID != 99)
         {
-            cdc.leftPerson.sprite = gameManagerAT.playerVisualPalletsList[rightVisualID].playerSmall;
+            cdc.rightPerson.enabled = true;
+            cdc.rightPerson.sprite = gameManagerAT.playerVisualPalletsList[rightVisualID].playerSmall;
         }
         else
         {
-            cdc.leftPerson.sprite = null;
+            cdc.rightPerson.enabled = false;
+            cdc.rightPerson.sprite = null;
         }
 
 
@@ -350,30 +356,29 @@ public class ChatBehaviour : NetworkBehaviour
 
     [ClientRpc]
     public void RpcFillUpMainCanvasTextAndUI(int id, bool leftFree, bool rightFree, string leftName, string rightName, int leftVisualID, int rightVisualID)
-    {
+    {      
         ChatDisplayContent cdc = mainChatDisplay.GetComponent<ChatDisplayContent>();
 
-        cdc.leftPerson.gameObject.SetActive(!leftFree);
-        cdc.rightPerson.gameObject.SetActive(!rightFree);
-        cdc.leftName.text = networkPlayer.chatroomStates[id].leftName;
-        cdc.rightName.text = networkPlayer.chatroomStates[id].rightName;
         if (leftVisualID != 99)
         {
+            cdc.leftPerson.enabled = true;
             cdc.leftPerson.sprite = gameManagerAT.playerVisualPalletsList[leftVisualID].playerAliveBig;
         }
         else
         {
+            cdc.leftPerson.enabled = false;
             cdc.leftPerson.sprite = null;
         }
         if (rightVisualID != 99)
         {
-            cdc.leftPerson.sprite = gameManagerAT.playerVisualPalletsList[rightVisualID].playerAliveBig;
+            cdc.rightPerson.enabled = true;
+            cdc.rightPerson.sprite = gameManagerAT.playerVisualPalletsList[rightVisualID].playerAliveBig;
         }
         else
         {
-            cdc.leftPerson.sprite = null;
+            cdc.rightPerson.enabled = false;
+            cdc.rightPerson.sprite = null;
         }
-
         for (int x = 0; listOfChatroomLists[id].Count > x; x++)
         {
             GameObject newMessage = Instantiate(textPrefab, mainChatDisplay.GetComponent<ChatDisplayContent>().scrollPanelContent.transform);
@@ -412,19 +417,23 @@ public class ChatBehaviour : NetworkBehaviour
 
         if (leftVisualID != 99)
         {
+            cdc.leftPerson.enabled = true;
             cdc.leftPerson.sprite = gameManagerAT.playerVisualPalletsList[leftVisualID].playerAliveBig;
         }
         else
         {
+            cdc.leftPerson.enabled = false;
             cdc.leftPerson.sprite = null;
         }
         if (rightVisualID != 99)
         {
-            cdc.leftPerson.sprite = gameManagerAT.playerVisualPalletsList[rightVisualID].playerAliveBig;
+            cdc.rightPerson.enabled = true;
+            cdc.rightPerson.sprite = gameManagerAT.playerVisualPalletsList[rightVisualID].playerAliveBig;
         }
         else
         {
-            cdc.leftPerson.sprite = null;
+            cdc.rightPerson.enabled = false;
+            cdc.rightPerson.sprite = null;
         }
         networkPlayer.chatroomID = id;
 
