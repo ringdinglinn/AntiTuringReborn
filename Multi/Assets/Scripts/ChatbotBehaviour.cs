@@ -92,7 +92,7 @@ public class ChatbotBehaviour : MonoBehaviour {
             //getSessionIdOfPandoraResponse(wr.downloadHandler.text);
 
             string r = sanitizePandoraResponse(wr.downloadHandler.text); //Where we get our chatbots response message
-            Response response = new Response(chatroomID, r, chatbotAIs[chatbotID].fakeName);
+            Response response = new Response(chatroomID, r, chatbotAIs[chatbotID].fakeName, chatbotAIs[chatbotID].playerVisualPalletID);
             responses.Add(response);
             SendResponseToServer(response);
         }
@@ -102,14 +102,16 @@ public class ChatbotBehaviour : MonoBehaviour {
     }
 
     public struct Response {
-        public Response(int id, string t, string n) {
+        public Response(int id, string t, string n, int visID) {
             chatroomID = id;
             text = t;
             fakeName = n;
+            visualPalletID = visID;
         }
         public int chatroomID;
         public string text;
         public string fakeName;
+        public int visualPalletID;
     }
 
     public void SendTextToChatbot(string text, int chatroomID, int chatbotID) {
@@ -120,6 +122,6 @@ public class ChatbotBehaviour : MonoBehaviour {
 
     private void SendResponseToServer(Response response) {
         Debug.Log("ChatbotBehaviour, SendResponseToServer, chatroom id = " + response.chatroomID);
-        networkManager.GamePlayers[0].ReceiveMessageFromChatbot(response.text, response.chatroomID, response.fakeName);
+        networkManager.GamePlayers[0].ReceiveMessageFromChatbot(response.text, response.chatroomID, response.fakeName, response.visualPalletID);
     }
 }
