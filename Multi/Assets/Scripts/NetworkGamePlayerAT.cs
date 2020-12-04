@@ -147,9 +147,9 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
-    public void ReceiveMessageFromChatbot(string r, int id, string chatbotName) {
+    public void ReceiveMessageFromChatbot(string r, int id, string chatbotName, int BotVisualId) {
         Debug.Log("GamePlayer, ReceiveMessageFromChatbot, chatroom id = " + id);
-        chatBehaviour.ReceiveChatbotMessageFromPlayer(r, id, chatbotName);
+        chatBehaviour.ReceiveChatbotMessageFromPlayer(r, id, chatbotName, BotVisualId);
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   

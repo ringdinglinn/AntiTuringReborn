@@ -164,6 +164,7 @@ public class ChatBehaviour : NetworkBehaviour
 
         GameObject speechBubPrefab1 = Instantiate(speechBubPrefab);
         speechBubPrefab1.transform.SetParent(newMessage1.transform);
+        speechBubPrefab1.GetComponent<Image>().color = gameManagerAT.playerVisualPalletsList[visualIDOfPlayerWhoSendMessage].playerColor;
         //Set Left or right Bound
         if (networkPlayer.chatroomStates[chatroomID].rightName == name)
         {
@@ -172,13 +173,13 @@ public class ChatBehaviour : NetworkBehaviour
             newMessage1.GetComponent<Text>().rectTransform.anchorMax = new Vector2(1, 0);
             newMessage1.GetComponent<Text>().rectTransform.pivot = new Vector2(1, 0);
             newMessage1.GetComponent<Text>().rectTransform.anchoredPosition = new Vector3(0, 0, 0);
-            speechBubPrefab1.GetComponent<RawImage>().rectTransform.anchorMin = new Vector2(1, 0);
-            speechBubPrefab1.GetComponent<RawImage>().rectTransform.anchorMax = new Vector2(1, 0);
-            speechBubPrefab1.GetComponent<RawImage>().rectTransform.pivot = new Vector2(1, 0);
+            speechBubPrefab1.GetComponent<Image>().rectTransform.anchorMin = new Vector2(1, 0);
+            speechBubPrefab1.GetComponent<Image>().rectTransform.anchorMax = new Vector2(1, 0);
+            speechBubPrefab1.GetComponent<Image>().rectTransform.pivot = new Vector2(1, 0);
             newMessage1.GetComponent<Text>().fontSize = 12;
             newMessage1.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(230, 60);
             listOfChatroomLists[chatroomID].Add(newMessage1);
-            StartCoroutine(BuildText(newMessage1.GetComponent<Text>(), name + "" + message, 0.02f, speechBubPrefab1.GetComponent<RawImage>(), true));
+            StartCoroutine(BuildText(newMessage1.GetComponent<Text>(), name + "" + message, 0.02f, true));
         }
     
         if (networkPlayer.chatroomStates[chatroomID].leftName == name)
@@ -187,7 +188,7 @@ public class ChatBehaviour : NetworkBehaviour
             newMessage1.GetComponent<Text>().fontSize = 12;
             newMessage1.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(230, 60);
             listOfChatroomLists[chatroomID].Add(newMessage1);
-            StartCoroutine(BuildText(newMessage1.GetComponent<Text>(), name + "" + message, 0.02f, speechBubPrefab1.GetComponent<RawImage>(), true));       
+            StartCoroutine(BuildText(newMessage1.GetComponent<Text>(), name + "" + message, 0.02f,  true));       
         }
        // StartCoroutine(BuildText(newMessage.GetComponent<Text>(), name + "" + message, 0.02f));
         if (chatroomID == networkPlayer.chatroomID)
@@ -196,8 +197,9 @@ public class ChatBehaviour : NetworkBehaviour
              newMessage2.transform.SetParent(mainChatDisplay.GetComponent<ChatDisplayContent>().scrollPanelContent.transform);
             // newMessage1.GetComponent<Text>().text = name + "" + message;
             newMessage2.transform.localScale = new Vector3(1, 1, 1);
-            GameObject speechBubPrefab2 = Instantiate(speechBubPrefab);
-            speechBubPrefab2.transform.SetParent(newMessage2.transform);
+       //     GameObject speechBubPrefab2 = Instantiate(speechBubPrefab);
+      //      speechBubPrefab2.transform.SetParent(newMessage2.transform);
+       //     speechBubPrefab2.GetComponent<Image>().color = gameManagerAT.playerVisualPalletsList[visualIDOfPlayerWhoSendMessage].playerColor;
             //Set Left or right Bound
             if (networkPlayer.chatroomStates[chatroomID].rightName == name)
             {
@@ -208,11 +210,11 @@ public class ChatBehaviour : NetworkBehaviour
                 newMessage2.GetComponent<Text>().rectTransform.anchorMax = new Vector2(1, 0);
                 newMessage2.GetComponent<Text>().rectTransform.pivot = new Vector2(1, 0);
                 newMessage2.GetComponent<Text>().rectTransform.anchoredPosition = new Vector3(0, 0, 0);
-                speechBubPrefab2.GetComponent<RawImage>().rectTransform.anchorMin = new Vector2(1, 0);
-                speechBubPrefab2.GetComponent<RawImage>().rectTransform.anchorMax = new Vector2(1, 0);
-                speechBubPrefab2.GetComponent<RawImage>().rectTransform.pivot = new Vector2(1, 0);
+            //    speechBubPrefab2.GetComponent<Image>().rectTransform.anchorMin = new Vector2(1, 0);
+            //    speechBubPrefab2.GetComponent<Image>().rectTransform.anchorMax = new Vector2(1, 0);
+           //     speechBubPrefab2.GetComponent<Image>().rectTransform.pivot = new Vector2(1, 0);
               //  listOfChatroomLists[chatroomID].Add(newMessage2);
-                StartCoroutine(BuildText(newMessage2.GetComponent<Text>(), name + "" + message, 0.02f, speechBubPrefab2.GetComponent<RawImage>(), false));
+                StartCoroutine(BuildText(newMessage2.GetComponent<Text>(), name + "" + message, 0.02f,  false));
 
             }
             if (networkPlayer.chatroomStates[chatroomID].leftName == name)
@@ -221,7 +223,7 @@ public class ChatBehaviour : NetworkBehaviour
                 newMessage2.GetComponent<Text>().fontSize = 20;
                 newMessage2.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(230, 90);
              //   listOfChatroomLists[chatroomID].Add(newMessage2);
-                StartCoroutine(BuildText(newMessage2.GetComponent<Text>(), name + "" + message, 0.02f, speechBubPrefab2.GetComponent<RawImage>(), false));
+                StartCoroutine(BuildText(newMessage2.GetComponent<Text>(), name + "" + message, 0.02f,  false));
             }
             mainChatDisplayContentList.Add(newMessage2);
 
@@ -233,7 +235,7 @@ public class ChatBehaviour : NetworkBehaviour
     }
 
 
-    private IEnumerator BuildText(Text text, string message, float textSpeed, RawImage image, bool smallUpdate)
+    private IEnumerator BuildText(Text text, string message, float textSpeed, bool smallUpdate)
     {
         if (smallUpdate == true)
         {
@@ -245,17 +247,16 @@ public class ChatBehaviour : NetworkBehaviour
                 TextGenerationSettings textGenerationSettings = text.GetComponent<Text>().GetGenerationSettings(text.rectTransform.rect.size);
                 float width = textGen.GetPreferredWidth(text.text, textGenerationSettings);
                 float height = textGen.GetPreferredHeight(text.text, textGenerationSettings);
-                image.rectTransform.sizeDelta = new Vector2(width * 0.9f, height * 0.6f);
+            //    image.rectTransform.sizeDelta = new Vector2(width * 0.8f, height * 0.5f);
               //  image.transform.position = newMessage.transform.position;
 
-                image.rectTransform.anchoredPosition = new Vector3(0, 0, 0);
+            //    image.rectTransform.anchoredPosition = new Vector3(0, 0, 0);
                 //Wait a certain amount of time, then continue with the for loop
                 yield return new WaitForSeconds(textSpeed);
             }
         }
         else
         {
-          
             for (int i = 0; i < message.Length; i++)
             {
               
@@ -265,10 +266,16 @@ public class ChatBehaviour : NetworkBehaviour
                 TextGenerationSettings textGenerationSettings = text.GetComponent<Text>().GetGenerationSettings(text.rectTransform.rect.size);
                 float width = textGen.GetPreferredWidth(text.text, textGenerationSettings);
                 float height = textGen.GetPreferredHeight(text.text, textGenerationSettings);
-                image.rectTransform.sizeDelta = new Vector2(width * 0.8f, height *0.9f);
-                //  testImage.transform.position = newMessage.transform.position;
 
-                image.rectTransform.anchoredPosition = new Vector3(0, 0, 0);
+                float spacingHeight = 0.6f;
+                    if(textGen.lineCount >3)
+                {
+                    spacingHeight += textGen.lineCount * 0.01f;
+                }
+              //  image.rectTransform.sizeDelta = new Vector2(width * 0.7f, height * spacingHeight);
+                //  testImage.transform.position = newMessage.transform.position;
+                Debug.Log("LineCout = " + textGen.lineCount);
+              //  image.rectTransform.anchoredPosition = new Vector3(0, 0, 0);
                 //Wait a certain amount of time, then continue with the for loop
                 yield return new WaitForSeconds(textSpeed);
             }
@@ -342,22 +349,22 @@ public class ChatBehaviour : NetworkBehaviour
     }
 
     [Command]
-    public void CmdSendOutResponseFromChatbot(string r, int id, string chatbotName)
+    public void CmdSendOutResponseFromChatbot(string r, int id, string chatbotName, int BotVisualId)
     {
-        RpcHandleMessage(r, chatbotName, id);
+        RpcHandleMessage(r, chatbotName, id, BotVisualId);
     }
 
-    public void ReceiveChatbotMessageFromPlayer(string r, int id, string chatbotName)
+    public void ReceiveChatbotMessageFromPlayer(string r, int id, string chatbotName, int BotVisualId)
     {
         // Debug.Log("ChatBehaviour, ReceiveChatbotMessageFromPlayer, chatroom id = " + id);
         r.Remove(0, 1);
         r.Remove(r.Length - 1, 1);
         if (isClientOnly)
         {
-            CmdSendOutResponseFromChatbot(r, id, chatbotName);
+            CmdSendOutResponseFromChatbot(r, id, chatbotName, BotVisualId);
             return;
         }
-        RpcHandleMessage(r, chatbotName, id);
+        RpcHandleMessage(r, chatbotName, id, BotVisualId);
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
