@@ -43,6 +43,21 @@ public class ChatBehaviour : NetworkBehaviour
     public TMP_InputField mainInputField;
 
     public GameObject speechBubPrefab;
+
+    [Header("Speechbuble Spacing")]
+    public float spacingHeightLine1 = 0.6f;
+    public float spacingWidthLine1 = 0.8f;
+    public float spacingHeightLine2 = 0.6f;
+    public float spacingWidthLine2 = 0.8f;
+    public float spacingHeightLine3 = 0.6f;
+    public float spacingWidthLine3 = 0.8f;
+    public float spacingHeightLine4 = 0.6f;
+    public float spacingWidthLine4 = 0.8f;
+    public float spacingHeightLine5 = 0.6f;
+    public float spacingWidthLine5 = 0.8f;
+    public float spacingHeightLine6 = 0.6f;
+    public float spacingWidthLine6 = 0.8f;
+
     public override void OnStartAuthority()
     {
         chatbotRoomsIndex[0] = true;
@@ -179,7 +194,7 @@ public class ChatBehaviour : NetworkBehaviour
             newMessage1.GetComponent<Text>().fontSize = 12;
             newMessage1.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(230, 60);
             listOfChatroomLists[chatroomID].Add(newMessage1);
-            StartCoroutine(BuildText(newMessage1.GetComponent<Text>(), name + "" + message, 0.02f, true));
+         //   StartCoroutine(BuildText(newMessage1.GetComponent<Text>(), name + "" + message, 0.02f, speechBubPrefab1.GetComponent<Image>(), true));
         }
     
         if (networkPlayer.chatroomStates[chatroomID].leftName == name)
@@ -188,21 +203,31 @@ public class ChatBehaviour : NetworkBehaviour
             newMessage1.GetComponent<Text>().fontSize = 12;
             newMessage1.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(230, 60);
             listOfChatroomLists[chatroomID].Add(newMessage1);
-            StartCoroutine(BuildText(newMessage1.GetComponent<Text>(), name + "" + message, 0.02f,  true));       
+        //    StartCoroutine(BuildText(newMessage1.GetComponent<Text>(), name + "" + message, 0.02f, speechBubPrefab1.GetComponent<Image>(),  true));       
         }
-       // StartCoroutine(BuildText(newMessage.GetComponent<Text>(), name + "" + message, 0.02f));
+       
         if (chatroomID == networkPlayer.chatroomID)
         {
-            GameObject newMessage2 = Instantiate(textPrefab);
+         
+
+
+             GameObject newMessage2 = Instantiate(textPrefab);
              newMessage2.transform.SetParent(mainChatDisplay.GetComponent<ChatDisplayContent>().scrollPanelContent.transform);
-            // newMessage1.GetComponent<Text>().text = name + "" + message;
+
+       
+
             newMessage2.transform.localScale = new Vector3(1, 1, 1);
-       //     GameObject speechBubPrefab2 = Instantiate(speechBubPrefab);
-      //      speechBubPrefab2.transform.SetParent(newMessage2.transform);
-       //     speechBubPrefab2.GetComponent<Image>().color = gameManagerAT.playerVisualPalletsList[visualIDOfPlayerWhoSendMessage].playerColor;
+            GameObject speechBubPrefab2 = Instantiate(speechBubPrefab);
+           speechBubPrefab2.transform.SetParent(newMessage2.transform);
+            speechBubPrefab2.GetComponent<Image>().color = gameManagerAT.playerVisualPalletsList[visualIDOfPlayerWhoSendMessage].playerColor;
+
+
             //Set Left or right Bound
             if (networkPlayer.chatroomStates[chatroomID].rightName == name)
             {
+            
+            
+
                 newMessage2.GetComponent<Text>().alignment = TextAnchor.LowerRight;
                 newMessage2.GetComponent<Text>().fontSize = 20;
                 newMessage2.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(230, 90);
@@ -210,21 +235,27 @@ public class ChatBehaviour : NetworkBehaviour
                 newMessage2.GetComponent<Text>().rectTransform.anchorMax = new Vector2(1, 0);
                 newMessage2.GetComponent<Text>().rectTransform.pivot = new Vector2(1, 0);
                 newMessage2.GetComponent<Text>().rectTransform.anchoredPosition = new Vector3(0, 0, 0);
-            //    speechBubPrefab2.GetComponent<Image>().rectTransform.anchorMin = new Vector2(1, 0);
-            //    speechBubPrefab2.GetComponent<Image>().rectTransform.anchorMax = new Vector2(1, 0);
-           //     speechBubPrefab2.GetComponent<Image>().rectTransform.pivot = new Vector2(1, 0);
-              //  listOfChatroomLists[chatroomID].Add(newMessage2);
-                StartCoroutine(BuildText(newMessage2.GetComponent<Text>(), name + "" + message, 0.02f,  false));
+                speechBubPrefab2.GetComponent<Image>().rectTransform.anchorMin = new Vector2(1, 0);
+                speechBubPrefab2.GetComponent<Image>().rectTransform.anchorMax = new Vector2(1, 0);
+               speechBubPrefab2.GetComponent<Image>().rectTransform.pivot = new Vector2(1, 0);
+                listOfChatroomLists[chatroomID].Add(newMessage2);
+                StartCoroutine(BuildText(newMessage2.GetComponent<Text>(), name,"" + message, 0.02f, speechBubPrefab2.GetComponent<Image>(),  false));
 
             }
             if (networkPlayer.chatroomStates[chatroomID].leftName == name)
             {
+              
+              
+
                 newMessage2.GetComponent<Text>().alignment = TextAnchor.LowerLeft;
                 newMessage2.GetComponent<Text>().fontSize = 20;
                 newMessage2.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(230, 90);
              //   listOfChatroomLists[chatroomID].Add(newMessage2);
-                StartCoroutine(BuildText(newMessage2.GetComponent<Text>(), name + "" + message, 0.02f,  false));
+
+
+                StartCoroutine(BuildText(newMessage2.GetComponent<Text>(), name, ""  + message, 0.02f, speechBubPrefab2.GetComponent<Image>(),  false));
             }
+        
             mainChatDisplayContentList.Add(newMessage2);
 
 
@@ -235,7 +266,7 @@ public class ChatBehaviour : NetworkBehaviour
     }
 
 
-    private IEnumerator BuildText(Text text, string message, float textSpeed, bool smallUpdate)
+    private IEnumerator BuildText(Text text, string name, string message, float textSpeed,Image image, bool smallUpdate)
     {
         if (smallUpdate == true)
         {
@@ -245,37 +276,104 @@ public class ChatBehaviour : NetworkBehaviour
 
                 TextGenerator textGen = new TextGenerator();
                 TextGenerationSettings textGenerationSettings = text.GetComponent<Text>().GetGenerationSettings(text.rectTransform.rect.size);
-                float width = textGen.GetPreferredWidth(text.text, textGenerationSettings);
-                float height = textGen.GetPreferredHeight(text.text, textGenerationSettings);
-            //    image.rectTransform.sizeDelta = new Vector2(width * 0.8f, height * 0.5f);
-              //  image.transform.position = newMessage.transform.position;
 
-            //    image.rectTransform.anchoredPosition = new Vector3(0, 0, 0);
+                var extends = text.cachedTextGenerator.rectExtents.size * 0.5f;
+                float hightOfOneLine = text.cachedTextGeneratorForLayout.GetPreferredHeight("A", text.GetGenerationSettings(extends));
+
+                float width = textGen.GetPreferredWidth(text.text, textGenerationSettings) ;
+                float height = textGen.GetPreferredHeight(text.text, textGenerationSettings);
+                image.rectTransform.sizeDelta = new Vector2(width * 0.8f, (height - hightOfOneLine) * 0.5f);
+           
+           
+
+                image.rectTransform.anchoredPosition = new Vector3(0, 0, 0);
                 //Wait a certain amount of time, then continue with the for loop
                 yield return new WaitForSeconds(textSpeed);
             }
         }
         else
         {
+            TextGenerator textGen = new TextGenerator();
+            TextGenerationSettings textGenerationSettings = text.GetComponent<Text>().GetGenerationSettings(text.rectTransform.rect.size);
+            float nameWidth = 0;
+            for (int i = 0; i < name.Length; i++)
+            {
+                text.text = string.Concat(text.text, name[i]);
+              
+                textGenerationSettings = text.GetComponent<Text>().GetGenerationSettings(text.rectTransform.rect.size);
+                nameWidth = textGen.GetPreferredWidth(text.text, textGenerationSettings);
+                
+            }
+
+            Text text1 = 
+
+
             for (int i = 0; i < message.Length; i++)
             {
               
                 text.text = string.Concat(text.text, message[i]);
 
-                TextGenerator textGen = new TextGenerator();
-                TextGenerationSettings textGenerationSettings = text.GetComponent<Text>().GetGenerationSettings(text.rectTransform.rect.size);
+                float width1 = 0;
+                textGenerationSettings = text.GetComponent<Text>().GetGenerationSettings(text.rectTransform.rect.size);
+                if (textGen.lineCount > 1)
+                {
+                    UILineInfo x = textGen.lines[1];
+                     width1 = textGen.GetPreferredWidth(x.l, textGenerationSettings);
+                }
+             
+               
                 float width = textGen.GetPreferredWidth(text.text, textGenerationSettings);
                 float height = textGen.GetPreferredHeight(text.text, textGenerationSettings);
 
                 float spacingHeight = 0.6f;
-                    if(textGen.lineCount >3)
+                float spacingWidth = 0.8f;
+
+                var extends = text.cachedTextGenerator.rectExtents.size * 0.5f;
+                float hightOfOneLine = text.cachedTextGeneratorForLayout.GetPreferredHeight("A", text.GetGenerationSettings(extends));
+
+              
+
+                if (textGen.lineCount == 1)
                 {
-                    spacingHeight += textGen.lineCount * 0.01f;
+                    spacingHeight += textGen.lineCount * spacingHeightLine1;
+                    spacingWidth += textGen.lineCount * spacingWidthLine1;
                 }
-              //  image.rectTransform.sizeDelta = new Vector2(width * 0.7f, height * spacingHeight);
-                //  testImage.transform.position = newMessage.transform.position;
+                if (textGen.lineCount == 2)
+                {
+                    spacingHeight += textGen.lineCount * spacingHeightLine2;
+                    spacingWidth += textGen.lineCount * spacingWidthLine2;
+                }
+                if (textGen.lineCount == 3)
+                {
+                    spacingHeight += textGen.lineCount * spacingHeightLine3;
+                    spacingWidth += textGen.lineCount * spacingWidthLine3;
+                }
+                if (textGen.lineCount == 4)
+                {
+                    spacingHeight += textGen.lineCount * spacingHeightLine4;
+                    spacingWidth += textGen.lineCount * spacingWidthLine4;
+                }
+                if (textGen.lineCount >= 5)
+                {
+                    spacingHeight += textGen.lineCount * spacingHeightLine5;
+                    spacingWidth += textGen.lineCount * spacingWidthLine5;
+                }
+                if (textGen.lineCount >3)
+                {
+                    spacingHeight += textGen.lineCount * spacingHeightLine6;
+                    spacingWidth += textGen.lineCount * spacingWidthLine6;
+                }
+                if(width > 420)
+                {
+                    width = 420;
+                }
+
+              
+
+                image.rectTransform.sizeDelta = new Vector2(width1, height - hightOfOneLine);
+            
                 Debug.Log("LineCout = " + textGen.lineCount);
-              //  image.rectTransform.anchoredPosition = new Vector3(0, 0, 0);
+                image.rectTransform.anchoredPosition = new Vector3(-5, -2, 0);
                 //Wait a certain amount of time, then continue with the for loop
                 yield return new WaitForSeconds(textSpeed);
             }

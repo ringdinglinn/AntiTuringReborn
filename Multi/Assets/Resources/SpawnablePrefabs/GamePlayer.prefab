@@ -4708,6 +4708,18 @@ MonoBehaviour:
   mainInputField: {fileID: 6708898323458029418}
   speechBubPrefab: {fileID: 7984367564354197722, guid: cf3c0ac41f520d04e82f169a5865eb0d,
     type: 3}
+  spacingHeightLine1: 0
+  spacingWidthLine1: 0
+  spacingHeightLine2: 0
+  spacingWidthLine2: 0
+  spacingHeightLine3: 0
+  spacingWidthLine3: 0
+  spacingHeightLine4: 0
+  spacingWidthLine4: 0
+  spacingHeightLine5: 0
+  spacingWidthLine5: 0
+  spacingHeightLine6: 0
+  spacingWidthLine6: 0
 --- !u!114 &2598132078515685881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8114,8 +8126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 6
-    m_Right: 68
+    m_Left: 53
+    m_Right: 78
     m_Top: 0
     m_Bottom: 26
   m_ChildAlignment: 6
