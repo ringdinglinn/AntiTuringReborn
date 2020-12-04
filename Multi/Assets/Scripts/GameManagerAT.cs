@@ -4,9 +4,14 @@ using UnityEngine;
 using Mirror;
 using UnityEngine.UI;
 using TMPro;
+using FMODUnity;
+using FMOD;
 
 public class GameManagerAT : NetworkBehaviour
 {
+
+    public int gameStage = 0;
+    public int invWatching = 0;
 
     [Header("Component References")]
     public NetworkGamePlayerAT networkGamePlayerAT;
@@ -67,6 +72,7 @@ public class GameManagerAT : NetworkBehaviour
     #region Start Setup
     public override void OnStartClient()
     {
+        networkManagerAT = GameObject.Find("NetworkManager").GetComponent<NetworkManagerAT>();
         StartStartScreen1();
         tagManagement.StartSetup();
         connectionDiagramManager.StartSetup();
@@ -188,7 +194,6 @@ public class GameManagerAT : NetworkBehaviour
                 if (bot.GetPlayerRealName() == tagedPlayerRealName)//Check ob getagted Person eine  Human Ai ist oder Bot.           
                 { 
                     
-                    Debug.Log("1");
                     int visualOfTaggedBotByHumanAI = bot.visualID;
                     CmdHumanAIPlayerTagedWrong(tagedPlayerRealName, playerWhoTagedRealNamen, visualOfTaggedBotByHumanAI,networkGamePlayerAT.playerVisualPalletID);
                     return;
@@ -245,20 +250,16 @@ public class GameManagerAT : NetworkBehaviour
     [Command]
     public void CmdHumanAIPlayerTagedWrong(string tagedBotName, string playerWhoTagedRealName, int visualOfTaggedBotByHumanAI, int visualIDofHumanWhoTaged)
     {
-        Debug.Log("2");
         RpcHumanAIPlayerTagedWrong(tagedBotName, playerWhoTagedRealName, visualOfTaggedBotByHumanAI, visualIDofHumanWhoTaged);
     }
     [ClientRpc]
     public void RpcHumanAIPlayerTagedWrong(string tagedBotName, string playerWhoTagedRealName, int visualOfTaggedBotByHumanAI, int visualIDofHumanWhoTaged)
     {
-        Debug.Log("3");
         if (hasAuthority)
         {
-            Debug.Log("4");
             currentNrOfAiPlayerFailedConnectionsAttempts++;
             if (currentNrOfAiPlayerFailedConnectionsAttempts >= maxNrOfAllowedFailedConnectionAttemptsAIPlayers)
             {
-                Debug.Log("5");
                 CmdMessagePlayerDiedBecauseOfToManyWrongTags(playerWhoTagedRealName, visualIDofHumanWhoTaged);
                 return;
             }
@@ -267,16 +268,13 @@ public class GameManagerAT : NetworkBehaviour
             //Inform the Player and Investigators about the failed connection Attempt
             foreach (NetworkGamePlayerAT playerAT in networkManagerAT.GamePlayers)
             {
-                Debug.Log("Hello 1");
                 if (playerAT.isInvestigator == true)
                 {
-                    Debug.Log("Hello 2");
                     playerAT.gameManagerAT.messagesHandler.HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer("Failed Connection Attempt! ", playerWhoTagedRealName, "?", 1, playerWhoTagedRealName + " attempted a connection but failed");
                 }
 
                 if (playerAT.realName == playerWhoTagedRealName)
                 {
-                    Debug.Log("Hello 3");
                     playerAT.gameManagerAT.messagesHandler.HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer("Failed Connection Attempt! ", playerWhoTagedRealName, tagedBotName, 1, tagedBotName + " is not a sentient AI, connection attempt failed, you have: " + (maxNrOfAllowedFailedConnectionAttemptsAIPlayers - currentNrOfAiPlayerFailedConnectionsAttempts-1) + " Attempts left befor being found and destroyed");
                 }
             }
@@ -405,13 +403,13 @@ public class GameManagerAT : NetworkBehaviour
 
     public void YouDiedWindowBackToLobbyButton()
     {
-        Debug.Log("Player " + networkGamePlayerAT.realName + "wants to leave the game and go back to the Lobby");
+        //Debug.Log("Player " + networkGamePlayerAT.realName + "wants to leave the game and go back to the Lobby");
     }
 
     [Command]
     private void CmdYouDiedWindowBackToLobbyButton(string playerThatWantsToLeaveRealName)
     {
-        Debug.Log("Player " + playerThatWantsToLeaveRealName + "wants to leave the game and go back to the Lobby");
+        //Debug.Log("Player " + playerThatWantsToLeaveRealName + "wants to leave the game and go back to the Lobby");
     }
     #endregion
 
@@ -451,14 +449,12 @@ public class GameManagerAT : NetworkBehaviour
     [Command]
     public void CmdMessagePlayerDiedBecauseOfToManyWrongTags(string newDeadPlayerRealName, int visualID)
     {
-        Debug.Log("6");
         RpcdMessagePlayerDiedBecauseOfToManyWrongTags(newDeadPlayerRealName, visualID);
     }
 
     [ClientRpc]
     public void RpcdMessagePlayerDiedBecauseOfToManyWrongTags(string newDeadPlayerRealName, int visualID)
     {
-        Debug.Log("7");
         foreach (NetworkGamePlayerAT player in networkManagerAT.GamePlayers)
         {
             player.gameManagerAT.currentHumanBotsAlive--;
@@ -548,6 +544,7 @@ public class GameManagerAT : NetworkBehaviour
     #region //Opening Screen Handling
     public void StartStartScreen1()
     {
+        if (isLocalPlayer) networkManagerAT.StartLoadingRoleMusic();
         StartCoroutine(StartScreen1());
        // StartCoroutine(CloseStartScreen2());
 
@@ -587,6 +584,8 @@ public class GameManagerAT : NetworkBehaviour
 
     public void StartStartScreen2()
     {
+        if (isLocalPlayer) networkManagerAT.StopLoadingRoleMusic();
+        if (isLocalPlayer) networkManagerAT.StartRevealRoleMusic();
         startScreen2.SetActive(true);
 
         if(networkGamePlayerAT.isInvestigator == true)
@@ -605,10 +604,30 @@ public class GameManagerAT : NetworkBehaviour
     }
     IEnumerator CloseStartScreen2()
     {
+        if (isLocalPlayer) networkManagerAT.StopRevealRoleMusic();
         yield return new WaitForSeconds(12);
         startScreen1.SetActive(false);
         startScreen2.SetActive(false);
+        if (isLocalPlayer) {
+            if (networkGamePlayerAT.isInvestigator) {
+                networkManagerAT.StartInvTheme();
+            }
+            else networkManagerAT.StartAITheme();
+        }
+    }
 
+
+    #endregion
+
+    private void Update() {
+        if (isLocalPlayer) {
+            if (networkGamePlayerAT.isInvestigator) {
+                networkManagerAT.invTheme.SetParameter("Game_Stage", gameStage);
+            }
+            else {
+                networkManagerAT.aiTheme.SetParameter("Game_Stage", gameStage);
+                networkManagerAT.aiTheme.SetParameter("Investigator", invWatching);
+            }
+        }
     }
-        #endregion
-    }
+}
