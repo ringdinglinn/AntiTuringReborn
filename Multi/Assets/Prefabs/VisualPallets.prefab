@@ -49,7 +49,7 @@ MonoBehaviour:
   playerBigHover: {fileID: 21300000, guid: 18febc9826246a546836d24bcfd1c931, type: 3}
   playerSmall: {fileID: 21300000, guid: 1a65b17c99bffa04781a564905375bff, type: 3}
   playerSmallHover: {fileID: 21300000, guid: 0a22d11164a641f419cf58c14d0151da, type: 3}
-  playerColor: {r: 0.96470594, g: 0.909804, b: 0.25490198, a: 0}
+  playerColor: {r: 0.96470594, g: 0.909804, b: 0.25490198, a: 1}
 --- !u!1 &5568962109967107951
 GameObject:
   m_ObjectHideFlags: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
   playerBigHover: {fileID: 21300000, guid: 5467a8111cd32df409ff8a4d029175f4, type: 3}
   playerSmall: {fileID: 21300000, guid: 0236b1eb7550daf40aaf4dae864e6b9d, type: 3}
   playerSmallHover: {fileID: 21300000, guid: 57c8b01242a0ca94ba0edf29fc33bcfb, type: 3}
-  playerColor: {r: 1, g: 0, b: 0.5176471, a: 0}
+  playerColor: {r: 1, g: 0, b: 0.5176471, a: 1}
 --- !u!1 &5568962110173551180
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,7 +149,7 @@ MonoBehaviour:
   playerBigHover: {fileID: 21300000, guid: 9c15ce94a33707146a2087038a24245f, type: 3}
   playerSmall: {fileID: 21300000, guid: 8390a25cf8462c54d8841d8ec533b1ce, type: 3}
   playerSmallHover: {fileID: 21300000, guid: 0f4f30fdbd7060d44851c446ee1439f6, type: 3}
-  playerColor: {r: 0.5019608, g: 0.35686275, b: 0.97647065, a: 0}
+  playerColor: {r: 0.5019608, g: 0.35686275, b: 0.97647065, a: 1}
 --- !u!1 &5568962110266922697
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +199,7 @@ MonoBehaviour:
   playerBigHover: {fileID: 21300000, guid: 8c95bfc8808440c44a131fc9713d5516, type: 3}
   playerSmall: {fileID: 21300000, guid: c3353d790eb9a9e4da1ea7884097c637, type: 3}
   playerSmallHover: {fileID: 21300000, guid: 016e1974638f57c45a7d49eeaa74dda1, type: 3}
-  playerColor: {r: 0.5019608, g: 0.35686275, b: 0.97647065, a: 0}
+  playerColor: {r: 0.5019608, g: 0.35686275, b: 0.97647065, a: 1}
 --- !u!1 &5568962110303389929
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +249,7 @@ MonoBehaviour:
   playerBigHover: {fileID: 21300000, guid: d17a1dfd8294d684fa9c41a07fd9695c, type: 3}
   playerSmall: {fileID: 21300000, guid: 3decca44fc6170c4faa1e67a23570229, type: 3}
   playerSmallHover: {fileID: 21300000, guid: 6b209326025ea3e4890e6b744a499469, type: 3}
-  playerColor: {r: 0.22352943, g: 1, b: 0.6117647, a: 0}
+  playerColor: {r: 0.22352943, g: 1, b: 0.6117647, a: 1}
 --- !u!1 &5568962110545790997
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +299,7 @@ MonoBehaviour:
   playerBigHover: {fileID: 21300000, guid: 8df647f7a800679468316215165ae3bb, type: 3}
   playerSmall: {fileID: 21300000, guid: 2eec878dcbdfd8849b3a43fcd2ada391, type: 3}
   playerSmallHover: {fileID: 21300000, guid: a30ef5dfd36064b4a85539784440ad99, type: 3}
-  playerColor: {r: 0.43137258, g: 0.9176471, b: 0.19607845, a: 0}
+  playerColor: {r: 0.43137258, g: 0.9176471, b: 0.19607845, a: 1}
 --- !u!1 &5568962110546205510
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,7 +349,7 @@ MonoBehaviour:
   playerBigHover: {fileID: 21300000, guid: 505c52ebda2a4484fb6c62ec07a63b06, type: 3}
   playerSmall: {fileID: 21300000, guid: ce8a3b3b92335b04ba2131ba6cd2e234, type: 3}
   playerSmallHover: {fileID: 21300000, guid: 9244f810be54e97489fc35298a3ee1d0, type: 3}
-  playerColor: {r: 0.5647059, g: 0, b: 1, a: 0}
+  playerColor: {r: 0.5647059, g: 0, b: 1, a: 1}
 --- !u!1 &5568962110709255732
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,7 +399,7 @@ MonoBehaviour:
   playerBigHover: {fileID: 21300000, guid: 64a73dc3a5fe82041a512f5d80dd500a, type: 3}
   playerSmall: {fileID: 21300000, guid: 1c35ab256b3dc1a4eb1fcc96385594f0, type: 3}
   playerSmallHover: {fileID: 21300000, guid: 6caa03d5177afe943af2c561ae60963e, type: 3}
-  playerColor: {r: 0, g: 0.36862746, b: 1, a: 0}
+  playerColor: {r: 0, g: 0.36862746, b: 1, a: 1}
 --- !u!1 &5568962110829712377
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,7 +495,7 @@ MonoBehaviour:
   playerBigHover: {fileID: 21300000, guid: 488e4cc9bf8ca0144a62fb6835825e21, type: 3}
   playerSmall: {fileID: 21300000, guid: 1a9fa6600c647e1448dcd255ed6144c6, type: 3}
   playerSmallHover: {fileID: 21300000, guid: 8f4f44ebb12204742b3062d072656b0b, type: 3}
-  playerColor: {r: 1, g: 0.3137255, b: 0.22352943, a: 0}
+  playerColor: {r: 1, g: 0.3137255, b: 0.22352943, a: 1}
 --- !u!1 &5568962110915646329
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,7 +545,7 @@ MonoBehaviour:
   playerBigHover: {fileID: 21300000, guid: 3c94fd2d4bb16c84aa4f90c3bd15d8ce, type: 3}
   playerSmall: {fileID: 21300000, guid: fdbda9ca930201e43af83f214c98dc52, type: 3}
   playerSmallHover: {fileID: 21300000, guid: 45a8721617e17bc4a8920ae7f16b2231, type: 3}
-  playerColor: {r: 0.24313727, g: 0.16470589, b: 1, a: 0}
+  playerColor: {r: 0.24313727, g: 0.16470589, b: 1, a: 1}
 --- !u!1 &5568962110931749289
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,7 +595,7 @@ MonoBehaviour:
   playerBigHover: {fileID: 21300000, guid: 566187ef7b7979041869b2880bad55e8, type: 3}
   playerSmall: {fileID: 21300000, guid: 8c01cbf17b164c4438e8b21648f92cf3, type: 3}
   playerSmallHover: {fileID: 21300000, guid: 043061ce9ffc3354cab32f99f869dc79, type: 3}
-  playerColor: {r: 0.019607844, g: 0.8000001, b: 0.27450982, a: 0}
+  playerColor: {r: 0.019607844, g: 0.8000001, b: 0.27450982, a: 1}
 --- !u!1 &5568962111034153313
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,7 +645,7 @@ MonoBehaviour:
   playerBigHover: {fileID: 21300000, guid: ab876dd543aa6a7439fca978f4773cde, type: 3}
   playerSmall: {fileID: 21300000, guid: 938bc3a9bbf45fc4f8e1cb254c5f65b1, type: 3}
   playerSmallHover: {fileID: 21300000, guid: 1f051a4ba38832540a0aa0265ce13795, type: 3}
-  playerColor: {r: 0.909804, g: 0.22352943, b: 1, a: 0}
+  playerColor: {r: 0.909804, g: 0.22352943, b: 1, a: 1}
 --- !u!1 &5568962111338409224
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,7 +695,7 @@ MonoBehaviour:
   playerBigHover: {fileID: 21300000, guid: 4ce919a2f45c77547a28967f89c0f8e1, type: 3}
   playerSmall: {fileID: 21300000, guid: 0dae043cbc1bed04390e785c99ab6cc2, type: 3}
   playerSmallHover: {fileID: 21300000, guid: 54cdc1d7629a88d4c808c2800717186a, type: 3}
-  playerColor: {r: 1, g: 0.49803925, b: 0.70980394, a: 0}
+  playerColor: {r: 1, g: 0.49803925, b: 0.70980394, a: 1}
 --- !u!1 &5568962111354402640
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,7 +745,7 @@ MonoBehaviour:
   playerBigHover: {fileID: 21300000, guid: abd7bd0f8680de64fb973885f772cdf4, type: 3}
   playerSmall: {fileID: 21300000, guid: cda89d86cfd01d64b9af7f35e2fa499b, type: 3}
   playerSmallHover: {fileID: 21300000, guid: fc322be19da71ed469033785baa17005, type: 3}
-  playerColor: {r: 1, g: 0.5647059, b: 0, a: 0}
+  playerColor: {r: 1, g: 0.5647059, b: 0, a: 1}
 --- !u!1 &5568962111582599883
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,7 +795,7 @@ MonoBehaviour:
   playerBigHover: {fileID: 21300000, guid: 6ef5ce26af14a34479829864f5b999a1, type: 3}
   playerSmall: {fileID: 21300000, guid: 2311d7b613b762147916e03dc9977bff, type: 3}
   playerSmallHover: {fileID: 21300000, guid: ee352a028c901e247bf8379bfca0a18f, type: 3}
-  playerColor: {r: 0.85098046, g: 1, b: 0.16470589, a: 0}
+  playerColor: {r: 0.85098046, g: 1, b: 0.16470589, a: 1}
 --- !u!1 &5568962111680118465
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,4 +845,4 @@ MonoBehaviour:
   playerBigHover: {fileID: 21300000, guid: 4a922252547b750438aa909d8671f537, type: 3}
   playerSmall: {fileID: 21300000, guid: e2728a1842a766042aae7ed0dd1360d3, type: 3}
   playerSmallHover: {fileID: 21300000, guid: bc5b10cfcdbcff14195220b0f9ce8bd3, type: 3}
-  playerColor: {r: 1, g: 0.007843138, b: 0.17254902, a: 0}
+  playerColor: {r: 1, g: 0.007843138, b: 0.17254902, a: 1}
