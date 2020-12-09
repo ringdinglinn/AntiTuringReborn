@@ -92,6 +92,10 @@ public class ChatbotBehaviour : MonoBehaviour {
             //getSessionIdOfPandoraResponse(wr.downloadHandler.text);
 
             string r = sanitizePandoraResponse(wr.downloadHandler.text); //Where we get our chatbots response message
+            Debug.Log(r);
+            r =   r.Remove(0,1);
+            r  = r .Remove(r.Length - 1, 1);
+            Debug.Log(r);
             Response response = new Response(chatroomID, r, chatbotAIs[chatbotID].fakeName, chatbotAIs[chatbotID].playerVisualPalletID);
             responses.Add(response);
             SendResponseToServer(response);
@@ -121,7 +125,7 @@ public class ChatbotBehaviour : MonoBehaviour {
     }
 
     private void SendResponseToServer(Response response) {
-        Debug.Log("ChatbotBehaviour, SendResponseToServer, chatroom id = " + response.chatroomID);
+        Debug.Log("ChatbotBehaviour, SendResponseToServer, chatroom id = " + response.chatroomID);    
         networkManager.GamePlayers[0].ReceiveMessageFromChatbot(response.text, response.chatroomID, response.fakeName, response.visualPalletID);
     }
 }

@@ -4765,8 +4765,6 @@ MonoBehaviour:
   playerID: 0
   left: 0
   playerIsDead: 0
-  maxNrOfAllowedConnetionsAttempts: 3
-  failedConnectionAttempts: 0
   playerVisualPalletID: 0
 --- !u!114 &5066766018890470629
 MonoBehaviour:
@@ -21486,7 +21484,7 @@ PrefabInstance:
     - target: {fileID: 5932025061717631914, guid: d5a4ba69bb2e74c58ab782223a66dcaf,
         type: 3}
       propertyPath: m_Value
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6225575362898327286, guid: d5a4ba69bb2e74c58ab782223a66dcaf,
         type: 3}

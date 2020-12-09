@@ -26,11 +26,11 @@ public class GameManagerAT : NetworkBehaviour
 
     [SerializeField] private int currentNrOfMadeAIConncetions;
    
-    [SerializeField] private int maxNrOfAllowedFailedConnectionAttemptsAIPlayers = 3;
-    public int currentNrOfAiPlayerFailedConnectionsAttempts = 3;
+    public int maxNrOfAllowedFailedConnectionAttemptsAIPlayers = 3;
+    public int currentNrOfAiPlayerFailedConnectionsAttempts = 0;
 
-    [SerializeField] private int investigatorsFailedConnections;
-    [SerializeField] private int investigatorsMaxAllowedFailedConnections = 3;
+   public int investigatorsFailedConnections;
+    public int investigatorsMaxAllowedFailedConnections = 3;
 
 
     [Header("Detemind When Win And Loses States Should be called")]      
@@ -361,12 +361,12 @@ public class GameManagerAT : NetworkBehaviour
         {
             if (newDeadPlayerRealName != player.realName)
             {
-                player.gameManagerAT.messagesHandler.HandlePlayerDied("Investigators Destroyed A Player", testSprite, newDeadPlayerRealName, "Investigators Found And Destroyed " + newDeadPlayerRealName + " 3 Human Players Remaining");
+                player.gameManagerAT.messagesHandler.HandlePlayerDied("Investigators Destroyed A Player", testSprite, newDeadPlayerRealName, "Investigators Found And Destroyed " + newDeadPlayerRealName + " "+ currentHumanBotsAlive + "Human Players Remaining");
             }
 
             if (newDeadPlayerRealName == player.realName)
             {
-                player.gameManagerAT.messagesHandler.HandlePlayerDied("Investigators Destroyes A Player", testSprite, newDeadPlayerRealName, "Investigators Found And Destroyed You. 3 Human Players Remaining");
+                player.gameManagerAT.messagesHandler.HandlePlayerDied("Investigators Destroyes A Player", testSprite, newDeadPlayerRealName, "Investigators Found And Destroyed You. " + currentHumanBotsAlive + " Human Players Remaining");
               
                 player.SetIsDead(true);
             }
