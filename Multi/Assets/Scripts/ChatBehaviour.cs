@@ -305,8 +305,6 @@ public class ChatBehaviour : NetworkBehaviour
                 
             }
 
-            Text text1 = 
-
 
             for (int i = 0; i < message.Length; i++)
             {
@@ -318,7 +316,6 @@ public class ChatBehaviour : NetworkBehaviour
                 if (textGen.lineCount > 1)
                 {
                     UILineInfo x = textGen.lines[1];
-                     width1 = textGen.GetPreferredWidth(x.l, textGenerationSettings);
                 }
              
                
