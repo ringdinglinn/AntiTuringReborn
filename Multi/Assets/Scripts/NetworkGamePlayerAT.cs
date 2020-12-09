@@ -46,9 +46,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
     public bool playerIsDead = true;
 
-    [Header("Connection Attempts")]
-    public int maxNrOfAllowedConnetionsAttempts = 3;
-    public int failedConnectionAttempts = 0;
+   
 
    
     public int playerVisualPalletID;

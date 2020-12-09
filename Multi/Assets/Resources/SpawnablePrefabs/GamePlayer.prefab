@@ -4806,8 +4806,6 @@ MonoBehaviour:
   playerID: 0
   left: 0
   playerIsDead: 0
-  maxNrOfAllowedConnetionsAttempts: 3
-  failedConnectionAttempts: 0
   playerVisualPalletID: 0
 --- !u!114 &5066766018890470629
 MonoBehaviour:

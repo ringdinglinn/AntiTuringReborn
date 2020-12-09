@@ -180,18 +180,20 @@ public class TagManagement : NetworkBehaviour
     public void OpenConfirmWindow(string tagedPlayerRealName, string tagedPlayerFakeName, Image playerVisual)
     {
         confirmeWindow.SetActive(true);
-        clickedPlayerPicture = playerVisual;
+        clickedPlayerPicture.sprite = playerVisual.sprite;
         playerFakeName.text = tagedPlayerFakeName;
 
         if (networkGamePlayerAT.isInvestigator)
         {
             buttonText.text = "Destroy Bot";
+            remainingAttemptsText.text = "Reamaining Attempts: " + gameManagerAT.investigatorsFailedConnections + "/" + gameManagerAT.investigatorsMaxAllowedFailedConnections;
         }
         else
         {
             buttonText.text = "Attempt Connection";
+            remainingAttemptsText.text = "Reamaining Attempts: " + gameManagerAT.currentNrOfAiPlayerFailedConnectionsAttempts + "/" + gameManagerAT.maxNrOfAllowedFailedConnectionAttemptsAIPlayers;
         }
-        remainingAttemptsText.text = "Reamaining Attempts: " + networkGamePlayerAT.failedConnectionAttempts + "/" + networkGamePlayerAT.maxNrOfAllowedConnetionsAttempts;
+    
     }
     public void CancleTagProcessCloseConfirmWindow()
     {
