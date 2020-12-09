@@ -252,4 +252,17 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
         Room.randomPalletsInt[index] = value;
     }
 
-} 
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Sounds
+
+    [ClientRpc]
+    public void RpcStopLobbyMusic() {
+        Room.lobbyMusic.Stop();
+    }
+
+    [ClientRpc]
+    public void RpcStartLobbyMusic() {
+        Room.lobbyMusic.Play();
+    }
+}

@@ -19,6 +19,11 @@ public class NetworkManagerAT : NetworkManager {
     public StudioEventEmitter startGameSound;
     public StudioEventEmitter isReadySound;
     public StudioEventEmitter isNotReadySound;
+    public StudioEventEmitter lobbyMusic;
+    public StudioEventEmitter loadingRoleMusic;
+    public StudioEventEmitter revealRoleMusic;
+    public StudioEventEmitter invTheme;
+    public StudioEventEmitter aiTheme;
 
     //Prefabs
     [Header("Room")]
@@ -81,7 +86,10 @@ public class NetworkManagerAT : NetworkManager {
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    public override void OnStartServer() => spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList<GameObject>();
+    public override void OnStartServer() {
+        spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList<GameObject>();
+        lobbyMusic.Stop();
+    }
     public override void OnServerConnect(NetworkConnection conn) {
 
        
@@ -145,6 +153,7 @@ public class NetworkManagerAT : NetworkManager {
         if (SceneManager.GetActiveScene().path == menuScene) {
             if (!IsReadyToStart()) return;
 
+            StopLobbyMusic();
             startGameSound.Play();
             nrPlayers = RoomPlayers.Count;
             nrOfWaitingClients = nrPlayers;
@@ -154,6 +163,37 @@ public class NetworkManagerAT : NetworkManager {
             ServerChangeScene("SampleScene");
         }     
     }
+
+    private void StopLobbyMusic() {
+        foreach (NetworkRoomPlayerAT player in RoomPlayers) {
+            player.RpcStopLobbyMusic();
+        }
+    }
+
+    public void StartLoadingRoleMusic() {
+        loadingRoleMusic.Play();
+    }
+
+    public void StopLoadingRoleMusic() {
+        loadingRoleMusic.Stop();
+    }
+
+    public void StartRevealRoleMusic() {
+        revealRoleMusic.Play();
+    }
+
+    public void StopRevealRoleMusic() {
+        revealRoleMusic.Stop();
+    }
+
+    public void StartAITheme() {
+        aiTheme.Play();
+    }
+
+    public void StartInvTheme() {
+        invTheme.Play();
+    }
+
     public override void ServerChangeScene(string newSceneName) {
         if (SceneManager.GetActiveScene().path == menuScene && newSceneName == "SampleScene") {
             for (int i = RoomPlayers.Count - 1; i >= 0; i--) {

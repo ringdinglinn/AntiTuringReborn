@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/07 Music/AI_Theme-02
   guid: eb249b62941c3043ae08b44351b4ee2b
-  Banks:
-  - {fileID: -8222185339747427395}
+  Banks: []
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -106,9 +105,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: ../FMOD/AT-FMOD/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637426362412247870
+  lastModified: 637426933690000000
   LoadResult: 0
   FileSizes: []
+  Exists: 1
+--- !u!114 &-8179234356827999033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/AI_Theme/Investigator_Watching
+  m_EditorClassIdentifier: 
+  Name: Investigator_Watching
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
   Exists: 1
 --- !u!114 &-8178465995548698043
 MonoBehaviour:
@@ -155,7 +174,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
-  Length: 1568
+  Length: 1508
 --- !u!114 &-8086337864446096789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +221,31 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 4597
+--- !u!114 &-7793168527125844767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/07 Music/AI_Theme
+  m_EditorClassIdentifier: 
+  Path: event:/07 Music/AI_Theme
+  guid: 6db72193b37ffc44a109d06bcdf52f7f
+  Banks:
+  - {fileID: -8222185339747427395}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -7624010363353985483}
+  - {fileID: -7011666903470608449}
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 191571
 --- !u!114 &-7741159248427879759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,6 +269,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1568
+--- !u!114 &-7624010363353985483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/AI_Theme/Game_Stage
+  m_EditorClassIdentifier: 
+  Name: Game_Stage
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-7492731940489230061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,6 +335,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1568
+--- !u!114 &-7011666903470608449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/AI_Theme/Investigator_Watching
+  m_EditorClassIdentifier: 
+  Name: Investigator_Watching
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-6993846402360783039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,6 +582,26 @@ MonoBehaviour:
   - Name: Desktop
     Value: 3180
   Exists: 1
+--- !u!114 &-4116151368911460110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Inv_Theme/Game_Stage
+  m_EditorClassIdentifier: 
+  Name: Game_Stage
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-4007182697911544056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -581,8 +685,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/07 Music/Inv_Theme-01
   guid: 92f08c5754e11b48822e4e9b85f0d43f
-  Banks:
-  - {fileID: -8222185339747427395}
+  Banks: []
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -650,12 +753,72 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: ../FMOD/AT-FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637426362412257843
+  lastModified: 637426933690000000
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 3718
+    Value: 3676
   Exists: 1
+--- !u!114 &-3407553972337736607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Inv_Theme/Game_Stage
+  m_EditorClassIdentifier: 
+  Name: Game_Stage
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
+--- !u!114 &-3317582761217407096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/AI_Theme/Game_Stage
+  m_EditorClassIdentifier: 
+  Name: Game_Stage
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
+--- !u!114 &-3118295129594374553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Inv_Theme/Game_Stage
+  m_EditorClassIdentifier: 
+  Name: Game_Stage
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &-2763060263081618085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -670,8 +833,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/07 Music/Inv_Theme-03
   guid: 0cc9005c492ea244bb51328672742114
-  Banks:
-  - {fileID: -8222185339747427395}
+  Banks: []
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -739,8 +901,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/07 Music/Inv_Theme-02
   guid: 05ec9346bee5374fbf092fa140a783a4
-  Banks:
-  - {fileID: -8222185339747427395}
+  Banks: []
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -817,6 +978,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1504
+--- !u!114 &-1875217430765993327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/AI_Theme/Investigator_Watching
+  m_EditorClassIdentifier: 
+  Name: Investigator_Watching
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &-1869843452359569240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -978,6 +1159,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 6246
+--- !u!114 &-427112650672987994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/AI_Theme/Game_Stage
+  m_EditorClassIdentifier: 
+  Name: Game_Stage
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-382034936291139918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1115,24 +1316,20 @@ MonoBehaviour:
   - {fileID: 2594707380863770075}
   - {fileID: -7134915613211686258}
   - {fileID: -2684460360000244314}
-  - {fileID: -2337724637539783946}
-  - {fileID: -2763060263081618085}
   - {fileID: -8596719866710087217}
   - {fileID: 5336218842952541580}
   - {fileID: -2758261113861058}
-  - {fileID: 7403228545153720577}
   - {fileID: -3893103602654223736}
-  - {fileID: -3873571353730050809}
   - {fileID: 7725952686564695264}
-  - {fileID: 2999289868447874949}
   - {fileID: 3091621313437730316}
-  - {fileID: -9215382709316373118}
+  - {fileID: -7793168527125844767}
+  - {fileID: 3512010104865907081}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8222185339747427395}
   StringsBanks:
   - {fileID: -3502452591779404042}
-  stringsBankWriteTime: 637426362412257843
+  stringsBankWriteTime: 637426933690000000
   cacheVersion: 5
 --- !u!114 &320789741567481777
 MonoBehaviour:
@@ -1341,6 +1538,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 519
+--- !u!114 &1837741619348388697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/AI_Theme/Game_Stage
+  m_EditorClassIdentifier: 
+  Name: Game_Stage
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &1867571016101028247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1433,6 +1650,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
+--- !u!114 &2206992567288974626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Inv_Theme/Game_Stage
+  m_EditorClassIdentifier: 
+  Name: Game_Stage
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &2343272757985612457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1570,7 +1807,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
-  Length: 1568
+  Length: 340
 --- !u!114 &2999289868447874949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1585,8 +1822,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/07 Music/AI_Theme-03
   guid: 9dbe54283d1be54fab7e9dd81d3058c6
-  Banks:
-  - {fileID: -8222185339747427395}
+  Banks: []
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -1708,7 +1944,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
-  Length: 1568
+  Length: 320
 --- !u!114 &3340764862200952737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1755,6 +1991,30 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1148
+--- !u!114 &3512010104865907081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/07 Music/Inv_Theme
+  m_EditorClassIdentifier: 
+  Path: event:/07 Music/Inv_Theme
+  guid: 92f08c5754e11b48822e4e9b85f0d43f
+  Banks:
+  - {fileID: -8222185339747427395}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -4116151368911460110}
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 133307
 --- !u!114 &3732932953708963870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2146,6 +2406,26 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 494
+--- !u!114 &5626588977567585686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/AI_Theme/Investigator_Watching
+  m_EditorClassIdentifier: 
+  Name: Investigator_Watching
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &5887665033967718369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2385,8 +2665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/07 Music/AI_Theme-01
   guid: 6db72193b37ffc44a109d06bcdf52f7f
-  Banks:
-  - {fileID: -8222185339747427395}
+  Banks: []
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
