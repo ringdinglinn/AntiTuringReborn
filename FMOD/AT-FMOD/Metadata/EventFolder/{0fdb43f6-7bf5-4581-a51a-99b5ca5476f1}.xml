@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="EventFolder" id="{0fdb43f6-7bf5-4581-a51a-99b5ca5476f1}">
+		<property name="name">
+			<value>EscapeDown</value>
+		</property>
+		<relationship name="folder">
+			<destination>{8f139ec9-a5cf-468c-91d9-ec69aeab75a8}</destination>
+		</relationship>
+	</object>
+</objects>

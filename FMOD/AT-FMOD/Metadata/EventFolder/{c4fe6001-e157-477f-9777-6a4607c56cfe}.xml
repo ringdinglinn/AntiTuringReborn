@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="EventFolder" id="{c4fe6001-e157-477f-9777-6a4607c56cfe}">
+		<property name="name">
+			<value>SpaceUp</value>
+		</property>
+		<relationship name="folder">
+			<destination>{8f139ec9-a5cf-468c-91d9-ec69aeab75a8}</destination>
+		</relationship>
+	</object>
+</objects>
