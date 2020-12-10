@@ -25,6 +25,16 @@ public class NetworkManagerAT : NetworkManager {
     public StudioEventEmitter invTheme;
     public StudioEventEmitter aiTheme;
 
+    [Header("Key Sounds")]
+    public StudioEventEmitter normalKeyDownSound;
+    public StudioEventEmitter normalKeyUpSound;
+    public StudioEventEmitter spaceDownSound;
+    public StudioEventEmitter spaceUpSound;
+    public StudioEventEmitter enterDownSound;
+    public StudioEventEmitter enterUpSound;
+    public StudioEventEmitter escapeDownSound;
+    public StudioEventEmitter escapeUpSound;
+
     //Prefabs
     [Header("Room")]
     [SerializeField] private NetworkRoomPlayerAT roomPlayerPrefab;

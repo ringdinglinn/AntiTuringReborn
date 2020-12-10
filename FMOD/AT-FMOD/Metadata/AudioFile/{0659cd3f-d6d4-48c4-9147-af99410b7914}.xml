@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{0659cd3f-d6d4-48c4-9147-af99410b7914}">
+		<property name="assetPath">
+			<value>Keys/EnterUp/EnterUp-014.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.068791666666666668</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{04e4a58b-fb14-496f-9c96-3f242e8b8dc7}</destination>
+		</relationship>
+	</object>
+</objects>

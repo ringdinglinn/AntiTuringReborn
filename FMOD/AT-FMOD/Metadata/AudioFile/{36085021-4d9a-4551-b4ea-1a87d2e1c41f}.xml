@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{36085021-4d9a-4551-b4ea-1a87d2e1c41f}">
+		<property name="assetPath">
+			<value>Keys/NormalKeyDown/Tasten-036.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.089604166666666665</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{04e4a58b-fb14-496f-9c96-3f242e8b8dc7}</destination>
+		</relationship>
+	</object>
+</objects>

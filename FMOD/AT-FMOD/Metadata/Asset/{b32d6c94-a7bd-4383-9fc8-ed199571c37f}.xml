@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="EncodableAsset" id="{b32d6c94-a7bd-4383-9fc8-ed199571c37f}">
+		<property name="assetPath">
+			<value>Keys/SpaceDown/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{04e4a58b-fb14-496f-9c96-3f242e8b8dc7}</destination>
+		</relationship>
+	</object>
+</objects>

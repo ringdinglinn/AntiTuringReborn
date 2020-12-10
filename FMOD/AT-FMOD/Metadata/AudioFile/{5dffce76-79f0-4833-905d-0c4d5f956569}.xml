@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{5dffce76-79f0-4833-905d-0c4d5f956569}">
+		<property name="assetPath">
+			<value>Keys/NormalKeyUp/Tasten-012.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.053020833333333336</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{04e4a58b-fb14-496f-9c96-3f242e8b8dc7}</destination>
+		</relationship>
+	</object>
+</objects>

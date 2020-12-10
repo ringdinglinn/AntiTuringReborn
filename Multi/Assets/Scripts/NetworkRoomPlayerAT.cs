@@ -38,11 +38,15 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
     
     private NetworkManagerAT room;
 
+   
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public override void OnStartAuthority() {
         CmdSetDisplayName(PlayerNameInput.DisplayName);
         lobbyUI.SetActive(true);
+
+     
     }
+
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public void SetLeader(bool value) {
