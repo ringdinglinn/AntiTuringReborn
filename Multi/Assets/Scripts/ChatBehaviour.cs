@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using System;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using FMODUnity;
 
 
 public class ChatBehaviour : NetworkBehaviour
@@ -95,7 +96,9 @@ public class ChatBehaviour : NetworkBehaviour
         for (int i = 1; i < inputFields.Count; i++) chatbotRoomsIndex.Add(i, false);
     }
  
-
+    [Header("SoundEffect")]
+    public StudioEventEmitter digitalLetterVersion1;
+    public StudioEventEmitter digitalLetterVersion2;
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public override void OnStartClient()
     {
@@ -171,7 +174,7 @@ public class ChatBehaviour : NetworkBehaviour
             newMessage1.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(230, 60);
             listOfChatroomLists[chatroomID].Add(newMessage1);
            // mainChatDisplayContentList.Add(newMessage1);
-            StartCoroutine(BuildText(newMessage1.GetComponent<Text>(), name + "\n"   + message  , 0.02f));
+            StartCoroutine(BuildText(newMessage1.GetComponent<Text>(), name + "\n"   + message  , 0.02f,false));
         }
 
         if (networkPlayer.chatroomStates[chatroomID].leftName == name)
@@ -180,7 +183,7 @@ public class ChatBehaviour : NetworkBehaviour
             newMessage1.GetComponent<Text>().fontSize = 12;
             newMessage1.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(230, 60);
             listOfChatroomLists[chatroomID].Add(newMessage1);
-            StartCoroutine(BuildText(newMessage1.GetComponent<Text>(), name + "\n"   + message , 0.02f));
+            StartCoroutine(BuildText(newMessage1.GetComponent<Text>(), name + "\n"   + message , 0.02f,false));
 
         }
             if (chatroomID == networkPlayer.chatroomID)
@@ -201,7 +204,7 @@ public class ChatBehaviour : NetworkBehaviour
                     newMessage2.GetComponent<Text>().rectTransform.anchoredPosition = new Vector3(0, 0, 0);
 
                  //   listOfChatroomLists[chatroomID].Add(newMessage2);
-                    StartCoroutine(BuildText(newMessage2.GetComponent<Text>(), name + "\n"   + message , 0.02f));
+                    StartCoroutine(BuildText(newMessage2.GetComponent<Text>(), name + "\n"   + message , 0.02f,true));
                 }
                 if (networkPlayer.chatroomStates[chatroomID].leftName == name)
                 {
@@ -209,17 +212,21 @@ public class ChatBehaviour : NetworkBehaviour
                     newMessage2.GetComponent<Text>().fontSize = 20;
                     newMessage2.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(230, 90);
                   //  listOfChatroomLists[chatroomID].Add(newMessage2);
-                    StartCoroutine(BuildText(newMessage2.GetComponent<Text>(), name + "\n"   + message  , 0.02f));
+                    StartCoroutine(BuildText(newMessage2.GetComponent<Text>(), name + "\n"   + message  , 0.02f,true));
                 }
                 mainChatDisplayContentList.Add(newMessage2);
             }
         
     }
-    private IEnumerator BuildText(Text text,  string message, float textSpeed)
+    private IEnumerator BuildText(Text text,  string message, float textSpeed, bool textForMainCanvas)
     {
         for (int i = 0; i < message.Length; i++)
         {
             text.text = string.Concat(text.text, message[i]);
+            if (textForMainCanvas == true)
+            {
+                digitalLetterVersion1.Play();
+            }
             yield return new WaitForSeconds(textSpeed);
         }           
     }

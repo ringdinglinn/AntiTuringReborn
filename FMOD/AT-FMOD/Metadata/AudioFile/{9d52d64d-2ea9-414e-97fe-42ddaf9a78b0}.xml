@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.00.00">
 	<object class="AudioFile" id="{9d52d64d-2ea9-414e-97fe-42ddaf9a78b0}">
 		<property name="assetPath">
-			<value>Keys/SpaceDown/SpacebarDown-006.wav</value>
+			<value>08_Keys/SpaceDown/SpacebarDown-006.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>

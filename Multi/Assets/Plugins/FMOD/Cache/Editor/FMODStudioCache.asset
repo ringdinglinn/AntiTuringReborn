@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: ../FMOD/AT-FMOD/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637431977404107734
+  lastModified: 637432009825761563
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -198,6 +198,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 185
+--- !u!114 &-8130547014722061479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/AI_Theme/Game_Stage
+  m_EditorClassIdentifier: 
+  Name: Game_Stage
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-8110125320145683782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,8 +307,8 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 4767796895970385912}
-  - {fileID: -6338220458421276834}
+  - {fileID: -8130547014722061479}
+  - {fileID: 8310402590520596788}
   MinDistance: 0
   MaxDistance: 0
   Length: 191571
@@ -509,7 +529,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-5758369150186841575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -602,6 +622,26 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2190
+--- !u!114 &-5043967569462578577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Inv_Theme/Game_Stage
+  m_EditorClassIdentifier: 
+  Name: Game_Stage
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-4951383072135433486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -882,11 +922,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: ../FMOD/AT-FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637431977404157600
+  lastModified: 637432009825841235
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 4138
+    Value: 4244
   Exists: 1
 --- !u!114 &-3407553972337736607
 MonoBehaviour:
@@ -1607,12 +1647,14 @@ MonoBehaviour:
   - {fileID: 2180802616006907510}
   - {fileID: 5139494844041238884}
   - {fileID: 3525251394047622634}
+  - {fileID: 1243178912644747956}
+  - {fileID: 2534093059943736750}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8222185339747427395}
   StringsBanks:
   - {fileID: -3502452591779404042}
-  stringsBankWriteTime: 637431977404157600
+  stringsBankWriteTime: 637432009825841235
   cacheVersion: 5
 --- !u!114 &274653691811952060
 MonoBehaviour:
@@ -1772,6 +1814,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 350
+--- !u!114 &1243178912644747956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/09 Digital Letters/LetterVersion2
+  m_EditorClassIdentifier: 
+  Path: event:/09 Digital Letters/LetterVersion2
+  guid: f67ddeb6004d6846bcb330ba92f94942
+  Banks:
+  - {fileID: -8222185339747427395}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 102
 --- !u!114 &1271813658014237638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2085,6 +2150,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 3771
+--- !u!114 &2534093059943736750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/09 Digital Letters/LetterVersion1
+  m_EditorClassIdentifier: 
+  Path: event:/09 Digital Letters/LetterVersion1
+  guid: ffa6f579e74f3d498f87e4517e5c6b17
+  Banks:
+  - {fileID: -8222185339747427395}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 105
 --- !u!114 &2558896777517890691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2417,7 +2505,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 6270781588109164754}
+  - {fileID: -5043967569462578577}
   MinDistance: 0
   MaxDistance: 0
   Length: 133307
@@ -2759,7 +2847,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &4777181448369597620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2848,7 +2936,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
-  Length: 68
+  Length: 1068
 --- !u!114 &5336218842952541580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3021,7 +3109,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &6579085998804035152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3515,6 +3603,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 439
+--- !u!114 &8310402590520596788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/AI_Theme/Investigator_Watching
+  m_EditorClassIdentifier: 
+  Name: Investigator_Watching
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &8601182749440344843
 MonoBehaviour:
   m_ObjectHideFlags: 0

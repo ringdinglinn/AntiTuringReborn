@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.00.00">
 	<object class="AudioFile" id="{f2af7668-a2f7-4697-87d6-77ab424d0f20}">
 		<property name="assetPath">
-			<value>Keys/EnterDown/EnterDown-018.wav</value>
+			<value>08_Keys/EnterDown/EnterDown-018.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>

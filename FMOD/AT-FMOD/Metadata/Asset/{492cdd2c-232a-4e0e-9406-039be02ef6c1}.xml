@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.00.00">
 	<object class="EncodableAsset" id="{492cdd2c-232a-4e0e-9406-039be02ef6c1}">
 		<property name="assetPath">
-			<value>Keys/EnterUp/</value>
+			<value>08_Keys/EnterUp/</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{04e4a58b-fb14-496f-9c96-3f242e8b8dc7}</destination>

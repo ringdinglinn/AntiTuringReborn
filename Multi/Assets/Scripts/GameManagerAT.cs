@@ -545,8 +545,8 @@ public class GameManagerAT : NetworkBehaviour
     public void StartStartScreen1()
     {
         if (isLocalPlayer) networkManagerAT.StartLoadingRoleMusic();
-        StartCoroutine(StartScreen1());
-       // StartCoroutine(CloseStartScreen2());
+      //  StartCoroutine(StartScreen1());
+        StartCoroutine(CloseStartScreen2());
 
     }
     IEnumerator StartScreen1()
@@ -605,7 +605,7 @@ public class GameManagerAT : NetworkBehaviour
     IEnumerator CloseStartScreen2()
     {
         if (isLocalPlayer) networkManagerAT.StopRevealRoleMusic();
-        yield return new WaitForSeconds(12);
+        yield return new WaitForSeconds(1);
         startScreen1.SetActive(false);
         startScreen2.SetActive(false);
         if (isLocalPlayer) {

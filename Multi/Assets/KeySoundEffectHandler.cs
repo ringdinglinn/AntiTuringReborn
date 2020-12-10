@@ -34,19 +34,19 @@ public class KeySoundEffectHandler : MonoBehaviour
                     if (code == KeyCode.Space)
                     {
                         //Play Space Key Down
-                        Debug.Log("Space down ");
+                       // Debug.Log("Space down ");
                         spaceDownSound.Play();
                     }
                     else if (code == KeyCode.Return)
                     {
                         //Play Enter Key Down
-                        Debug.Log("Enter down ");
+                     //   Debug.Log("Enter down ");
                         enterDownSound.Play();
                     }
                     else if (code == KeyCode.Mouse0 || code == KeyCode.Mouse1 || code == KeyCode.Mouse2)
                     {
                         //Play Enter Key Down
-                        Debug.Log("Mouse down ");
+                    //    Debug.Log("Mouse down ");
                     }
                     else if (code == KeyCode.Escape)
                     {
@@ -55,7 +55,7 @@ public class KeySoundEffectHandler : MonoBehaviour
                     else if (Input.GetKey(code))
                     {
                         //Play Normal Key Down
-                        Debug.Log(code + " Key Down");
+                    //    Debug.Log(code + " Key Down");
                         normalKeyDownSound.Play();
                     }
                 }
@@ -75,7 +75,7 @@ public class KeySoundEffectHandler : MonoBehaviour
                     m_activeInputs.Add(code);
                     pressedInput.Add(code);
 
-                    Debug.Log(code + " was pressed");
+                    //Debug.Log(code + " was pressed");
                     break;
                 }
             }
@@ -97,19 +97,19 @@ public class KeySoundEffectHandler : MonoBehaviour
                     if (code == KeyCode.Space)
                     {
                         //Play Space Key Down
-                        Debug.Log("Space Up ");
+                      //  Debug.Log("Space Up ");
                         spaceUpSound.Play();
                     }
                     else if (code == KeyCode.Return)
                     {
                         //Play Enter Key Down
-                        Debug.Log("Enter UP ");
+                      //  Debug.Log("Enter UP ");
                         enterUpSound.Play();
                     }
                     else if (code == KeyCode.Mouse0 || code == KeyCode.Mouse1 || code == KeyCode.Mouse2)
                     {
                         //Play Enter Key Down
-                        Debug.Log("Mouse UP ");
+                     //   Debug.Log("Mouse UP ");
                     }
                     else if (code == KeyCode.Escape)
                     {
@@ -118,7 +118,7 @@ public class KeySoundEffectHandler : MonoBehaviour
                     else
                     {
                         //Play Normal Key Down
-                        Debug.Log(code + " Key UP");
+                   //     Debug.Log(code + " Key UP");
                         normalKeyUpSound.Play();
                     }
                 

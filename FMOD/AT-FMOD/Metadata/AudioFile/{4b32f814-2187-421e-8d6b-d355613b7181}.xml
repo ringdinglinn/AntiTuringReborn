@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.00.00">
 	<object class="AudioFile" id="{4b32f814-2187-421e-8d6b-d355613b7181}">
 		<property name="assetPath">
-			<value>Keys/NormalKeyDown/Tasten-030.wav</value>
+			<value>08_Keys/NormalKeyDown/Tasten-030.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>
