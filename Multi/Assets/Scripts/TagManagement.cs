@@ -122,7 +122,7 @@ public class TagManagement : NetworkBehaviour
     #region //Opening And Closing Tag Panel
     public void OpenTagPanel()
     {
-        moveViewTagPanel.OpenTagPanel();
+        moveViewTagPanel.OpenTagPanel(600, 800);
         openTagPanelButton.SetActive(false);
         closeTagPanelButton.SetActive(true);
     }

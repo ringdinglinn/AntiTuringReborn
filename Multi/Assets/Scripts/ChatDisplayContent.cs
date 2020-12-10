@@ -16,4 +16,6 @@ public class ChatDisplayContent : MonoBehaviour
     public GameObject scrollPanelContent;
     public GameObject inputField;
     public GameObject investigatorVisual;
+    public Sprite baseChatroomSprite;
+    public Sprite selectedChatroomSprite;
 }

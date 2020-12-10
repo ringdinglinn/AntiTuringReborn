@@ -253,6 +253,9 @@ MonoBehaviour:
   scrollPanelContent: {fileID: 874060736276741974}
   inputField: {fileID: 0}
   investigatorVisual: {fileID: 3699318342489069667}
+  baseChatroomSprite: {fileID: 21300000, guid: c721c29dffed64872a5a9d137b19c3ac, type: 3}
+  selectedChatroomSprite: {fileID: 21300000, guid: 4a6c65b53be9d412dbe749fa947b74b2,
+    type: 3}
 --- !u!1 &874060736276741974
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,7 +937,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 0
+    m_Mode: 3
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}

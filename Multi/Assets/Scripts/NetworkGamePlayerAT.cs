@@ -153,7 +153,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     //Start a Player Joins a Chatroom logic 
     public void CheckRequestFromJoinButton() {
-     
+
         for (int x = 0; joinButtonsList.Count > x; x++) {
             if (EventSystem.current.currentSelectedGameObject == joinButtonsList[x]) {
                 chatroomID = x;
@@ -267,6 +267,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     [ClientRpc]
     private void RpcOpenChatroom() {
         moveView.MoveViewRight();
+        chatBehaviour.chatDisplayContents[chatroomID].GetComponent<ChatDisplayContent>().joinButton.GetComponent<Image>().sprite = chatBehaviour.chatDisplayContents[chatroomID].GetComponent<ChatDisplayContent>().selectedChatroomSprite;
     }
     #endregion
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
@@ -335,6 +336,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     [ClientRpc]
     private void RpcCloseChatroom() {
         moveView.MoveViewLeft();
+        chatBehaviour.chatDisplayContents[chatroomID].GetComponent<ChatDisplayContent>().joinButton.GetComponent<Image>().sprite = chatBehaviour.chatDisplayContents[chatroomID].GetComponent<ChatDisplayContent>().baseChatroomSprite;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
