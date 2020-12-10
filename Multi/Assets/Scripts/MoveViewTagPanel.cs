@@ -16,39 +16,36 @@ public class MoveViewTagPanel : MonoBehaviour
 
     public void OpenTagPanel(float xSize, float ySize)
     {
-        //LeanTween.move(GetComponent<RectTransform>(), new Vector2(-700, 0), 1f).setEase(LeanTweenType.easeOutExpo);
         tagPanel.SetActive(true);
         GetDefaultSize();
-        //LeanTween.scale(tagPanel.GetComponent<RectTransform>(), new Vector3(xSize, ySize, 1), 1f);
         StartCoroutine(OpenTagPanel(tagPanel.GetComponent<RectTransform>(), xSize, ySize, 50));
     }
 
     public void CloseTagPanel()
     {
-        //LeanTween.move(GetComponent<RectTransform>(), new Vector2(0, 0), 1f).setEase(LeanTweenType.easeOutExpo);
-        //LeanTween.scale(tagPanel.GetComponent<RectTransform>(), new Vector3(defaultX, defaultY, 1), 1f);
-        //tagPanel.SetActive(false);
         StartCoroutine(CloseTagPanel(tagPanel.GetComponent<RectTransform>(), 50));
     }
 
     IEnumerator OpenTagPanel(RectTransform rect, float xSize, float ySize, float steps) {
         float deltaX = xSize - defaultX;
-        deltaX /= steps;
         float deltaY = ySize - defaultY;
-        deltaY /= steps;
+        float factorX = deltaX / Mathf.Log(steps);
+        float factorY = deltaY / Mathf.Log(steps);
         for (int i = 0; i < steps; i++) {
-            rect.sizeDelta = new Vector2(rect.sizeDelta.x + deltaX, rect.sizeDelta.y + deltaY);
+            rect.sizeDelta = new Vector2(defaultX + Mathf.Log(i) * factorX, defaultY + Mathf.Log(i) * factorY);
             yield return null;
         }
     }
 
     IEnumerator CloseTagPanel(RectTransform rect, float steps) {
-        float deltaX = rect.sizeDelta.x - defaultX;
-        deltaX /= steps;
-        float deltaY = rect.sizeDelta.y - defaultY;
-        deltaY /= steps;
+        float initialX = rect.sizeDelta.x;
+        float initialY = rect.sizeDelta.y;
+        float deltaX = initialX - defaultX;
+        float deltaY = initialY - defaultY;
+        float factorX = deltaX / Mathf.Log(steps);
+        float factorY = deltaY / Mathf.Log(steps);
         for (int i = 0; i < steps; i++) {
-            rect.sizeDelta = new Vector2(rect.sizeDelta.x - deltaX, rect.sizeDelta.y - deltaY);
+            rect.sizeDelta = new Vector2(initialX - Mathf.Log(i) * factorX, initialY - Mathf.Log(i) * factorY);
             yield return null;
         }
         rect.gameObject.SetActive(false);
