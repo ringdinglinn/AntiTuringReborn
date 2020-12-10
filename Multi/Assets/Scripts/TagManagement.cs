@@ -233,7 +233,8 @@ public class TagManagement : NetworkBehaviour
             if(x.GetPlayerRealName() == tagedPlayerRealName)
             {
                 x.DisableButton();
-                x.SetButtonDisabledColor(Color.red);
+                x.SwitchSpriteToDead();
+                //x.SetButtonDisabledColor(Color.red);
             }
         }
         foreach (PlayerTagPanelHandler x in botsTagPanelHandlerList)
@@ -241,7 +242,8 @@ public class TagManagement : NetworkBehaviour
             if (x.GetPlayerRealName() == tagedPlayerRealName)
             {
                 x.DisableButton();
-                x.SetButtonDisabledColor(Color.red);
+                x.SwitchSpriteToDead();
+                //x.SetButtonDisabledColor(Color.red);
             }
         }
     }
@@ -252,7 +254,8 @@ public class TagManagement : NetworkBehaviour
             if (x.GetPlayerRealName() == tagedPlayerRealName)
             {
                 x.DisableButton();
-                x.SetButtonDisabledColor(Color.green);
+                x.SwitchSpriteToDead();
+                //x.SetButtonDisabledColor(Color.green);
             }
         }
     }

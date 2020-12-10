@@ -10,6 +10,7 @@ public class PlayerTagPanelHandler : MonoBehaviour
     [SerializeField] private Button button;
     [SerializeField] private TextMeshProUGUI playerFakeName;
     [SerializeField] private Image playerVisual;
+    [SerializeField] private Sprite deadSprite;
 
     public int visualID;
     private TagManagement tagManagement;
@@ -42,6 +43,11 @@ public class PlayerTagPanelHandler : MonoBehaviour
     {
         button.interactable =  false;
     }
+
+    public void SwitchSpriteToDead() {
+        playerVisual.sprite = deadSprite;
+    }
+
     public void SetButtonDisabledColor(Color newColor)
     {
         var newColorBlock = button.colors;

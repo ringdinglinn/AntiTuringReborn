@@ -125,6 +125,7 @@ MonoBehaviour:
   button: {fileID: 5955841084159472566}
   playerFakeName: {fileID: 2753109508920123739}
   playerVisual: {fileID: 3248006120933776646}
+  deadSprite: {fileID: 21300000, guid: b645c155875bc4fd99bb1d4c2bac1849, type: 3}
   visualID: 0
 --- !u!1 &4306433360345322207
 GameObject:

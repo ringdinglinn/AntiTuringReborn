@@ -1,14 +1,12 @@
 [LOG] System::create                           : Header version = 2.01.05. Current version = 2.01.05.
-[LOG] Manager::init                            : maxchannels = 256 studioflags = 00000006 flags 00000000 extradriverdata 0000000000000000.
+[LOG] Manager::init                            : maxchannels = 256 studioflags = 00000006 flags 00000000 extradriverdata 0x0.
 [LOG] SystemI::init                            : Initialize version=20105 (112138), maxchannels=256, flags=0x00020000
-[LOG] SystemI::setOutputInternal               : Setting output to 'FMOD WASAPI Output'
-[LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEX): wFormatTag=0xFFFE, nChannels=2, nSamplesPerSec=44100, nAvgBytesPerSec=352800, nBlockAlign=8, wBitsPerSample=32, cbSize=22.
-[LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEXTENSIBLE): wValidBitsPerSample=32, dwChannelMask=0x00000003, SubFormat=00000003-0000-0010-8000-00AA00389B71.
-[LOG] OutputWASAPI::init                       : Output buffer size: 3760 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 1024 * 4
-[WRN] SystemI::init                            : Output requires a sample rate of 44100Hz, resampling will occur.
+[LOG] SystemI::setOutputInternal               : Setting output to 'FMOD Core Audio Output'
+[LOG] OutputCoreAudio::init                    : Output running 2 channels at 48000Hz sample rate.
+[LOG] OutputCoreAudio::init                    : Maximum hardware read size: 1024 samples, Software buffer size: 512 samples, Number of software buffers: 4.
 [LOG] Thread::initThread                       : Init FMOD stream thread. Affinity: 0x8000000000000003, Priority: 0xFFFF7FFB, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
-[LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x8000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 000002454DDB3D18 isAsync 0 updatePeriod 0.02
+[LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x8000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: Yes, Sleep Time: 0, Looping: Yes.
+[LOG] AsyncManager::init                       : manager 0x7fbb04abfc08 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Affinity: 0x8000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
@@ -17,8 +15,1368 @@
 [LOG] Manager::init                            : done.
 [LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 135)
 [LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 135)
-[LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 135)
-[LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba41c90c38
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='general_hover-002', format=5, channels=2, frequency=48000, lengthbytes=3584, lengthpcm=72237, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.205882.
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba41c8f288
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='general_button-003', format=5, channels=2, frequency=48000, lengthbytes=5632, lengthpcm=75275, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.066211.
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba55086738
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='general_button-007', format=5, channels=2, frequency=48000, lengthbytes=2400, lengthpcm=75275, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.431701.
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-030', format=5, channels=2, frequency=48000, lengthbytes=1408, lengthpcm=5182, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.155670.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-041', format=5, channels=2, frequency=48000, lengthbytes=704, lengthpcm=2014, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.090973.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-036', format=5, channels=2, frequency=48000, lengthbytes=1184, lengthpcm=4301, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.214081.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-034', format=5, channels=2, frequency=48000, lengthbytes=1280, lengthpcm=4122, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.140686.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-039', format=5, channels=2, frequency=48000, lengthbytes=1472, lengthpcm=5404, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.172699.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-050', format=5, channels=2, frequency=48000, lengthbytes=1696, lengthpcm=5135, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.119415.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-035', format=5, channels=2, frequency=48000, lengthbytes=1184, lengthpcm=3948, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.075226.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-055', format=5, channels=2, frequency=48000, lengthbytes=1088, lengthpcm=4028, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.156036.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-045', format=5, channels=2, frequency=48000, lengthbytes=1184, lengthpcm=4073, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.144562.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-051', format=5, channels=2, frequency=48000, lengthbytes=1408, lengthpcm=4210, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.244141.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-031', format=5, channels=2, frequency=48000, lengthbytes=1312, lengthpcm=3847, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.338104.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-053', format=5, channels=2, frequency=48000, lengthbytes=1280, lengthpcm=4471, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.188751.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-040', format=5, channels=2, frequency=48000, lengthbytes=1152, lengthpcm=4081, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.255768.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-054', format=5, channels=2, frequency=48000, lengthbytes=1056, lengthpcm=3586, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.292847.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-044', format=5, channels=2, frequency=48000, lengthbytes=1536, lengthpcm=4234, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.487518.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-032', format=5, channels=2, frequency=48000, lengthbytes=3008, lengthpcm=12049, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.171753.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-048', format=5, channels=2, frequency=48000, lengthbytes=1600, lengthpcm=5109, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.197449.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='KeyUpEvent', format=5, channels=2, frequency=48000, lengthbytes=1376, lengthpcm=4527, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.126465.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-037', format=5, channels=2, frequency=48000, lengthbytes=1408, lengthpcm=5636, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.097290.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-033', format=5, channels=2, frequency=48000, lengthbytes=1568, lengthpcm=5255, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.355804.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-046', format=5, channels=2, frequency=48000, lengthbytes=1056, lengthpcm=4028, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.134613.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-042', format=5, channels=2, frequency=48000, lengthbytes=832, lengthpcm=2678, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.152618.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-029', format=5, channels=2, frequency=48000, lengthbytes=576, lengthpcm=996, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.064423.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-052', format=5, channels=2, frequency=48000, lengthbytes=1472, lengthpcm=5047, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.250336.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-047', format=5, channels=2, frequency=48000, lengthbytes=1312, lengthpcm=4702, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.110229.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-049', format=5, channels=2, frequency=48000, lengthbytes=1408, lengthpcm=4580, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.313110.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-056', format=5, channels=2, frequency=48000, lengthbytes=1024, lengthpcm=3452, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.144012.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-038', format=5, channels=2, frequency=48000, lengthbytes=1184, lengthpcm=4012, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.207123.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba5556dd48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-043', format=5, channels=2, frequency=48000, lengthbytes=960, lengthpcm=3770, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.151184.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-019', format=5, channels=2, frequency=48000, lengthbytes=1056, lengthpcm=3240, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.330963.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-028', format=5, channels=2, frequency=48000, lengthbytes=608, lengthpcm=1372, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.129974.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-005', format=5, channels=2, frequency=48000, lengthbytes=1760, lengthpcm=5126, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.139435.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-023', format=5, channels=2, frequency=48000, lengthbytes=800, lengthpcm=1837, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.326538.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-002', format=5, channels=2, frequency=48000, lengthbytes=1824, lengthpcm=6997, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.158173.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-024', format=5, channels=2, frequency=48000, lengthbytes=544, lengthpcm=1062, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.265228.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='NormalKeyUp', format=5, channels=2, frequency=48000, lengthbytes=1120, lengthpcm=2760, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.115814.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-012', format=5, channels=2, frequency=48000, lengthbytes=960, lengthpcm=2545, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.161682.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-022', format=5, channels=2, frequency=48000, lengthbytes=928, lengthpcm=2302, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.188843.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-007', format=5, channels=2, frequency=48000, lengthbytes=2016, lengthpcm=7805, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.165131.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-015', format=5, channels=2, frequency=48000, lengthbytes=960, lengthpcm=1992, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.161133.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-014', format=5, channels=2, frequency=48000, lengthbytes=928, lengthpcm=2722, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.326752.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-004', format=5, channels=2, frequency=48000, lengthbytes=1952, lengthpcm=8444, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.108093.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-017', format=5, channels=2, frequency=48000, lengthbytes=896, lengthpcm=2579, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.187927.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-010', format=5, channels=2, frequency=48000, lengthbytes=1088, lengthpcm=3365, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.372314.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-011', format=5, channels=2, frequency=48000, lengthbytes=864, lengthpcm=2368, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.125763.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-008', format=5, channels=2, frequency=48000, lengthbytes=1248, lengthpcm=3333, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.340637.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-018', format=5, channels=2, frequency=48000, lengthbytes=896, lengthpcm=2524, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.231049.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-009', format=5, channels=2, frequency=48000, lengthbytes=1248, lengthpcm=3210, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.235413.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-026', format=5, channels=2, frequency=48000, lengthbytes=608, lengthpcm=1698, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.121582.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-021', format=5, channels=2, frequency=48000, lengthbytes=1344, lengthpcm=3552, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.291107.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-025', format=5, channels=2, frequency=48000, lengthbytes=768, lengthpcm=1446, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.155762.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-016', format=5, channels=2, frequency=48000, lengthbytes=736, lengthpcm=1572, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.156006.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-027', format=5, channels=2, frequency=48000, lengthbytes=1248, lengthpcm=3940, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.188843.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-001', format=5, channels=2, frequency=48000, lengthbytes=1632, lengthpcm=6179, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.188995.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-006', format=5, channels=2, frequency=48000, lengthbytes=2208, lengthpcm=9817, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.142059.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-020', format=5, channels=2, frequency=48000, lengthbytes=1056, lengthpcm=3032, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.111084.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f4a3a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Tasten-003', format=5, channels=2, frequency=48000, lengthbytes=2464, lengthpcm=12130, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.164825.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fbb01f458b8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='lobby_is-ready', format=5, channels=2, frequency=48000, lengthbytes=2976, lengthpcm=19762, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.060137.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba56e5f9d8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='general_button-002', format=5, channels=2, frequency=48000, lengthbytes=2560, lengthpcm=75275, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.056487.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba57b0e6a8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='general_button-010', format=5, channels=2, frequency=48000, lengthbytes=1952, lengthpcm=75275, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.642868.
+[LOG] SoundI::release                          : AntiTuring-RECEPTION 1C (0x7fba52fef238)
+[LOG] SoundI::release                          :     AntiTuring-RECEPTION 1C (0x7fba54e5b8e8)
+[LOG] SoundI::release                          :     AntiTuring-RECEPTION 1C (0x7fbb01f66a68)
+[LOG] SystemI::createSound                     : filename = ../FMOD/AT-FMOD/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0x7fba550bae48 : node = 0x7fba550ca110
+[LOG] SystemI::createSound                     : add node to async list : head = 0x7fba555f32e8.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0x7fba550bae48
+[LOG] SystemI::createSoundInternal             :     Create name='../FMOD/AT-FMOD/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0x7fba550ca220
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Time out Message ', format=5, channels=2, frequency=48000, lengthbytes=187840, lengthpcm=658285, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.266736.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0x7fba550bae48
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[LOG] SystemI::createSound                     : filename = ../FMOD/AT-FMOD/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0x7fba55532658 : node = 0x7fba5558d100
+[LOG] SystemI::createSound                     : add node to async list : head = 0x7fba555f32e8.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0x7fba55532658
+[LOG] SystemI::createSoundInternal             :     Create name='../FMOD/AT-FMOD/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0x7fba5558d210
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='General Message Stage 1', format=5, channels=2, frequency=48000, lengthbytes=192672, lengthpcm=658285, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.259255.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0x7fba55532658
+[LOG] SoundI::release                          : General Message Stage 1 (0x7fba55532658)
+[LOG] SoundI::release                          :     General Message Stage 1 (0x7fba551f3f68)
+[LOG] SoundI::release                          :     General Message Stage 1 (0x7fba551f11f8)
+[LOG] SoundI::release                          : Time out Message  (0x7fba550bae48)
+[LOG] SoundI::release                          :     Time out Message  (0x7fba552a25d8)
+[LOG] SoundI::release                          :     Time out Message  (0x7fba56e64798)
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0x70000cf698b4
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 0x1530ec752
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 0x1530ec809
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 0x1530ec836
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 0x1530ec8d8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0x7fba551f68b8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='AntiTuring-SURVEILLANCE intro4', format=5, channels=2, frequency=48000, lengthbytes=59904, lengthpcm=229920, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.476593.
+[LOG] SystemI::createSound                     : filename = ../FMOD/AT-FMOD/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0x7fba55577408 : node = 0x7fba55579c70
+[LOG] SystemI::createSound                     : add node to async list : head = 0x7fba555f32e8.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0x7fba55577408
+[LOG] SystemI::createSoundInternal             :     Create name='../FMOD/AT-FMOD/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0x7fba55579d80
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='A.I. Theme Stage 1', format=5, channels=2, frequency=48000, lengthbytes=173920, lengthpcm=658285, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.660788.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0x7fba55577408
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[LOG] SystemI::createSound                     : filename = ../FMOD/AT-FMOD/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0x7fba555b6be8 : node = 0x7fba5556ad90
+[LOG] SystemI::createSound                     : add node to async list : head = 0x7fba555f32e8.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0x7fba555b6be8
+[LOG] SystemI::createSoundInternal             :     Create name='../FMOD/AT-FMOD/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0x7fba5556aea0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='A.I. Theme Stage 1', format=5, channels=2, frequency=48000, lengthbytes=173920, lengthpcm=658285, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.660788.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0x7fba555b6be8
+[LOG] SoundI::release                          : A.I. Theme Stage 1 (0x7fba55577408)
+[LOG] SoundI::release                          :     A.I. Theme Stage 1 (0x7fba551ef3b8)
+[LOG] SoundI::release                          :     A.I. Theme Stage 1 (0x7fba551ef548)
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[LOG] SystemI::createSound                     : filename = ../FMOD/AT-FMOD/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0x7fba5529f208 : node = 0x7fba56e5ec50
+[LOG] SystemI::createSound                     : add node to async list : head = 0x7fba555f32e8.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0x7fba5529f208
+[LOG] SystemI::createSoundInternal             :     Create name='../FMOD/AT-FMOD/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0x7fba56e5ed60
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='A.I. Theme Stage 1', format=5, channels=2, frequency=48000, lengthbytes=173920, lengthpcm=658285, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.660788.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0x7fba5529f208
+[LOG] SoundI::release                          : A.I. Theme Stage 1 (0x7fba555b6be8)
+[LOG] SoundI::release                          :     A.I. Theme Stage 1 (0x7fba56e66368)
+[LOG] SoundI::release                          :     A.I. Theme Stage 1 (0x7fba56e664f8)
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[LOG] SystemI::createSound                     : filename = ../FMOD/AT-FMOD/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0x7fba41c92688 : node = 0x7fba41c90420
+[LOG] SystemI::createSound                     : add node to async list : head = 0x7fba555f32e8.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0x7fba41c92688
+[LOG] SystemI::createSoundInternal             :     Create name='../FMOD/AT-FMOD/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0x7fba41c90530
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='A.I. Theme Stage 1', format=5, channels=2, frequency=48000, lengthbytes=173920, lengthpcm=658285, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.660788.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0x7fba41c92688
+[LOG] SoundI::release                          : A.I. Theme Stage 1 (0x7fba5529f208)
+[LOG] SoundI::release                          :     A.I. Theme Stage 1 (0x7fba5522d8b8)
+[LOG] SoundI::release                          :     A.I. Theme Stage 1 (0x7fba56e64798)
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[LOG] SystemI::createSound                     : filename = ../FMOD/AT-FMOD/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0x7fba551ee5c8 : node = 0x7fba551f1210
+[LOG] SystemI::createSound                     : add node to async list : head = 0x7fba555f32e8.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0x7fba551ee5c8
+[LOG] SystemI::createSoundInternal             :     Create name='../FMOD/AT-FMOD/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0x7fba551f1320
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='A.I. Theme Stage 1', format=5, channels=2, frequency=48000, lengthbytes=173920, lengthpcm=658285, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.660788.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0x7fba551ee5c8
+[LOG] SoundI::release                          : A.I. Theme Stage 1 (0x7fba41c92688)
+[LOG] SoundI::release                          :     A.I. Theme Stage 1 (0x7fba41c940e8)
+[LOG] SoundI::release                          :     A.I. Theme Stage 1 (0x7fba41c94278)
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[LOG] SystemI::createSound                     : filename = ../FMOD/AT-FMOD/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0x7fba5529f628 : node = 0x7fba552a2d70
+[LOG] SystemI::createSound                     : add node to async list : head = 0x7fba555f32e8.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0x7fba5529f628
+[LOG] SystemI::createSoundInternal             :     Create name='../FMOD/AT-FMOD/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0x7fba552a2e80
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='A.I. Theme Stage 1', format=5, channels=2, frequency=48000, lengthbytes=173920, lengthpcm=658285, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.660788.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0x7fba5529f628
+[LOG] SoundI::release                          : A.I. Theme Stage 1 (0x7fba551ee5c8)
+[LOG] SoundI::release                          :     A.I. Theme Stage 1 (0x7fba553e13e8)
+[LOG] SoundI::release                          :     A.I. Theme Stage 1 (0x7fba553e1578)
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[LOG] SystemI::createSound                     : filename = ../FMOD/AT-FMOD/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0x7fba55574088 : node = 0x7fba55579df0
+[LOG] SystemI::createSound                     : add node to async list : head = 0x7fba555f32e8.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0x7fba55574088
+[LOG] SystemI::createSoundInternal             :     Create name='../FMOD/AT-FMOD/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 8567424
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 124192
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0x7fba55579f00
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='A.I. Theme Stage 1', format=5, channels=2, frequency=48000, lengthbytes=173920, lengthpcm=658285, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.660788.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0x7fba55574088
+[LOG] SoundI::release                          : A.I. Theme Stage 1 (0x7fba5529f628)
+[LOG] SoundI::release                          :     A.I. Theme Stage 1 (0x7fba55531ef8)
+[LOG] SoundI::release                          :     A.I. Theme Stage 1 (0x7fba55532088)
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[WRN] FMOD_OS_Net_Listen                       : Cannot listen for connections, port 9264 is currently in use.
+[LOG] SoundI::release                          : A.I. Theme Stage 1 (0x7fba55574088)
+[LOG] SoundI::release                          :     A.I. Theme Stage 1 (0x7fba550bae48)
+[LOG] SoundI::release                          :     A.I. Theme Stage 1 (0x7fba56cd89b8)
+[LOG] SoundI::release                          :  (0x7fba55085978)
+[LOG] SoundI::release                          :     general_button-007 (0x7fba5509c068)
+[LOG] SoundI::release                          :  (0x7fba41c90c38)
+[LOG] SoundI::release                          :     general_button-003 (0x7fba41c90da8)
+[LOG] SoundI::release                          :  (0x7fba41c91078)
+[LOG] SoundI::release                          :     general_hover-002 (0x7fba41c911e8)
+[LOG] SoundI::release                          :  (0x7fba56e5ffc8)
+[LOG] SoundI::release                          :     general_button-002 (0x7fba56e60138)
+[LOG] SoundI::release                          :  (0x7fba55534558)
+[LOG] SoundI::release                          :     general_button-010 (0x7fba5576d248)
+[LOG] SoundI::release                          :  (0x7fba56d63b98)
+[LOG] SoundI::release                          :     AntiTuring-SURVEILLANCE intro4 (0x7fba551e9638)
+[LOG] SoundI::release                          :  (0x7fba55560c88)
+[LOG] SoundI::release                          :     Tasten-029 (0x7fba55560df8)
+[LOG] SoundI::release                          :  (0x7fba5557fdb8)
+[LOG] SoundI::release                          :     Tasten-030 (0x7fba555696e8)
+[LOG] SoundI::release                          :  (0x7fba555665e8)
+[LOG] SoundI::release                          :     Tasten-031 (0x7fba55566758)
+[LOG] SoundI::release                          :  (0x7fba55567d58)
+[LOG] SoundI::release                          :     Tasten-032 (0x7fba55564ea8)
+[LOG] SoundI::release                          :  (0x7fba55563b38)
+[LOG] SoundI::release                          :     Tasten-033 (0x7fba55563ca8)
+[LOG] SoundI::release                          :  (0x7fba5556bb38)
+[LOG] SoundI::release                          :     Tasten-034 (0x7fba5556bca8)
+[LOG] SoundI::release                          :  (0x7fba555688a8)
+[LOG] SoundI::release                          :     Tasten-035 (0x7fba55568a18)
+[LOG] SoundI::release                          :  (0x7fba5556af48)
+[LOG] SoundI::release                          :     Tasten-036 (0x7fba5556b0b8)
+[LOG] SoundI::release                          :  (0x7fba55565b48)
+[LOG] SoundI::release                          :     Tasten-037 (0x7fba55565cb8)
+[LOG] SoundI::release                          :  (0x7fba5553e778)
+[LOG] SoundI::release                          :     Tasten-038 (0x7fba5553c868)
+[LOG] SoundI::release                          :  (0x7fba55567f48)
+[LOG] SoundI::release                          :     Tasten-039 (0x7fba555680b8)
+[LOG] SoundI::release                          :  (0x7fba55566f48)
+[LOG] SoundI::release                          :     Tasten-040 (0x7fba555670b8)
+[LOG] SoundI::release                          :  (0x7fba5557ff28)
+[LOG] SoundI::release                          :     Tasten-041 (0x7fba55569a28)
+[LOG] SoundI::release                          :  (0x7fba555631a8)
+[LOG] SoundI::release                          :     Tasten-042 (0x7fba55563318)
+[LOG] SoundI::release                          :  (0x7fba5553cba8)
+[LOG] SoundI::release                          :     Tasten-043 (0x7fba5553cd18)
+[LOG] SoundI::release                          :  (0x7fba555678a8)
+[LOG] SoundI::release                          :     Tasten-044 (0x7fba55567a18)
+[LOG] SoundI::release                          :  (0x7fba55569208)
+[LOG] SoundI::release                          :     Tasten-045 (0x7fba55569378)
+[LOG] SoundI::release                          :  (0x7fba55563fe8)
+[LOG] SoundI::release                          :     Tasten-046 (0x7fba55564158)
+[LOG] SoundI::release                          :  (0x7fba55561848)
+[LOG] SoundI::release                          :     Tasten-047 (0x7fba555619b8)
+[LOG] SoundI::release                          :  (0x7fba555651e8)
+[LOG] SoundI::release                          :     Tasten-048 (0x7fba55565358)
+[LOG] SoundI::release                          :  (0x7fba55561cf8)
+[LOG] SoundI::release                          :     Tasten-049 (0x7fba55561e68)
+[LOG] SoundI::release                          :  (0x7fba555683f8)
+[LOG] SoundI::release                          :     Tasten-050 (0x7fba55568568)
+[LOG] SoundI::release                          :  (0x7fba55566138)
+[LOG] SoundI::release                          :     Tasten-051 (0x7fba555662a8)
+[LOG] SoundI::release                          :  (0x7fba55561398)
+[LOG] SoundI::release                          :     Tasten-052 (0x7fba55561508)
+[LOG] SoundI::release                          :  (0x7fba55566a98)
+[LOG] SoundI::release                          :     Tasten-053 (0x7fba55566c08)
+[LOG] SoundI::release                          :  (0x7fba555673f8)
+[LOG] SoundI::release                          :     Tasten-054 (0x7fba55567568)
+[LOG] SoundI::release                          :  (0x7fba55568d58)
+[LOG] SoundI::release                          :     Tasten-055 (0x7fba55568ec8)
+[LOG] SoundI::release                          :  (0x7fba555621a8)
+[LOG] SoundI::release                          :     Tasten-056 (0x7fba5553e438)
+[LOG] SoundI::release                          :  (0x7fba55565698)
+[LOG] SoundI::release                          :     KeyUpEvent (0x7fba55565808)
+[LOG] SoundI::release                          :  (0x7fba5518b438)
+[LOG] SoundI::release                          :     NormalKeyUp (0x7fba54de8a38)
+[LOG] SoundI::release                          :  (0x7fbaa1c01e78)
+[LOG] SoundI::release                          :     Tasten-001 (0x7fbaa1c03ea8)
+[LOG] SoundI::release                          :  (0x7fbb01f49af8)
+[LOG] SoundI::release                          :     Tasten-002 (0x7fbb01f47b58)
+[LOG] SoundI::release                          :  (0x7fbaa1c05128)
+[LOG] SoundI::release                          :     Tasten-003 (0x7fbaa1c05298)
+[LOG] SoundI::release                          :  (0x7fba551f9478)
+[LOG] SoundI::release                          :     Tasten-004 (0x7fba551f95e8)
+[LOG] SoundI::release                          :  (0x7fbb01f45748)
+[LOG] SoundI::release                          :     Tasten-005 (0x7fba551ed0a8)
+[LOG] SoundI::release                          :  (0x7fbaa1c047c8)
+[LOG] SoundI::release                          :     Tasten-006 (0x7fbaa1c04938)
+[LOG] SoundI::release                          :  (0x7fba551ecb38)
+[LOG] SoundI::release                          :     Tasten-007 (0x7fba551ecca8)
+[LOG] SoundI::release                          :  (0x7fba551fae58)
+[LOG] SoundI::release                          :     Tasten-008 (0x7fba551fafc8)
+[LOG] SoundI::release                          :  (0x7fba551fbb58)
+[LOG] SoundI::release                          :     Tasten-009 (0x7fba551fbcc8)
+[LOG] SoundI::release                          :  (0x7fba551fa178)
+[LOG] SoundI::release                          :     Tasten-010 (0x7fba551fa2e8)
+[LOG] SoundI::release                          :  (0x7fba551fa628)
+[LOG] SoundI::release                          :     Tasten-011 (0x7fba551fa798)
+[LOG] SoundI::release                          :  (0x7fba5517d8a8)
+[LOG] SoundI::release                          :     Tasten-012 (0x7fbb01f4a108)
+[LOG] SoundI::release                          :  (0x7fbb01f44bd8)
+[LOG] SoundI::release                          :     Tasten-014 (0x7fbb01f3af48)
+[LOG] SoundI::release                          :  (0x7fba5517d568)
+[LOG] SoundI::release                          :     Tasten-015 (0x7fbb01f44898)
+[LOG] SoundI::release                          :  (0x7fba551f8338)
+[LOG] SoundI::release                          :     Tasten-016 (0x7fba551f84a8)
+[LOG] SoundI::release                          :  (0x7fba551f9928)
+[LOG] SoundI::release                          :     Tasten-017 (0x7fba551f9a98)
+[LOG] SoundI::release                          :  (0x7fba551fb308)
+[LOG] SoundI::release                          :     Tasten-018 (0x7fba551fb478)
+[LOG] SoundI::release                          :  (0x7fba54de7dc8)
+[LOG] SoundI::release                          :     Tasten-019 (0x7fbb01f44e88)
+[LOG] SoundI::release                          :  (0x7fbaa1c04c78)
+[LOG] SoundI::release                          :     Tasten-020 (0x7fbaa1c04de8)
+[LOG] SoundI::release                          :  (0x7fba551f76b8)
+[LOG] SoundI::release                          :     Tasten-021 (0x7fba551f7828)
+[LOG] SoundI::release                          :  (0x7fbb01f46278)
+[LOG] SoundI::release                          :     Tasten-022 (0x7fba5518ab28)
+[LOG] SoundI::release                          :  (0x7fbb01f432d8)
+[LOG] SoundI::release                          :     Tasten-023 (0x7fba55176c78)
+[LOG] SoundI::release                          :  (0x7fba5517d738)
+[LOG] SoundI::release                          :     Tasten-024 (0x7fba5518b2a8)
+[LOG] SoundI::release                          :  (0x7fba551f7b68)
+[LOG] SoundI::release                          :     Tasten-025 (0x7fba551f7cd8)
+[LOG] SoundI::release                          :  (0x7fba551f6f88)
+[LOG] SoundI::release                          :     Tasten-026 (0x7fba551f70f8)
+[LOG] SoundI::release                          :  (0x7fba551f8ae8)
+[LOG] SoundI::release                          :     Tasten-027 (0x7fba551f8c58)
+[LOG] SoundI::release                          :  (0x7fba54de74b8)
+[LOG] SoundI::release                          :     Tasten-028 (0x7fba5518d778)
+[LOG] SoundI::release                          :  (0x7fbb01f47ce8)
+[LOG] SoundI::release                          :     lobby_is-ready (0x7fbb01f46d38)
+[LOG] Thread::callback                         : FMOD Studio update thread finished.
+[LOG] Thread::callback                         : FMOD Studio bank load thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] Thread::callback                         : FMOD Studio sample load thread finished.
+[LOG] LiveUpdate::release                      : 
+[LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
+[LOG] Thread::callback                         : FMOD stream thread finished.
+[LOG] Thread::callback                         : FMOD mixer thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] SystemI::close                           : Closed.
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.
 [LOG] Thread::callback                         : FMOD Studio sample load thread finished.
 [LOG] LiveUpdate::release                      : 
@@ -26,3 +1384,5 @@
 [LOG] Thread::callback                         : FMOD stream thread finished.
 [LOG] Thread::callback                         : FMOD mixer thread finished.
 [LOG] SystemI::close                           : Closed.
+[LOG] Thread::callback                         : FMOD nonblocking thread (0) finished.
+[LOG] Thread::callback                         : FMOD file thread finished.
