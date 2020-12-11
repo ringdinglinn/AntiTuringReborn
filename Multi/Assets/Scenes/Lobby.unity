@@ -5727,7 +5727,7 @@ MonoBehaviour:
   nrOfChatbots: 0
   chatbot: {fileID: 802153548}
   isSeverOnly: 0
-  nrChatrooms: 4
+  nrChatrooms: 8
   playerVisualPalletsList:
   - {fileID: 879762674}
   - {fileID: 2119314439}

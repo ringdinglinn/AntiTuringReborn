@@ -106,7 +106,7 @@ public class ChatBehaviour : NetworkBehaviour
         networkPlayer = GetComponent<NetworkGamePlayerAT>();
         myFakeName = networkPlayer.fakeName;
 
-        for (int x = 0; 4 > x; x++)
+        for (int x = 0; 8 > x; x++)
         {
             listOfChatroomLists.Add(new List<GameObject>());
            // Debug.Log(listOfChatroomLists.Count);
