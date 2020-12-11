@@ -119,7 +119,7 @@ public class TagManagement : NetworkBehaviour
     {
         //botsTagPanelHandlerList
 
-        GameObject newBotTagPanelObj = Instantiate(playerTagPanelPrefab);
+        GameObject newBotTagPanelObj = Instantiate(playerTagPanelPrefab, tagPanelParent.transform);
         newBotTagPanelObj.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
         PlayerTagPanelHandler botTagPanelHandler = newBotTagPanelObj.GetComponent<PlayerTagPanelHandler>();
        
@@ -149,8 +149,18 @@ public class TagManagement : NetworkBehaviour
         }
         else
         {
-            neededXSize += playerTagPanelHandlerList[0].GetComponent<RectTransform>().rect.width * 2;
-            neededYSize += playerTagPanelHandlerList[0].GetComponent<RectTransform>().rect.height * (totalNrOfPanelSlots /2);
+            if (totalNrOfPanelSlots % 2 == 0)//is Even Nr
+            {
+                neededXSize += playerTagPanelHandlerList[0].GetComponent<RectTransform>().rect.width * 2;
+                neededYSize += playerTagPanelHandlerList[0].GetComponent<RectTransform>().rect.height * (totalNrOfPanelSlots / 2);
+            }
+            else //Is Not Even Nr
+            {
+                neededXSize += playerTagPanelHandlerList[0].GetComponent<RectTransform>().rect.width * 2;
+                neededYSize += playerTagPanelHandlerList[0].GetComponent<RectTransform>().rect.height * ((totalNrOfPanelSlots / 2) +1);
+            }
+
+
         }
             Debug.Log("in");
         
@@ -173,12 +183,12 @@ public class TagManagement : NetworkBehaviour
 
         foreach (PlayerTagPanelHandler x in playerTagPanelHandlerList)
         {
-            x.gameObject.SetActive(false);
+        //    x.gameObject.SetActive(false);
         }
 
         foreach (PlayerTagPanelHandler x in botsTagPanelHandlerList)
         {
-            x.gameObject.SetActive(true);
+         //   x.gameObject.SetActive(true);
         }
 
 
@@ -194,7 +204,7 @@ public class TagManagement : NetworkBehaviour
     {
         foreach (NetworkGamePlayerAT gamePlayerAT in allTagableHumanPlayersList)
         {
-            GameObject newPlayerTagPanelObj = Instantiate(playerTagPanelPrefab);
+            GameObject newPlayerTagPanelObj = Instantiate(playerTagPanelPrefab, tagPanelParent.transform);
             newPlayerTagPanelObj.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
             PlayerTagPanelHandler playerTagPanelHandler = newPlayerTagPanelObj.GetComponent<PlayerTagPanelHandler>();
          
