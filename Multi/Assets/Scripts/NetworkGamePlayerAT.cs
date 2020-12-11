@@ -287,7 +287,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     [Command]
     public void CmdLeaveChatroom(int ID, string fakeName)
     {
-        RpcCloseChatroom();
+        RpcCloseChatroom(ID);
         if (isInvestigator)
         {
             chatroomID = 99;
@@ -342,9 +342,10 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         }
     }
     [ClientRpc]
-    private void RpcCloseChatroom() {
+    private void RpcCloseChatroom(int chatroomId) {
         moveView.MoveViewLeft();
-        chatBehaviour.chatDisplayContents[chatroomID].GetComponent<ChatDisplayContent>().joinButton.GetComponent<Image>().sprite = chatBehaviour.chatDisplayContents[chatroomID].GetComponent<ChatDisplayContent>().baseChatroomSprite;
+        chatBehaviour.chatDisplayContents[chatroomId].GetComponent<ChatDisplayContent>().joinButton.GetComponent<Image>().sprite = chatBehaviour.chatDisplayContents[chatroomID].GetComponent<ChatDisplayContent>().baseChatroomSprite;
+        chatroomId = 99;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
