@@ -73,7 +73,11 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
             }
         }
     }
-
+    IEnumerator ShortDelayChatroomStates()
+    {
+        yield return new WaitForSeconds(1);
+        InitializeChatroomStates();
+    }
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     // this returns and sometimes assigns the network manager to our player
     // maybe this is because we can't assign it to the prefab, since it exists in the scene
@@ -93,7 +97,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         Room.GamePlayers.Add(this);
         isInvestigator = Room.GetRole(Room.GamePlayers.Count - 1);
         CmdUpdateRoleOnServer(isInvestigator);
-        InitializeChatroomStates();
+      
 
         CmdGamePlayerConnected();
        
@@ -102,15 +106,18 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
       
         GetNameAndColor(Room.GamePlayers.Count - 1);
         realName = displayName;
+
+        StartCoroutine(ShortDelayChatroomStates());
+
+      
     }
 
-    
-
+   
     private void GetNameAndColor(int index)
     {
         fakeName = Room.randomNames[index];
         playerVisualPalletID = Room.randomPalletsInt[index];
-        StartCoroutine(ShortDelay());
+        StartCoroutine(ShortDelayVisual());
     }
 
 
@@ -183,7 +190,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
             chatroomID = roomID;
             if (chatroomID == roomID)
             {
-                RpcOpenChatroom();
+                RpcOpenChatroom(roomID);
                 GetComponent<ChatBehaviour>().RpcClearMainCanvas(roomID, chatroomStates[roomID].leftFree, chatroomStates[roomID].rightFree, chatroomStates[roomID].leftName, chatroomStates[roomID].rightName);
                 GetComponent<ChatBehaviour>().RpcFillUpMainCanvasTextAndUI(roomID, chatroomStates[roomID].leftFree, chatroomStates[roomID].rightFree, chatroomStates[roomID].leftName, chatroomStates[roomID].rightName, chatroomStates[roomID].leftVisualID, chatroomStates[roomID].rightVisualID);
                 RpcDisableInvestigatorButton(roomID, false);
@@ -206,7 +213,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
             if (chatroomID == roomID)
             {
-                RpcOpenChatroom();
+                RpcOpenChatroom(roomID);
                 GetComponent<ChatBehaviour>().RpcClearMainCanvas(roomID, chatroomStates[roomID].leftFree, chatroomStates[roomID].rightFree, chatroomStates[roomID].leftName, chatroomStates[roomID].rightName);
                 GetComponent<ChatBehaviour>().RpcFillUpMainCanvasTextAndUI(roomID, chatroomStates[roomID].leftFree, chatroomStates[roomID].rightFree, chatroomStates[roomID].leftName, chatroomStates[roomID].rightName, chatroomStates[roomID].leftVisualID, chatroomStates[roomID].rightVisualID);
                 RpcDeadPlayerToggleButtons(false);
@@ -218,7 +225,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         {
             if (!isChatbot)
             {
-                RpcOpenChatroom();
+                RpcOpenChatroom(roomID);
                 chatroomID = roomID;
             }
 
@@ -264,8 +271,10 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     }
 
     [ClientRpc]
-    private void RpcOpenChatroom() {
+    private void RpcOpenChatroom(int chatroomID) {
         moveView.MoveViewRight();
+        this.chatroomID = chatroomID;
+        Debug.Log("Chatroom ID:" + chatroomID);
         chatBehaviour.chatDisplayContents[chatroomID].GetComponent<ChatDisplayContent>().joinButton.GetComponent<Image>().sprite = chatBehaviour.chatDisplayContents[chatroomID].GetComponent<ChatDisplayContent>().selectedChatroomSprite;
     }
     #endregion
@@ -380,7 +389,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
 
    
-    IEnumerator ShortDelay()
+    IEnumerator ShortDelayVisual()
     {
         yield return new WaitForSeconds(3);
         CmdSyncPlayerVisualPalletID(playerVisualPalletID);

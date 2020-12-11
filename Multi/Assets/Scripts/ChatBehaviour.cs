@@ -76,9 +76,16 @@ public class ChatBehaviour : NetworkBehaviour
         CmdChatbotRoomsIndex();
 
 
+        StartCoroutine(ShortDelay());
+       // CmdServerAddNetworkPlayerAndShit();
+    }
 
+    IEnumerator ShortDelay()
+    {
+        yield return new WaitForSeconds(1);
         CmdServerAddNetworkPlayerAndShit();
     }
+
 
     public void CmdchatbotRooIndexSetup()
     {
