@@ -457,6 +457,7 @@ public class ChatBehaviour : NetworkBehaviour
                 GameObject newMessage = Instantiate(textPrefab, mainChatDisplay.GetComponent<ChatDisplayContent>().scrollPanelContent.transform);
                 newMessage.GetComponent<Text>().text = listOfChatroomLists[id][x].GetComponent<Text>().text;
                 newMessage.GetComponent<Text>().alignment = listOfChatroomLists[id][x].GetComponent<Text>().alignment;
+                newMessage.GetComponent<Text>().fontSize = 20;
                 mainChatDisplayContentList.Add(newMessage);
                 digitalLetterVersion1.Play();
                 yield return new WaitForSeconds(0.06f);
@@ -472,6 +473,7 @@ public class ChatBehaviour : NetworkBehaviour
                 GameObject newMessage = Instantiate(textPrefab, mainChatDisplay.GetComponent<ChatDisplayContent>().scrollPanelContent.transform);
                 newMessage.GetComponent<Text>().text = listOfChatroomLists[id][x].GetComponent<Text>().text;
                 newMessage.GetComponent<Text>().alignment = listOfChatroomLists[id][x].GetComponent<Text>().alignment;
+                newMessage.GetComponent<Text>().fontSize = 20;
                 mainChatDisplayContentList.Add(newMessage);
                 digitalLetterVersion1.Play();
               
