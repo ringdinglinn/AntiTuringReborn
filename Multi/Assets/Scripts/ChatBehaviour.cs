@@ -16,7 +16,7 @@ public class ChatBehaviour : NetworkBehaviour
 
     public List<GameObject> chatDisplayContents = new List<GameObject>();
     public GameObject mainChatDisplay;
-    public List<TMP_InputField> inputFields;
+   // public List<TMP_InputField> inputFields;
     public GameObject chatUI;
 
     public NetworkGamePlayerAT networkPlayer;
@@ -93,7 +93,7 @@ public class ChatBehaviour : NetworkBehaviour
     [Command]
     private void CmdChatbotRoomsIndex()
     {
-        for (int i = 1; i < inputFields.Count; i++) chatbotRoomsIndex.Add(i, false);
+       // for (int i = 1; i < inputFields.Count; i++) chatbotRoomsIndex.Add(i, false);
     }
  
     [Header("SoundEffect")]
@@ -118,7 +118,7 @@ public class ChatBehaviour : NetworkBehaviour
     private void CmdServerAddNetworkPlayerAndShit()
     {
         networkPlayer = GetComponent<NetworkGamePlayerAT>();
-        for (int x = 0; 4 > x; x++)
+        for (int x = 0; 8 > x; x++)
         {
             listOfChatroomLists.Add(new List<GameObject>());
             //Debug.Log(listOfChatroomLists.Count);
@@ -132,9 +132,9 @@ public class ChatBehaviour : NetworkBehaviour
     {
         networkPlayer = GetComponent<NetworkGamePlayerAT>();
 
-        if (listOfChatroomLists.Count < 4)
+        if (listOfChatroomLists.Count < 8)
         {
-            for (int x = 0; 4 > x; x++)
+            for (int x = 0; 8 > x; x++)
             {
                 listOfChatroomLists.Add(new List<GameObject>());
                 //Debug.Log(listOfChatroomLists.Count);
@@ -222,12 +222,15 @@ public class ChatBehaviour : NetworkBehaviour
     {
         for (int i = 0; i < message.Length; i++)
         {
-            text.text = string.Concat(text.text, message[i]);
-            if (textForMainCanvas == true)
+            if (text != null)
             {
-                digitalLetterVersion1.Play();
+                text.text = string.Concat(text.text, message[i]);
+                if (textForMainCanvas == true)
+                {
+                    digitalLetterVersion1.Play();
+                }
+                yield return new WaitForSeconds(textSpeed);
             }
-            yield return new WaitForSeconds(textSpeed);
         }           
     }
     [Client]
@@ -237,7 +240,7 @@ public class ChatBehaviour : NetworkBehaviour
         Clear();
         CmdSendMessage(message, chatroomID, networkPlayer.fakeName, networkPlayer.playerVisualPalletID);
         mainInputField.text = "";
-        inputFields[chatroomID].text = string.Empty;        
+        //inputFields[chatroomID].text = string.Empty;        
     }
     public void Clear()
     {
