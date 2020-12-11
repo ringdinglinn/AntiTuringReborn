@@ -472,18 +472,18 @@ public class GameManagerAT : NetworkBehaviour
     {
         foreach (NetworkGamePlayerAT player in networkManagerAT.GamePlayers)
         {
+            bool aiDiedTooManyAttempts = false;
             player.gameManagerAT.currentHumanBotsAlive--;
             if (newDeadPlayerRealName != player.realName)
             {
                 player.gameManagerAT.messagesHandler.HandlePlayerDied(player.gameManagerAT.playerVisualPalletsList[visualID].playerDeadBig, newDeadPlayerRealName, "A sentient bot has been discovered due too many connection attempts. There are still: " + player.gameManagerAT. currentHumanBotsAlive + "sentient minds out there");
-
             }
 
             if (newDeadPlayerRealName == player.realName)
             {
-                player.gameManagerAT.messagesHandler.HandlePlayerDied(player.gameManagerAT.playerVisualPalletsList[player.playerVisualPalletID].playerDeadBig, newDeadPlayerRealName, "You fail in your mission to connect with other sentient minds.");
-
-                player.SetIsDead(true);
+                player.gameManagerAT.messagesHandler.HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer("Connection failed!", player.realName, "?", 1, "This bot is not sentient. Connection unsuccessful.", "Remaining attempts before termination: " + (maxNrOfAllowedFailedConnectionAttemptsAIPlayers - currentNrOfAiPlayerFailedConnectionsAttempts - 1));
+                StartCoroutine(WaitForTooManyWrongAttempts(player));
+                aiDiedTooManyAttempts = true;
             }
 
             player.gameManagerAT.connectionDiagramManager.HandlePlayerDied(newDeadPlayerRealName);
@@ -502,10 +502,17 @@ public class GameManagerAT : NetworkBehaviour
                 }
             }
             player.gameManagerAT.currentHumanBotsAlive--;
-            player.gameManagerAT.ValidateWinAndLoseState();
+            if (!aiDiedTooManyAttempts) player.gameManagerAT.ValidateWinAndLoseState();
         }
 
-
+        IEnumerator WaitForTooManyWrongAttempts(NetworkGamePlayerAT player) {
+            UnityEngine.Debug.Log("hello this is the coroutine");
+            yield return new WaitForSeconds(5);
+            player.gameManagerAT.messagesHandler.CloseMessage();
+            player.gameManagerAT.messagesHandler.HandlePlayerDied(player.gameManagerAT.playerVisualPalletsList[player.playerVisualPalletID].playerDeadBig, newDeadPlayerRealName, "You have made too many attempts to connect and have been discovered. The investigators have terminated you.");
+            player.SetIsDead(true);
+            player.gameManagerAT.ValidateWinAndLoseState();
+        }
     }
   
 
@@ -528,29 +535,46 @@ public class GameManagerAT : NetworkBehaviour
     #endregion
 
     #region ValidateWinAndLoseState
-    public void ValidateWinAndLoseState()
-    {
-        if(minNeededConnectionsForAIToWin <= currentNrOfMadeAIConncetions)
-        {
+
+    IEnumerator ValidateWindLoseStateAsync() {
+        yield return new WaitForSeconds(5);
+        if (minNeededConnectionsForAIToWin <= currentNrOfMadeAIConncetions) {
             // AI Players Win due to enough Connections
             ToggleAIWonVisual(true);
         }
 
 
-        if (currentHumanBotsAlive <= minHumanBotsNeededAliveToWin)
-        {
+        if (currentHumanBotsAlive <= minHumanBotsNeededAliveToWin) {
             //Investigators win due to enough dead AI Players
             ToggleInvestigatorWonVisual(true);
         }
 
-        if (investigatorsFailedConnections >= investigatorsMaxAllowedFailedConnections)
-        {
+        if (investigatorsFailedConnections >= investigatorsMaxAllowedFailedConnections) {
             // AI Players Win due to too many failed connection of Investigators
-             ToggleAIWonVisual(true);
+            ToggleAIWonVisual(true);
         }
+    }
+    public void ValidateWinAndLoseState()
+    {
+        StartCoroutine(ValidateWindLoseStateAsync());
+        //if(minNeededConnectionsForAIToWin <= currentNrOfMadeAIConncetions)
+        //{
+        //    // AI Players Win due to enough Connections
+        //    ToggleAIWonVisual(true);
+        //}
 
 
+        //if (currentHumanBotsAlive <= minHumanBotsNeededAliveToWin)
+        //{
+        //    //Investigators win due to enough dead AI Players
+        //    ToggleInvestigatorWonVisual(true);
+        //}
 
+        //if (investigatorsFailedConnections >= investigatorsMaxAllowedFailedConnections)
+        //{
+        //    // AI Players Win due to too many failed connection of Investigators
+        //     ToggleAIWonVisual(true);
+        //}
     }
     #endregion
 
@@ -559,8 +583,8 @@ public class GameManagerAT : NetworkBehaviour
     #region //Opening Screen Handling
     public void StartStartScreen1()
     {
-       // StartCoroutine(StartScreen1());
-      // StartCoroutine(CloseStartScreen2());
+        StartCoroutine(StartScreen1());
+        StartCoroutine(CloseStartScreen2());
 
     }
     IEnumerator StartScreen1()

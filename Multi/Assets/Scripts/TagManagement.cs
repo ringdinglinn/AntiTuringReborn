@@ -269,6 +269,9 @@ public class TagManagement : NetworkBehaviour
             x.SetActive(true);
         }
         FinishLoadingResults();
+        foreach (GameObject x in loadingBars) {
+            x.SetActive(false);
+        }
     }
     public void FinishLoadingResults()
     {

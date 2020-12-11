@@ -9,9 +9,10 @@ public class GameManagerMessagesHandler : MonoBehaviour
     [Header("Manager References")]
     [SerializeField] private GameManagerAT gameManagerAT;
     [SerializeField] private NetworkGamePlayerAT networkGamePlayerAT;
-    
+
 
     [Header("Object Referenc")]
+    [SerializeField] private GameObject mainBroadcastHolder;
     [SerializeField] private GameObject messageField;
     [SerializeField] private GameObject attemptsField;
     
@@ -54,12 +55,15 @@ public class GameManagerMessagesHandler : MonoBehaviour
         {
             gameManagerAT.ShowYouDiedBecauseOfInvestigatorsWindow();
         }
+
+        mainBroadcastHolder.SetActive(false);
     }
     #endregion
 
     #region//Visual Handling When a Player Died
     public void HandlePlayerDied(Sprite newDeadPlayerSprite, string newDeadPlayerName, string newMessage, string attemptsText = "")
     {
+        mainBroadcastHolder.SetActive(true);
         deadPlayerVisual.SetActive(true);
         deadPlayerImage.sprite = newDeadPlayerSprite;
         deadPlayerName.text = newDeadPlayerName;
@@ -75,6 +79,7 @@ public class GameManagerMessagesHandler : MonoBehaviour
     #region//Visual Handling When Human Player Connected With Another Human Player
     public void HandleHumanPlayerConnectedWithAntoherHumanPlayer(string newTitle, string playerThatFoundTheOtherName, string tagedPlayerName, int numberOfConnections, string newMessage)
     {
+        mainBroadcastHolder.SetActive(true);
         title.gameObject.SetActive(true);
         title.text = newTitle;
         connectionVisual.SetActive(true);
@@ -93,6 +98,7 @@ public class GameManagerMessagesHandler : MonoBehaviour
     #region//Visual Handling When Human Player Connected With Another Human Player
     public void HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer(string newTitle, string playerThatFoundTheOtherName, string tagedPlayerName, int numberOfConnections, string newMessage, string attemptsMessage = "")
     {
+        mainBroadcastHolder.SetActive(true);
         title.text = newTitle;
         title.gameObject.SetActive(true);
         connectionVisual.SetActive(true);
