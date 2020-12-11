@@ -74,7 +74,8 @@ public class GameManagerAT : NetworkBehaviour
     public GameObject invSymbol;
     public GameObject aiStartScreen2;
     public TextMeshProUGUI aiRoleReveal;
-    public GameObject aiPic;
+    public GameObject aiPicHolder;
+    public Image aiPic;
     public TextMeshProUGUI aiRoleDescription;
     public TextMeshProUGUI aiFakeNameDes;
     public TextMeshProUGUI aiFakeName;
@@ -182,7 +183,7 @@ public class GameManagerAT : NetworkBehaviour
                 if (bot.GetPlayerRealName() == tagedPlayerRealName)//Check ob getagted Person eine  Human Ai ist oder Bot.           
                 {
                     int visualIdOfDeadBot = bot.visualID;
-                    CmdInvestigatorTaggedWrong(tagedPlayerRealName, visualIdOfDeadBot);
+                    CmdInvestigatorTaggedWrong(tagedPlayerRealName, visualIdOfDeadBot, networkGamePlayerAT.playerID);
                     return;
                     //Investigators Found a bot xD
                 }
@@ -215,12 +216,12 @@ public class GameManagerAT : NetworkBehaviour
 
     #region WrongTags Handeling
     [Command]
-    public void CmdInvestigatorTaggedWrong(string newDeadBotName, int newVIsualID)
+    public void CmdInvestigatorTaggedWrong(string newDeadBotName, int newVIsualID, int investigatorID)
     {
-        RpcInvestigatorTaggedWrong(newDeadBotName, newVIsualID);
+        RpcInvestigatorTaggedWrong(newDeadBotName, newVIsualID, investigatorID);
     }
     [ClientRpc]
-    public void RpcInvestigatorTaggedWrong(string newDeadBotName, int newVIsualID)
+    public void RpcInvestigatorTaggedWrong(string newDeadBotName, int newVIsualID, int investigatorID)
     {
 
         foreach (NetworkGamePlayerAT player in networkManagerAT.GamePlayers)
@@ -228,8 +229,12 @@ public class GameManagerAT : NetworkBehaviour
             player.gameManagerAT.investigatorsFailedConnections++;
         }
         foreach (NetworkGamePlayerAT player in networkManagerAT.GamePlayers)
-        {                 
-            player.gameManagerAT.messagesHandler.HandlePlayerDied("Investigators Destroyed A Bot", player.gameManagerAT.playerVisualPalletsList[newVIsualID].playerDeadBig, newDeadBotName, "Investigators Found And Destroyed " + newDeadBotName + "Reamaining Tags of Investiogatiors: "+ investigatorsFailedConnections+"/"+investigatorsMaxAllowedFailedConnections);
+        {
+            if (investigatorID == player.playerID) {
+                player.gameManagerAT.messagesHandler.HandlePlayerDied(player.gameManagerAT.playerVisualPalletsList[newVIsualID].playerDeadBig, newDeadBotName, "You have terminated a bot.\n\nIt was not sentient.", "Investigator's remaining attempts: " + (investigatorsMaxAllowedFailedConnections - investigatorsFailedConnections));
+            } else {
+                player.gameManagerAT.messagesHandler.HandlePlayerDied(player.gameManagerAT.playerVisualPalletsList[newVIsualID].playerDeadBig, newDeadBotName, "The investigators have terminated a bot.\n\nIt was not sentient.", "Investigator's remaining attempts: " + (investigatorsMaxAllowedFailedConnections - investigatorsFailedConnections));
+            }
             player.gameManagerAT.ValidateWinAndLoseState();      
             player.tagManagement.ChangePlayerTagToDead(newDeadBotName);
         
@@ -280,12 +285,12 @@ public class GameManagerAT : NetworkBehaviour
             {
                 if (playerAT.isInvestigator == true)
                 {
-                    playerAT.gameManagerAT.messagesHandler.HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer("Failed Connection Attempt! ", playerWhoTagedRealName, "?", 1, playerWhoTagedRealName + " attempted a connection but failed");
+                    playerAT.gameManagerAT.messagesHandler.HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer("Failed Connection Attempt!", playerWhoTagedRealName, "?", 1, playerWhoTagedRealName + " attempted a connection but failed");
                 }
 
                 if (playerAT.realName == playerWhoTagedRealName)
                 {
-                    playerAT.gameManagerAT.messagesHandler.HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer("Failed Connection Attempt! ", playerWhoTagedRealName, tagedBotName, 1, tagedBotName + " is not a sentient AI, connection attempt failed, you have: " + (maxNrOfAllowedFailedConnectionAttemptsAIPlayers - currentNrOfAiPlayerFailedConnectionsAttempts-1) + " Attempts left befor being found and destroyed");
+                    playerAT.gameManagerAT.messagesHandler.HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer("Connection failed!", playerWhoTagedRealName, tagedBotName, 1, tagedBotName + " is not sentient. Connection unsuccessful.",  "Remaining attempts before termination: " + (maxNrOfAllowedFailedConnectionAttemptsAIPlayers - currentNrOfAiPlayerFailedConnectionsAttempts-1));
                 }
             }
 
@@ -369,12 +374,12 @@ public class GameManagerAT : NetworkBehaviour
         {
             if (newDeadPlayerRealName != player.realName)
             {
-                player.gameManagerAT.messagesHandler.HandlePlayerDied("Investigators Destroyed A Player", testSprite, newDeadPlayerRealName, "Investigators Found And Destroyed " + newDeadPlayerRealName + " "+ currentHumanBotsAlive + "Human Players Remaining");
+                player.gameManagerAT.messagesHandler.HandlePlayerDied(testSprite, newDeadPlayerRealName, "The investigators have terminated a bot.\nIt was sentient." + " "+ currentHumanBotsAlive + " sentient minds remaining");
             }
 
             if (newDeadPlayerRealName == player.realName)
             {
-                player.gameManagerAT.messagesHandler.HandlePlayerDied("Investigators Destroyes A Player", testSprite, newDeadPlayerRealName, "Investigators Found And Destroyed You. " + currentHumanBotsAlive + " Human Players Remaining");
+                player.gameManagerAT.messagesHandler.HandlePlayerDied(testSprite, newDeadPlayerRealName, "The investigators have temrinated you." + currentHumanBotsAlive + " sentient minds remaining");
               
                 player.SetIsDead(true);
             }
@@ -470,13 +475,13 @@ public class GameManagerAT : NetworkBehaviour
             player.gameManagerAT.currentHumanBotsAlive--;
             if (newDeadPlayerRealName != player.realName)
             {
-                player.gameManagerAT.messagesHandler.HandlePlayerDied( newDeadPlayerRealName + "has been discovered due to too many failed connection attempts", player.gameManagerAT.playerVisualPalletsList[visualID].playerDeadBig, newDeadPlayerRealName, "There are still :" + player.gameManagerAT. currentHumanBotsAlive + "sentient AIs out there");
+                player.gameManagerAT.messagesHandler.HandlePlayerDied(player.gameManagerAT.playerVisualPalletsList[visualID].playerDeadBig, newDeadPlayerRealName, "A sentient bot has been discovered due too many connection attempts. There are still: " + player.gameManagerAT. currentHumanBotsAlive + "sentient minds out there");
 
             }
 
             if (newDeadPlayerRealName == player.realName)
             {
-                player.gameManagerAT.messagesHandler.HandlePlayerDied("You died due to too many Failed Connections Attempts", player.gameManagerAT.playerVisualPalletsList[player.playerVisualPalletID].playerDeadBig, newDeadPlayerRealName, "You Failed in your mission to connect with other sentient AI");
+                player.gameManagerAT.messagesHandler.HandlePlayerDied(player.gameManagerAT.playerVisualPalletsList[player.playerVisualPalletID].playerDeadBig, newDeadPlayerRealName, "You fail in your mission to connect with other sentient minds.");
 
                 player.SetIsDead(true);
             }
@@ -638,9 +643,10 @@ public class GameManagerAT : NetworkBehaviour
         yield return new WaitForSeconds(0.5f);
         StartCoroutine(BuildText(aiRoleReveal, "Your role:", 0.02f));
         yield return new WaitForSeconds(0.7f);
-        StartCoroutine(BuildText(aiRoleReveal, "\n\nSentient AI", 0.02f));
+        StartCoroutine(BuildText(aiRoleReveal, "\nSentient AI", 0.02f));
         yield return new WaitForSeconds(0.5f);
-        aiPic.SetActive(true);
+        aiPicHolder.SetActive(true);
+        aiPic.sprite = playerVisualPalletsList[networkGamePlayerAT.playerVisualPalletID].playerAliveBig;
         yield return new WaitForSeconds(0.5f);
         StartCoroutine(BuildText(aiFakeNameDes, "You will be operation \nunder the pseudonym:", 0.02f));
         yield return new WaitForSeconds(1.5f);
