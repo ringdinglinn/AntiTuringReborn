@@ -559,8 +559,8 @@ public class GameManagerAT : NetworkBehaviour
     #region //Opening Screen Handling
     public void StartStartScreen1()
     {
-        StartCoroutine(StartScreen1());
-        //StartCoroutine(CloseStartScreen2());
+       // StartCoroutine(StartScreen1());
+      // StartCoroutine(CloseStartScreen2());
 
     }
     IEnumerator StartScreen1()

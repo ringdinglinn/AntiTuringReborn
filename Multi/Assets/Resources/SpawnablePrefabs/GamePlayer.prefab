@@ -3920,7 +3920,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6529627193038448668
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15697,6 +15697,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tagPanel: {fileID: 8399131990873372422}
   tagPanelParent: {fileID: 5739966404442898859}
+  toggleSound: {fileID: 7825320832022023820}
 --- !u!1 &8513894383345663943
 GameObject:
   m_ObjectHideFlags: 0
