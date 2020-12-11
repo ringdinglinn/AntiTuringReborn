@@ -62,10 +62,15 @@ public class ConnectionDiagramManager : NetworkBehaviour
     #region Handle Game Manager Requests
     public void HandleNewConnection(string foundPlayerRealName, string playerWhoTagedRealNamen)
     {
+        Debug.Log("Arrow Request Came In");
+
+        Debug.Log("foundPlayerRealName " + foundPlayerRealName);
+        Debug.Log("playerWhoTagedRealNamen " + playerWhoTagedRealNamen);
         foreach (ConnectionDiagramLineHandler x in allArrownInDiagramList)
         {
             if(x.GetPlayerArrowFromRealName()== playerWhoTagedRealNamen &&  x.GetPlayerArrowTowardsRealName()== foundPlayerRealName)
             {
+                Debug.Log("Activate Arrow Alive");
                 x.ActivateVisualArrow();
             }
         }
@@ -76,6 +81,7 @@ public class ConnectionDiagramManager : NetworkBehaviour
         {
             if (x.GetPlayerArrowFromRealName() == deadPlayer || x.GetPlayerArrowTowardsRealName() == deadPlayer)
             {
+                Debug.Log("Activate Arrow Dead");
                 x.PlayerDied();
             }
         }
