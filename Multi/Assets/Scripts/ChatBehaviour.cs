@@ -227,6 +227,7 @@ public class ChatBehaviour : NetworkBehaviour
     }
     private IEnumerator BuildText(Text text,  string message, float textSpeed, bool textForMainCanvas)
     {
+        int soundCounter = 0;
         for (int i = 0; i < message.Length; i++)
         {
             if (text != null)
@@ -234,7 +235,12 @@ public class ChatBehaviour : NetworkBehaviour
                 text.text = string.Concat(text.text, message[i]);
                 if (textForMainCanvas == true)
                 {
-                    digitalLetterVersion1.Play();
+                    if (soundCounter % 2 == 0)
+                    {
+                        
+                        digitalLetterVersion1.Play();
+                    }
+                    soundCounter++;
                 }
                 yield return new WaitForSeconds(textSpeed);
             }
@@ -451,16 +457,11 @@ public class ChatBehaviour : NetworkBehaviour
                 GameObject newMessage = Instantiate(textPrefab, mainChatDisplay.GetComponent<ChatDisplayContent>().scrollPanelContent.transform);
                 newMessage.GetComponent<Text>().text = listOfChatroomLists[id][x].GetComponent<Text>().text;
                 newMessage.GetComponent<Text>().alignment = listOfChatroomLists[id][x].GetComponent<Text>().alignment;
-                mainChatDisplayContentList.Add(newMessage);            
+                mainChatDisplayContentList.Add(newMessage);
+                digitalLetterVersion1.Play();
+                yield return new WaitForSeconds(0.06f);
             }
-            for (int x = listOfChatroomLists[id].Count - 24; listOfChatroomLists[id].Count> x; x++)
-            {
-                GameObject newMessage = Instantiate(textPrefab, mainChatDisplay.GetComponent<ChatDisplayContent>().scrollPanelContent.transform);
-                newMessage.GetComponent<Text>().text = listOfChatroomLists[id][x].GetComponent<Text>().text;
-                newMessage.GetComponent<Text>().alignment = listOfChatroomLists[id][x].GetComponent<Text>().alignment;
-                mainChatDisplayContentList.Add(newMessage);            
-                yield return new WaitForSeconds(0.04f);              
-            }
+            
         }
         else
         {
@@ -472,6 +473,8 @@ public class ChatBehaviour : NetworkBehaviour
                 newMessage.GetComponent<Text>().text = listOfChatroomLists[id][x].GetComponent<Text>().text;
                 newMessage.GetComponent<Text>().alignment = listOfChatroomLists[id][x].GetComponent<Text>().alignment;
                 mainChatDisplayContentList.Add(newMessage);
+                digitalLetterVersion1.Play();
+              
                 // float waitTime = listOfChatroomLists[id][x].GetComponent<Text>().text.Length * 0.001f;
                 //     StartCoroutine(BuildText(newMessage.GetComponent<Text>(), listOfChatroomLists[id][x].GetComponent<Text>().text, 0.001f));
                 yield return new WaitForSeconds(0.06f);
