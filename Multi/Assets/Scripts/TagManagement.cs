@@ -17,7 +17,7 @@ public class TagManagement : NetworkBehaviour
     [SerializeField] private NetworkGamePlayerAT networkGamePlayerAT;
     [SerializeField] private GameObject tagPanelContent;
     [SerializeField] private GameObject playerTagPanelPrefab;
-    private List<PlayerTagPanelHandler> playerTagPanelHandlerList = new List<PlayerTagPanelHandler>();
+    public List<PlayerTagPanelHandler> playerTagPanelHandlerList = new List<PlayerTagPanelHandler>();
 
     public List<PlayerTagPanelHandler> botsTagPanelHandlerList = new List<PlayerTagPanelHandler>();
 
@@ -43,6 +43,8 @@ public class TagManagement : NetworkBehaviour
     public List<ChatbotAI> allTagableRealBotsList = new List<ChatbotAI>();
    
     private string tagedPlayerRealName;
+
+    public GameObject tagPanelParent;
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #region//Start Variables Setup
     public void StartSetup()
@@ -53,11 +55,17 @@ public class TagManagement : NetworkBehaviour
 
     IEnumerator ShortSetupDelay()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         CmdPopulateAllTagablePlayer();
         CmdPopulateAllTagableBots();
+        StartCoroutine(ShortSetupDelay2());
     }
-
+    IEnumerator ShortSetupDelay2()
+    {
+        yield return new WaitForSeconds(2f);
+        int totalNrOfPanelSlots = playerTagPanelHandlerList.Count + botsTagPanelHandlerList.Count;
+        moveViewTagPanel.SetTagPanelPositions(totalNrOfPanelSlots, playerTagPanelHandlerList, botsTagPanelHandlerList);
+    }
     [Command]
     private void CmdPopulateAllTagablePlayer()
     {
@@ -111,25 +119,70 @@ public class TagManagement : NetworkBehaviour
     {
         //botsTagPanelHandlerList
 
-        GameObject newPlayerTagPanelObj = Instantiate(playerTagPanelPrefab, tagPanelContent.transform);
-        PlayerTagPanelHandler botTagPanelHandler = newPlayerTagPanelObj.GetComponent<PlayerTagPanelHandler>();
+        GameObject newBotTagPanelObj = Instantiate(playerTagPanelPrefab);
+        newBotTagPanelObj.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
+        PlayerTagPanelHandler botTagPanelHandler = newBotTagPanelObj.GetComponent<PlayerTagPanelHandler>();
        
         botTagPanelHandler.StartSetup(botFakeName, realName, gameManagerAT.playerVisualPalletsList[botVisualPalletID].playerSmall, this, botVisualPalletID);
 
        
         botsTagPanelHandlerList.Add(botTagPanelHandler);
+
+    
     }
     #endregion
 
     #region //Opening And Closing Tag Panel
     public void OpenTagPanel()
     {
-        moveViewTagPanel.OpenTagPanel(600, 800);
+        // playerTagPanelHandlerList[0].transform.localPosition = 
+        //1.Wir brauchen eine Auswertung wieviele Tags Müssen angezeigt werden
+        int totalNrOfPanelSlots = playerTagPanelHandlerList.Count + botsTagPanelHandlerList.Count;
+        //2. Anhange dieser Zahl festlegen wie die Konfiguration ist -> Spricht 4 Unter einander, oder 3Links 4 Rechtes, Diese Konfiguartion speichern
+        float neededXSize = 0;
+        float neededYSize = 30; //10 für offset
+        Debug.Log("totalNrOfPanelSlots " + totalNrOfPanelSlots);
+        if (totalNrOfPanelSlots < 12)
+        {
+            neededXSize += playerTagPanelHandlerList[0].GetComponent<RectTransform>().rect.width;
+            neededYSize += playerTagPanelHandlerList[0].GetComponent<RectTransform>().rect.height * totalNrOfPanelSlots;
+        }
+        else
+        {
+            neededXSize += playerTagPanelHandlerList[0].GetComponent<RectTransform>().rect.width * 2;
+            neededYSize += playerTagPanelHandlerList[0].GetComponent<RectTransform>().rect.height * (totalNrOfPanelSlots /2);
+        }
+            Debug.Log("in");
+        
+        //3. Durch die Liste aller chatPanels Cyclen und ihnen eihne position geben. 
+      
+        //4. Sie alle anmachen sobald Tag Panel Offen
+        //5. Schauen, dass Verknüpfungen stimmen
+
+
+        Debug.Log("neededXSize " + neededXSize);
+
+        Debug.Log("neededYSize " + neededYSize);
+
+        moveViewTagPanel.OpenTagPanel(neededXSize, neededYSize, totalNrOfPanelSlots, playerTagPanelHandlerList, botsTagPanelHandlerList);
         openTagPanelButton.SetActive(false);
         closeTagPanelButton.SetActive(true);
     }
     public void CloseTagPanel()
     {
+
+        foreach (PlayerTagPanelHandler x in playerTagPanelHandlerList)
+        {
+            x.gameObject.SetActive(false);
+        }
+
+        foreach (PlayerTagPanelHandler x in botsTagPanelHandlerList)
+        {
+            x.gameObject.SetActive(true);
+        }
+
+
+
         moveViewTagPanel.CloseTagPanel();
         openTagPanelButton.SetActive(true);
         closeTagPanelButton.SetActive(false);
@@ -141,7 +194,8 @@ public class TagManagement : NetworkBehaviour
     {
         foreach (NetworkGamePlayerAT gamePlayerAT in allTagableHumanPlayersList)
         {
-            GameObject newPlayerTagPanelObj = Instantiate(playerTagPanelPrefab, tagPanelContent.transform);
+            GameObject newPlayerTagPanelObj = Instantiate(playerTagPanelPrefab);
+            newPlayerTagPanelObj.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
             PlayerTagPanelHandler playerTagPanelHandler = newPlayerTagPanelObj.GetComponent<PlayerTagPanelHandler>();
          
             playerTagPanelHandler.StartSetup(gamePlayerAT.fakeName, gamePlayerAT.realName, gameManagerAT.playerVisualPalletsList[gamePlayerAT.playerVisualPalletID].playerSmall, this, gamePlayerAT.playerVisualPalletID);
@@ -153,23 +207,7 @@ public class TagManagement : NetworkBehaviour
             playerTagPanelHandlerList.Add(playerTagPanelHandler);
         }
     }
-    public void PopulateTagPanelWithBots()
-    {
-        foreach (NetworkGamePlayerAT gamePlayerAT in allTagableHumanPlayersList)
-        {
-            GameObject newPlayerTagPanelObj = Instantiate(playerTagPanelPrefab, tagPanelContent.transform);
-            PlayerTagPanelHandler playerTagPanelHandler = newPlayerTagPanelObj.GetComponent<PlayerTagPanelHandler>();
-          
-            playerTagPanelHandler.StartSetup(gamePlayerAT.fakeName, gamePlayerAT.realName, gameManagerAT.playerVisualPalletsList[gamePlayerAT.playerVisualPalletID].playerSmall, this, gamePlayerAT.playerVisualPalletID);
-
-            if (gamePlayerAT.realName == networkGamePlayerAT.realName) //So I can not accuse myself
-            {
-                playerTagPanelHandler.DisableButton();
-            }
-            playerTagPanelHandlerList.Add(playerTagPanelHandler);
-        }
-    }
-
+  
     #endregion
 
     #region//HandlClickOnButton

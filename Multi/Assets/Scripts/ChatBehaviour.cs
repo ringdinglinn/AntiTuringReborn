@@ -36,7 +36,6 @@ public class ChatBehaviour : NetworkBehaviour
     public GameObject textPrefab;
     public List<List<GameObject>> listOfChatroomLists = new List<List<GameObject>>();
     public List<GameObject> mainChatDisplayContentList = new List<GameObject>();
-    private int nrOfChatrooms;
 
     private bool left;
 
@@ -107,7 +106,7 @@ public class ChatBehaviour : NetworkBehaviour
         networkPlayer = GetComponent<NetworkGamePlayerAT>();
         myFakeName = networkPlayer.fakeName;
 
-        for (int x = 0; nrOfChatrooms > x; x++)
+        for (int x = 0; 8 > x; x++)
         {
             listOfChatroomLists.Add(new List<GameObject>());
            // Debug.Log(listOfChatroomLists.Count);
@@ -119,7 +118,7 @@ public class ChatBehaviour : NetworkBehaviour
     private void CmdServerAddNetworkPlayerAndShit()
     {
         networkPlayer = GetComponent<NetworkGamePlayerAT>();
-        for (int x = 0; nrOfChatrooms > x; x++)
+        for (int x = 0; 4 > x; x++)
         {
             listOfChatroomLists.Add(new List<GameObject>());
             //Debug.Log(listOfChatroomLists.Count);
