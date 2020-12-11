@@ -165,7 +165,7 @@ public class GameManagerAT : NetworkBehaviour
     }
     #endregion
 
-    public void ValidateNewTagRequest(string tagedPlayerRealName, string playerWhoTagedRealNamen, bool isInvestigatorTagRequest)
+    public void ValidateNewTagRequest(string tagedPlayerRealName, string playerWhoTagedRealNamen, bool isInvestigatorTagRequest, int visualID)
     {    
         if(isInvestigatorTagRequest == true)//Check ob ein Investigator jmd Getagged hat.
         {
@@ -173,7 +173,7 @@ public class GameManagerAT : NetworkBehaviour
             {
                 if (playerAT.realName == tagedPlayerRealName)//Check ob getagted Person eine  Human Ai ist oder Bot.           
                 {
-                    CmdMessageInvestigatorsDestroyedHumanPlayer(tagedPlayerRealName);
+                    CmdMessageInvestigatorsDestroyedHumanPlayer(tagedPlayerRealName, visualID);
                     return;
                     //Investigators Found a Human Player!!! Dam dam dam
                 }
@@ -362,24 +362,24 @@ public class GameManagerAT : NetworkBehaviour
 
     #region Investigator Destroys Human Player
     [Command]
-    public void CmdMessageInvestigatorsDestroyedHumanPlayer(string newDeadPlayerRealName)
+    public void CmdMessageInvestigatorsDestroyedHumanPlayer(string newDeadPlayerRealName, int visualID)
     {
-        RpcMessageInvestigatorsDestroyedHumanPlayer(newDeadPlayerRealName);
+        RpcMessageInvestigatorsDestroyedHumanPlayer(newDeadPlayerRealName, visualID);
     }
 
     [ClientRpc]
-    public void RpcMessageInvestigatorsDestroyedHumanPlayer(string newDeadPlayerRealName)
+    public void RpcMessageInvestigatorsDestroyedHumanPlayer(string newDeadPlayerRealName, int visualID)
     {
         foreach (NetworkGamePlayerAT player in networkManagerAT.GamePlayers)
         {
             if (newDeadPlayerRealName != player.realName)
             {
-                player.gameManagerAT.messagesHandler.HandlePlayerDied(testSprite, newDeadPlayerRealName, "The investigators have terminated a bot.\nIt was sentient." + " "+ currentHumanBotsAlive + " sentient minds remaining");
+                player.gameManagerAT.messagesHandler.HandlePlayerDied(playerVisualPalletsList[visualID].playerDeadBig, newDeadPlayerRealName, "The investigators have terminated a bot.\nIt was sentient." + " "+ currentHumanBotsAlive + " sentient minds remaining");
             }
 
             if (newDeadPlayerRealName == player.realName)
             {
-                player.gameManagerAT.messagesHandler.HandlePlayerDied(testSprite, newDeadPlayerRealName, "The investigators have temrinated you." + currentHumanBotsAlive + " sentient minds remaining");
+                player.gameManagerAT.messagesHandler.HandlePlayerDied(playerVisualPalletsList[visualID].playerDeadBig, newDeadPlayerRealName, "The investigators have temrinated you." + currentHumanBotsAlive + " sentient minds remaining");
               
                 player.SetIsDead(true);
             }

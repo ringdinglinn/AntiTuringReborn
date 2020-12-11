@@ -43,6 +43,8 @@ public class TagManagement : NetworkBehaviour
     public List<ChatbotAI> allTagableRealBotsList = new List<ChatbotAI>();
    
     private string tagedPlayerRealName;
+    private int taggedPlayerVisualID;
+    private Sprite taggedPlayerSprite;
 
     public GameObject tagPanelParent;
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -221,16 +223,17 @@ public class TagManagement : NetworkBehaviour
     #endregion
 
     #region//HandlClickOnButton
-    public void PlayerInTagPanelHasBeenClickd(string tagedPlayerRealName, string tagedPlayerFakeName, Image playerVisual)
+    public void PlayerInTagPanelHasBeenClickd(string tagedPlayerRealName, string tagedPlayerFakeName, int visualID)
     {
         this.tagedPlayerRealName = tagedPlayerRealName;
-        OpenConfirmWindow(tagedPlayerRealName, tagedPlayerFakeName, playerVisual);
+        taggedPlayerVisualID = visualID;
+        OpenConfirmWindow(tagedPlayerRealName, tagedPlayerFakeName, gameManagerAT.playerVisualPalletsList[visualID].playerAliveBig);
     }
 
-    public void OpenConfirmWindow(string tagedPlayerRealName, string tagedPlayerFakeName, Image playerVisual)
+    public void OpenConfirmWindow(string tagedPlayerRealName, string tagedPlayerFakeName, Sprite sprite)
     {
         confirmeWindow.SetActive(true);
-        clickedPlayerPicture.sprite = playerVisual.sprite;
+        clickedPlayerPicture.sprite = sprite;
         playerFakeName.text = tagedPlayerFakeName;
 
         if (networkGamePlayerAT.isInvestigator)
@@ -276,7 +279,7 @@ public class TagManagement : NetworkBehaviour
     public void FinishLoadingResults()
     {
         loadingResultsWindow.SetActive(false);
-        gameManagerAT.ValidateNewTagRequest(tagedPlayerRealName, networkGamePlayerAT.realName, networkGamePlayerAT.isInvestigator);
+        gameManagerAT.ValidateNewTagRequest(tagedPlayerRealName, networkGamePlayerAT.realName, networkGamePlayerAT.isInvestigator, taggedPlayerVisualID);
 
 
     }

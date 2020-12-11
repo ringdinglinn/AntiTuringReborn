@@ -26,7 +26,7 @@ public class PlayerTagPanelHandler : MonoBehaviour
 
     public void ButtonClick()
     {
-        tagManagement.PlayerInTagPanelHasBeenClickd(playerRealName, playerFakeName.text, playerVisual);
+        tagManagement.PlayerInTagPanelHasBeenClickd(playerRealName, playerFakeName.text, visualID);
     }
 
    public void ActivateHiglightVisual()
