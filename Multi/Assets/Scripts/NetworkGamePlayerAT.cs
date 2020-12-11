@@ -93,7 +93,6 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         Room.GamePlayers.Add(this);
         isInvestigator = Room.GetRole(Room.GamePlayers.Count - 1);
         CmdUpdateRoleOnServer(isInvestigator);
-        investigatorText.SetActive(isInvestigator);
         InitializeChatroomStates();
 
         CmdGamePlayerConnected();

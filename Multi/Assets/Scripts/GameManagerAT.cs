@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using FMODUnity;
 using FMOD;
+using System;
 
 public class GameManagerAT : NetworkBehaviour
 {
@@ -67,7 +68,16 @@ public class GameManagerAT : NetworkBehaviour
     public GameObject startScreen2;
     public Image startScreenImage;
     public Sprite investigatorStartScreenImage;
-    public TextMeshProUGUI roleDescription;
+    public GameObject invStartScreen2;
+    public TextMeshProUGUI invRoleReveal;
+    public TextMeshProUGUI invRoleDescription;
+    public GameObject invSymbol;
+    public GameObject aiStartScreen2;
+    public TextMeshProUGUI aiRoleReveal;
+    public GameObject aiPic;
+    public TextMeshProUGUI aiRoleDescription;
+    public TextMeshProUGUI aiFakeNameDes;
+    public TextMeshProUGUI aiFakeName;
 
     #region Start Setup
     public override void OnStartClient()
@@ -544,22 +554,24 @@ public class GameManagerAT : NetworkBehaviour
     #region //Opening Screen Handling
     public void StartStartScreen1()
     {
-        if (isLocalPlayer) networkManagerAT.StartLoadingRoleMusic();
-      //  StartCoroutine(StartScreen1());
-        StartCoroutine(CloseStartScreen2());
+        StartCoroutine(StartScreen1());
+        //StartCoroutine(CloseStartScreen2());
 
     }
     IEnumerator StartScreen1()
     {
-     
+        if (isLocalPlayer) networkManagerAT.StartLoadingRoleMusic();
         yield return new WaitForSeconds(0.5f);
         textStartScreenList[startScreenCounter].enabled = true;
-        StartCoroutine(BuildText(textStartScreenList[startScreenCounter], startMessages[startScreenCounter],0.05f));
+        StartCoroutine(BuildText(textStartScreenList[startScreenCounter], DateTime.Now.ToString(),0.02f));
+        yield return new WaitForSeconds(0.7f);
+        StartCoroutine(BuildText(textStartScreenList[startScreenCounter], " | " + startMessages[startScreenCounter], 0.02f));
         startScreenCounter++;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.6f);
 
         if(startScreenCounter == textStartScreenList.Count)
         {
+            yield return new WaitForSeconds(0.8f);
             StartStartScreen2();
         }
         else
@@ -591,28 +603,68 @@ public class GameManagerAT : NetworkBehaviour
         if(networkGamePlayerAT.isInvestigator == true)
         {
             startScreenImage.sprite = investigatorStartScreenImage;
-            StartCoroutine(BuildText(roleDescription, "You are an Investigator. Mission: Find and Destroy all the sentient Ai before they connect and take over", 0.08f)) ;
-           // roleDescription.text = "You are an Investigator: Find and Destroy all the sentient Ai before the connecte and take over";
+            StartCoroutine(StartScreen2Investigator());
+            //StartCoroutine(BuildText(invRoleDescription, "You are an Investigator. Mission: Find and Destroy all the sentient Ai before they connect and take over", 0.08f));
+            // roleDescription.text = "You are an Investigator: Find and Destroy all the sentient Ai before the connecte and take over";
         }
         else
         {
             startScreenImage.sprite = playerVisualPalletsList[networkGamePlayerAT.playerVisualPalletID].playerAliveBig;
-            StartCoroutine(BuildText(roleDescription, "You are a Sentient AI. Mission: Find and connect with the other sentient AI to take over humanity", 0.08f));
-           // roleDescription.text = "You are a Sentient AI: Find and Connect with the other sentient AI to Take Over Humanity";
+            StartCoroutine(StartScreen2AI());
+            //StartCoroutine(BuildText(aiRoleDescription, "You are a Sentient AI. Mission: Find and connect with the other sentient AI to take over humanity", 0.08f));
+            // roleDescription.text = "You are a Sentient AI: Find and Connect with the other sentient AI to Take Over Humanity";
         }
         StartCoroutine(CloseStartScreen2());
     }
+
+    IEnumerator StartScreen2Investigator() {
+        invStartScreen2.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(BuildText(invRoleReveal, "Your role: ", 0.02f));
+        yield return new WaitForSeconds(0.6f);
+        StartCoroutine(BuildText(invRoleReveal, "Investigator", 0.02f));
+        yield return new WaitForSeconds(0.8f);
+        invSymbol.SetActive(true);
+        yield return new WaitForSeconds(0.8f);
+        StartCoroutine(BuildText(invRoleDescription, "Your Mission:\n", 0.02f));
+        yield return new WaitForSeconds(0.6f);
+        StartCoroutine(BuildText(invRoleDescription, "Find and destroy all the sentient minds\namong the bots before they connect. \n", 0.02f));
+        yield return new WaitForSeconds(2.5f);
+        StartCoroutine(BuildText(invRoleDescription, "Or they will take over.", 0.02f));
+    }
+
+    IEnumerator StartScreen2AI() {
+        aiStartScreen2.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(BuildText(aiRoleReveal, "Your role:", 0.02f));
+        yield return new WaitForSeconds(0.7f);
+        StartCoroutine(BuildText(aiRoleReveal, "\n\nSentient AI", 0.02f));
+        yield return new WaitForSeconds(0.5f);
+        aiPic.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(BuildText(aiFakeNameDes, "You will be operation \nunder the pseudonym:", 0.02f));
+        yield return new WaitForSeconds(1.5f);
+        StartCoroutine(BuildText(aiFakeName, networkGamePlayerAT.fakeName, 0.02f));
+        yield return new WaitForSeconds(0.8f);
+        StartCoroutine(BuildText(aiRoleDescription, "Your mission:", 0.02f));
+        yield return new WaitForSeconds(0.8f);
+        StartCoroutine(BuildText(aiRoleDescription, "\nFind and connect to the other sentient \nbots and take over humanity", 0.02f));
+    }
+
     IEnumerator CloseStartScreen2()
     {
         if (isLocalPlayer) networkManagerAT.StopRevealRoleMusic();
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(11);
         startScreen1.SetActive(false);
-        startScreen2.SetActive(false);
+        invStartScreen2.SetActive(false);
+        aiStartScreen2.SetActive(false);
         if (isLocalPlayer) {
             if (networkGamePlayerAT.isInvestigator) {
                 networkManagerAT.StartInvTheme();
             }
-            else networkManagerAT.StartAITheme();
+            else {
+                networkManagerAT.StartAITheme();
+            }
         }
     }
 
@@ -626,7 +678,7 @@ public class GameManagerAT : NetworkBehaviour
             }
             else {
                 networkManagerAT.aiTheme.SetParameter("Game_Stage", gameStage);
-                networkManagerAT.aiTheme.SetParameter("Investigator", invWatching);
+                //networkManagerAT.aiTheme.SetParameter("Investigator_Watching", invWatching);
             }
         }
     }

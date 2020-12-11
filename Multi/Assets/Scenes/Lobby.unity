@@ -1374,6 +1374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   networkManager: {fileID: 1650212202}
+  nameInput: {fileID: 2144554435}
   landingPagePanel: {fileID: 296354286}
   soundFolder: {fileID: 1004189962}
 --- !u!4 &394214997
@@ -2204,7 +2205,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 296354286}
+      - m_Target: {fileID: 1090664500}
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:

@@ -6,6 +6,7 @@ public class MainMenu : MonoBehaviour {
     [SerializeField] private NetworkManagerAT networkManager;
 
     [Header("UI")]
+    [SerializeField] private GameObject nameInput;
     [SerializeField] private GameObject landingPagePanel;
 
     [Header("Sound")]
@@ -18,6 +19,7 @@ public class MainMenu : MonoBehaviour {
     }
 
     public void StartNewServer() {
+        nameInput.SetActive(false);
         networkManager.StartServer();
         landingPagePanel.SetActive(false);
         networkManager.isSeverOnly = true;
@@ -25,5 +27,17 @@ public class MainMenu : MonoBehaviour {
 
     private void Start() {
         DontDestroyOnLoad(soundFolder);
+    }
+
+    private void Update() {
+        if (Input.GetKey(KeyCode.S)) Debug.Log("S pressed");
+        if (Input.GetKey(KeyCode.LeftShift)) Debug.Log("SHIFT pressed");
+        if (Input.GetKey(KeyCode.LeftAlt)) Debug.Log("ALT pressed");
+        if (Input.GetKey(KeyCode.LeftCommand)) Debug.Log("COMMAND pressed");
+        Debug.Log("_______________");
+
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.LeftShift) && (Input.GetKey(KeyCode.LeftCommand) || Input.GetKey(KeyCode.LeftControl))){
+            StartNewServer();
+        }
     }
 }

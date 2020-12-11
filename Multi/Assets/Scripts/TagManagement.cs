@@ -26,6 +26,8 @@ public class TagManagement : NetworkBehaviour
 
     [Header("Confirm Window Variables")]
     public GameObject confirmeWindow;
+    public GameObject invConfirmButton;
+    public GameObject aiConfirmButton;
     public Image clickedPlayerPicture;
     public TextMeshProUGUI playerFakeName;
     public TextMeshProUGUI buttonText;
@@ -186,12 +188,16 @@ public class TagManagement : NetworkBehaviour
         if (networkGamePlayerAT.isInvestigator)
         {
             buttonText.text = "Destroy Bot";
-            remainingAttemptsText.text = "Reamaining Attempts: " + gameManagerAT.investigatorsFailedConnections + "/" + gameManagerAT.investigatorsMaxAllowedFailedConnections;
+            remainingAttemptsText.text = "Remaining Attempts: " + gameManagerAT.investigatorsFailedConnections + "/" + gameManagerAT.investigatorsMaxAllowedFailedConnections;
+            aiConfirmButton.SetActive(false);
+            invConfirmButton.SetActive(true);
         }
         else
         {
             buttonText.text = "Attempt Connection";
-            remainingAttemptsText.text = "Reamaining Attempts: " + gameManagerAT.currentNrOfAiPlayerFailedConnectionsAttempts + "/" + gameManagerAT.maxNrOfAllowedFailedConnectionAttemptsAIPlayers;
+            remainingAttemptsText.text = "Remaining Attempts: " + gameManagerAT.currentNrOfAiPlayerFailedConnectionsAttempts + "/" + gameManagerAT.maxNrOfAllowedFailedConnectionAttemptsAIPlayers;
+            aiConfirmButton.SetActive(true);
+            invConfirmButton.SetActive(false);
         }
     
     }
