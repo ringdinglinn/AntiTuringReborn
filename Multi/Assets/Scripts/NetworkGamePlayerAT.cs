@@ -351,6 +351,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         else if (playerIsDead)
         {
             RpcDeadPlayerToggleButtons(true);
+            GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, chatroomStates[ID].leftFree, chatroomStates[ID].rightFree, chatroomStates[ID].leftName, chatroomStates[ID].rightName);
         }
         else if (ID != 99 && chatroomStates[ID].leftName == fakeName)
         {

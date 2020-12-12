@@ -289,7 +289,7 @@ public class TagManagement : NetworkBehaviour
             if (x.GetPlayerRealName() == tagedPlayerRealName)
             {
                 x.DisableButton();
-                x.SwitchSpriteToDead();
+              //  x.SwitchSpriteToDead();
                 //x.SetButtonDisabledColor(Color.green);
             }
         }

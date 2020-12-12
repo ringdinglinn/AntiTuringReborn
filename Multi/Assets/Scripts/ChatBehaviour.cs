@@ -513,9 +513,8 @@ public class ChatBehaviour : NetworkBehaviour
 
     private IEnumerator BuildPreviewsTextInMainCanvas(int id )
     {
-        if(listOfChatroomLists[id].Count > 30)
+        if(listOfChatroomLists[id].Count > 30) 
         {
-
             for (int x = 0; listOfChatroomLists[id].Count-24 > x; x++)
             {
                 GameObject newMessage = Instantiate(textPrefab, mainChatDisplay.GetComponent<ChatDisplayContent>().scrollPanelContent.transform);
@@ -525,13 +524,10 @@ public class ChatBehaviour : NetworkBehaviour
                 mainChatDisplayContentList.Add(newMessage);
                 digitalLetterVersion1.Play();
                 yield return new WaitForSeconds(0.06f);
-            }
-            
+            }           
         }
         else
         {
-
-
             for (int x = 0; listOfChatroomLists[id].Count > x; x++)
             {
                 GameObject newMessage = Instantiate(textPrefab, mainChatDisplay.GetComponent<ChatDisplayContent>().scrollPanelContent.transform);
@@ -547,8 +543,6 @@ public class ChatBehaviour : NetworkBehaviour
                 // StartCoroutine(BuildPreviewsTextInMainCanvas(id));
             }
         }
-
-
         yield return new WaitForEndOfFrame();
     }
 
@@ -590,12 +584,10 @@ public class ChatBehaviour : NetworkBehaviour
         }
     }
 
-
     [ClientRpc]
     public void RpcLeaveMainCanvas(int id, bool leftFree, bool rightFree, string leftName, string rightName)
     {
         ChatDisplayContent cdc = mainChatDisplay.GetComponent<ChatDisplayContent>();
-
         cdc.leftPerson.gameObject.SetActive(!networkPlayer.chatroomStates[id].leftFree);
         cdc.rightPerson.gameObject.SetActive(!networkPlayer.chatroomStates[id].rightFree);
         cdc.leftName.text = networkPlayer.chatroomStates[id].leftName;
@@ -604,8 +596,7 @@ public class ChatBehaviour : NetworkBehaviour
         if (networkPlayer.isInvestigator == false)
         {
             cdc.investigatorVisual.SetActive(false);
-        }
-       
+        }      
     }
     [ClientRpc]
     public void RpcClearMainCanvas(int id, bool leftFree, bool rightFree, string leftName, string rightName)

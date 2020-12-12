@@ -21,9 +21,6 @@ public class GameManagerAT : NetworkBehaviour
     public TagManagement tagManagement;
     public ConnectionDiagramManager connectionDiagramManager;
 
-    [Header("Provisiorisch")]
-    public Sprite testSprite;
-
     [Header("Core Mechanic")]
     [SerializeField] private int totalHumanBots;
     [SerializeField] private int currentHumanBotsAlive;
@@ -84,6 +81,8 @@ public class GameManagerAT : NetworkBehaviour
     [Header("Typing Sound Effect")]
     public StudioEventEmitter digitalLetterSound;
 
+    private bool isInSoundStage2 = false;
+    private bool isInSoundStage3 = false;
     #region Start Setup
     public override void OnStartClient()
     {
@@ -397,14 +396,15 @@ public class GameManagerAT : NetworkBehaviour
     {
         foreach (NetworkGamePlayerAT player in networkManagerAT.GamePlayers)
         {
+            player.gameManagerAT.currentHumanBotsAlive--;
             if (newDeadPlayerRealName != player.realName)
-            {
-                player.gameManagerAT.messagesHandler.HandlePlayerDied(playerVisualPalletsList[visualID].playerDeadBig, newDeadPlayerRealName, "The investigators have terminated a bot.\nIt was sentient." + " " + currentHumanBotsAlive + " sentient minds remaining", "", isLocalPlayer); ;
+            {             
+                player.gameManagerAT.messagesHandler.HandlePlayerDied(playerVisualPalletsList[visualID].playerDeadBig, newDeadPlayerRealName, "The investigators have terminated a bot.\nIt was sentient." + " " + player.gameManagerAT.currentHumanBotsAlive + " sentient minds remaining", "", isLocalPlayer); ;
             }
 
             if (newDeadPlayerRealName == player.realName)
-            {
-                player.gameManagerAT.messagesHandler.HandlePlayerDied(playerVisualPalletsList[visualID].playerDeadBig, newDeadPlayerRealName, "The investigators have temrinated you." + currentHumanBotsAlive + " sentient minds remaining", "", isLocalPlayer);
+            {              
+                player.gameManagerAT.messagesHandler.HandlePlayerDied(playerVisualPalletsList[visualID].playerDeadBig, newDeadPlayerRealName, "The investigators have temrinated you." + player.gameManagerAT.currentHumanBotsAlive + " sentient minds remaining", "", isLocalPlayer);
               
                 player.SetIsDead(true);
             }
@@ -418,14 +418,11 @@ public class GameManagerAT : NetworkBehaviour
                 if (alreadyExsitingHolder.connectionMade == true)
                 {
                     if (alreadyExsitingHolder.player1realName == newDeadPlayerRealName || alreadyExsitingHolder.player2realName == newDeadPlayerRealName)
-                    {
-                      
-                            player.gameManagerAT.currentNrOfMadeAIConncetions--;
-                       
+                    {                      
+                      player.gameManagerAT.currentNrOfMadeAIConncetions--;                      
                     }
                 }
-            }
-            player.gameManagerAT.currentHumanBotsAlive--;
+            }           
             player.gameManagerAT.ValidateWinAndLoseState(8);
         }
         networkManagerAT.botTerminated.Play();
@@ -507,6 +504,7 @@ public class GameManagerAT : NetworkBehaviour
             {
                 if (player.isLocalPlayer) networkManagerAT.botTerminated.Play();
                 player.gameManagerAT.messagesHandler.HandlePlayerDied(player.gameManagerAT.playerVisualPalletsList[visualID].playerDeadBig, newDeadPlayerRealName, "A sentient bot has been discovered due too many connection attempts. There are still: " + player.gameManagerAT. currentHumanBotsAlive + "sentient minds out there", "", isLocalPlayer);
+
             }
 
             if (newDeadPlayerRealName == player.realName)
@@ -532,7 +530,7 @@ public class GameManagerAT : NetworkBehaviour
                     }
                 }
             }
-            player.gameManagerAT.currentHumanBotsAlive--;
+           
             player.gameManagerAT.ValidateWinAndLoseState(10);
         }
 
@@ -605,7 +603,57 @@ public class GameManagerAT : NetworkBehaviour
     public void ValidateWinAndLoseState(float time)
     {
         StartCoroutine(ValidateWindLoseStateAsync(time));
+
+        ChangeMusicStateBasedOnNrOfMadeConnections();
+
     }
+
+    private void ChangeMusicStateBasedOnNrOfMadeConnections()
+    {
+        int stageCounter = minNeededConnectionsForAIToWin / 3;
+
+
+        //Change Based on Human Bots Alive
+        if (currentHumanBotsAlive == totalHumanBots && isInSoundStage2 == false && isInSoundStage3== false)
+        {
+            UnityEngine.Debug.Log("We are in Music Intensity Stage 1 because of Human Bots Alive ");
+            //If we already are in stage 1 music do nothing else change to stage 1 music
+        }
+        else if(currentHumanBotsAlive == currentHumanBotsAlive - 1 && isInSoundStage3 == false)
+        {
+            isInSoundStage2 = true;
+            UnityEngine.Debug.Log("We are in Music Intensity Stage 2 because of Human Bots Alive ");
+            //If we already are in stage 2 music do nothing else change to stage 2 music
+        }
+        else if (currentHumanBotsAlive == currentHumanBotsAlive - 2)
+        {
+            isInSoundStage3 = true;
+            UnityEngine.Debug.Log("We are in Music Intensity Stage 3 because of Human Bots Alive ");
+            //If we already are in stage 3 music do nothing else change to stage 3 music
+        }
+
+        //Change Based onn Connections
+        if (currentNrOfMadeAIConncetions < stageCounter && isInSoundStage2 == false && isInSoundStage3 == false)
+        {
+          
+            //If we already are in stage 1 music do nothing else change to stage 1 music
+            UnityEngine.Debug.Log("We are in Music Intensity Stage 1 because of made connections");
+        }
+        else if (currentNrOfMadeAIConncetions < stageCounter * 2 && isInSoundStage3 == false) // stage 2 still need 3 connections
+        {
+            isInSoundStage2 = true;
+            //If we already are in stage 2 music do nothing else change to stage 2 music
+            UnityEngine.Debug.Log("We are in Music Intensity Stage 2 of made connections");
+        }
+        else if (currentNrOfMadeAIConncetions >= stageCounter * 2 )
+        {
+            isInSoundStage3 = false;
+            //If we already are in stage 3 music do nothing else change to stage 3 music
+            UnityEngine.Debug.Log("We are in Music Intensity Stage 3 because of made connections");
+        }
+
+    }
+
     #endregion
 
 

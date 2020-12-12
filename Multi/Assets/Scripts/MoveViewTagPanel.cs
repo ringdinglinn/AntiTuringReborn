@@ -15,6 +15,9 @@ public class MoveViewTagPanel : MonoBehaviour
     public List<PlayerTagPanelHandler> tagHandlerListRightSide = new List<PlayerTagPanelHandler>();
     public List<PlayerTagPanelHandler> tagHandlerListLeftSide = new List<PlayerTagPanelHandler>();
 
+
+    public List<PlayerTagPanelHandler> tagHandlerListShuffler = new List<PlayerTagPanelHandler>();
+
     public StudioEventEmitter toggleSound;
 
     private void GetDefaultSize() {
@@ -25,31 +28,33 @@ public class MoveViewTagPanel : MonoBehaviour
 
     public void SetTagPanelPositions(int totalNrOfPanelSlots, List<PlayerTagPanelHandler> playerTagPanelHandlerList, List<PlayerTagPanelHandler> botsTagPanelHandlerList)
     {
-        float targetXPosition = playerTagPanelHandlerList[0].GetComponent<RectTransform>().rect.width;
+
+
+        tagHandlerListShuffler.AddRange(playerTagPanelHandlerList);
+
+        foreach (PlayerTagPanelHandler x in botsTagPanelHandlerList)
+        {
+           int randomInsertPosition = Random.Range(0, tagHandlerListShuffler.Count);
+            tagHandlerListShuffler.Insert(randomInsertPosition, x);
+        }
+
+        float targetXPosition = tagHandlerListShuffler[0].GetComponent<RectTransform>().rect.width;
         float targetYPosition = -101;
     
         if (totalNrOfPanelSlots <= 11)
         {
-            foreach (PlayerTagPanelHandler x in playerTagPanelHandlerList)
+            foreach (PlayerTagPanelHandler x in tagHandlerListShuffler)
             {             
                 x.GetComponent<RectTransform>().anchoredPosition = new Vector3(374 + ( targetXPosition * 0), targetYPosition - 5, 0);
                 targetYPosition -= x.GetComponent<RectTransform>().rect.height;
               
                 tagHandlerListLeftSide.Add(x);
-            }
-            foreach (PlayerTagPanelHandler x in botsTagPanelHandlerList)
-            {
-               
-                x.GetComponent<RectTransform>().anchoredPosition = new Vector3(374 + (targetXPosition * 0), targetYPosition - 5, 0);
-                targetYPosition -= x.GetComponent<RectTransform>().rect.height;
-            
-                tagHandlerListLeftSide.Add(x);
-            }
+            }      
         }
         else
         {
             int slotNr = 0;
-            foreach (PlayerTagPanelHandler x in playerTagPanelHandlerList)
+            foreach (PlayerTagPanelHandler x in tagHandlerListShuffler)
             {               
                 if (slotNr % 2 == 0)//is Even Nr
                 {
@@ -62,25 +67,8 @@ public class MoveViewTagPanel : MonoBehaviour
                     targetYPosition -= x.GetComponent<RectTransform>().rect.height;              
                     tagHandlerListLeftSide.Add(x);
                 }
-
                 slotNr++;
-            }
-            foreach (PlayerTagPanelHandler x in botsTagPanelHandlerList)
-            {      
-                if (slotNr % 2 == 0)//is Even Nr
-                {
-                    x.GetComponent<RectTransform>().anchoredPosition = new Vector3(77f + targetXPosition, targetYPosition, 0);                 
-                    tagHandlerListRightSide.Add(x);
-                }
-                else // is not even Nr
-                {
-                    x.GetComponent<RectTransform>().anchoredPosition = new Vector3(77f + (targetXPosition * 0), targetYPosition, 0);
-                    targetYPosition -= x.GetComponent<RectTransform>().rect.height;                  
-                    tagHandlerListLeftSide.Add(x);
-
-                }
-                slotNr++;
-            }
+            }       
         }
       
     }
@@ -154,13 +142,7 @@ public class MoveViewTagPanel : MonoBehaviour
 
                 }
             }
-
         }
-
-
-
-
-
     }
     
 
