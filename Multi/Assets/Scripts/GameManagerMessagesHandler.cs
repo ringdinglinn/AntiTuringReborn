@@ -15,6 +15,7 @@ public class GameManagerMessagesHandler : MonoBehaviour
     [SerializeField] private GameObject mainBroadcastHolder;
     [SerializeField] private GameObject messageField;
     [SerializeField] private GameObject attemptsField;
+    [SerializeField] private GameObject invFailed; 
     
     
     [Header("Component References")]
@@ -50,6 +51,7 @@ public class GameManagerMessagesHandler : MonoBehaviour
         playerConnectName1.text = "";
         playerConnectName2.text = "";
         deadPlayerName.text = "";
+        invFailed.SetActive(false);
 
         if(deadPlayerName.text == networkGamePlayerAT.realName)
         {
@@ -63,6 +65,7 @@ public class GameManagerMessagesHandler : MonoBehaviour
     #region//Visual Handling When a Player Died
     public void HandlePlayerDied(Sprite newDeadPlayerSprite, string newDeadPlayerName, string newMessage, string attemptsText = "")
     {
+        CloseMessage();
         mainBroadcastHolder.SetActive(true);
         deadPlayerVisual.SetActive(true);
         deadPlayerImage.sprite = newDeadPlayerSprite;
@@ -79,6 +82,7 @@ public class GameManagerMessagesHandler : MonoBehaviour
     #region//Visual Handling When Human Player Connected With Another Human Player
     public void HandleHumanPlayerConnectedWithAntoherHumanPlayer(string newTitle, string playerThatFoundTheOtherName, string tagedPlayerName, int numberOfConnections, string newMessage)
     {
+        CloseMessage();
         mainBroadcastHolder.SetActive(true);
         title.gameObject.SetActive(true);
         title.text = newTitle;
@@ -95,9 +99,10 @@ public class GameManagerMessagesHandler : MonoBehaviour
     }
     #endregion
 
-    #region//Visual Handling When Human Player Connected With Another Human Player
+    #region//Visual Handling When Human Player Failed to connect to Another Human Player
     public void HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer(string newTitle, string playerThatFoundTheOtherName, string tagedPlayerName, int numberOfConnections, string newMessage, string attemptsMessage = "")
     {
+        CloseMessage();
         mainBroadcastHolder.SetActive(true);
         title.text = newTitle;
         title.gameObject.SetActive(true);
@@ -113,5 +118,16 @@ public class GameManagerMessagesHandler : MonoBehaviour
         messageField.SetActive(true);
 
     }
+    #endregion
+
+    #region Broadcast for investigators when they made too many wrong attempts
+    public void HandleInvestigatorsMadeTooManyWrongAttempts(string message) {
+        CloseMessage();
+        mainBroadcastHolder.SetActive(true);
+        messageField.SetActive(true);
+        invFailed.SetActive(true);
+        this.message.text = message;
+    }
+
     #endregion
 }

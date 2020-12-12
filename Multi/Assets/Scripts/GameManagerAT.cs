@@ -166,7 +166,7 @@ public class GameManagerAT : NetworkBehaviour
     #endregion
 
     public void ValidateNewTagRequest(string tagedPlayerRealName, string playerWhoTagedRealNamen, bool isInvestigatorTagRequest, int visualID)
-    {    
+    {
         if(isInvestigatorTagRequest == true)//Check ob ein Investigator jmd Getagged hat.
         {
             foreach (NetworkGamePlayerAT playerAT in networkManagerAT.GamePlayers)
@@ -215,6 +215,13 @@ public class GameManagerAT : NetworkBehaviour
     }
 
     #region WrongTags Handeling
+
+    IEnumerator WaitForTooManyAttemptsInv(NetworkGamePlayerAT player, string message) {
+        yield return new WaitForSeconds(5);
+        player.gameManagerAT.messagesHandler.CloseMessage();
+        player.gameManagerAT.messagesHandler.HandleInvestigatorsMadeTooManyWrongAttempts(message);
+    }
+
     [Command]
     public void CmdInvestigatorTaggedWrong(string newDeadBotName, int newVIsualID, int investigatorID)
     {
@@ -230,12 +237,23 @@ public class GameManagerAT : NetworkBehaviour
         }
         foreach (NetworkGamePlayerAT player in networkManagerAT.GamePlayers)
         {
+            bool tooManyAttempts = false;
             if (investigatorID == player.playerID) {
                 player.gameManagerAT.messagesHandler.HandlePlayerDied(player.gameManagerAT.playerVisualPalletsList[newVIsualID].playerDeadBig, newDeadBotName, "You have terminated a bot.\n\nIt was not sentient.", "Investigator's remaining attempts: " + (investigatorsMaxAllowedFailedConnections - investigatorsFailedConnections));
+                if (investigatorsFailedConnections >= investigatorsMaxAllowedFailedConnections) {
+                    tooManyAttempts = true;
+                    StartCoroutine(WaitForTooManyAttemptsInv(player, "You were wrong. All attempts have been used. You have failed to protect humanity."));
+                }
             } else {
                 player.gameManagerAT.messagesHandler.HandlePlayerDied(player.gameManagerAT.playerVisualPalletsList[newVIsualID].playerDeadBig, newDeadBotName, "The investigators have terminated a bot.\n\nIt was not sentient.", "Investigator's remaining attempts: " + (investigatorsMaxAllowedFailedConnections - investigatorsFailedConnections));
+                if (investigatorsFailedConnections >= investigatorsMaxAllowedFailedConnections) {
+                    tooManyAttempts = true;
+                    if (player.isInvestigator) StartCoroutine(WaitForTooManyAttemptsInv(player, "An investigator guessed wrong. All attempts have been used. You have failed to protect humanity"));
+                    else StartCoroutine(WaitForTooManyAttemptsInv(player, "The investigators have used up all their attempts to find you. Now nothing stands in your way."));
+                }
             }
-            player.gameManagerAT.ValidateWinAndLoseState();      
+            if (!tooManyAttempts) player.gameManagerAT.ValidateWinAndLoseState(8);
+            else player.gameManagerAT.ValidateWinAndLoseState(14);
             player.tagManagement.ChangePlayerTagToDead(newDeadBotName);
         
         }
@@ -290,7 +308,7 @@ public class GameManagerAT : NetworkBehaviour
 
                 if (playerAT.realName == playerWhoTagedRealName)
                 {
-                    playerAT.gameManagerAT.messagesHandler.HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer("Connection failed!", playerWhoTagedRealName, tagedBotName, 1, tagedBotName + " is not sentient. Connection unsuccessful.",  "Remaining attempts before termination: " + (maxNrOfAllowedFailedConnectionAttemptsAIPlayers - currentNrOfAiPlayerFailedConnectionsAttempts-1));
+                    playerAT.gameManagerAT.messagesHandler.HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer("Connection failed!", playerWhoTagedRealName, tagedBotName, 1, tagedBotName + " is not sentient. Connection unsuccessful.",  "Remaining attempts before termination: " + (maxNrOfAllowedFailedConnectionAttemptsAIPlayers - currentNrOfAiPlayerFailedConnectionsAttempts));
                 }
             }
 
@@ -400,7 +418,7 @@ public class GameManagerAT : NetworkBehaviour
                 }
             }
             player.gameManagerAT.currentHumanBotsAlive--;
-            player.gameManagerAT.ValidateWinAndLoseState();
+            player.gameManagerAT.ValidateWinAndLoseState(8);
         }
 
       
@@ -451,7 +469,7 @@ public class GameManagerAT : NetworkBehaviour
 
             player.gameManagerAT.connectionDiagramManager.HandleNewConnection(foundPlayerRealName, playerWhoTagedRealNamen);
             player.gameManagerAT.currentNrOfMadeAIConncetions++;
-            player.gameManagerAT.ValidateWinAndLoseState();
+            player.gameManagerAT.ValidateWinAndLoseState(8);
         }
 
         tagManagement.ChangePlayerTagToFound(foundPlayerRealName);
@@ -482,7 +500,7 @@ public class GameManagerAT : NetworkBehaviour
             if (newDeadPlayerRealName == player.realName)
             {
                 player.gameManagerAT.messagesHandler.HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer("Connection failed!", player.realName, "?", 1, "This bot is not sentient. Connection unsuccessful.", "Remaining attempts before termination: " + (maxNrOfAllowedFailedConnectionAttemptsAIPlayers - currentNrOfAiPlayerFailedConnectionsAttempts - 1));
-                StartCoroutine(WaitForTooManyWrongAttempts(player));
+                StartCoroutine(WaitForTooManyWrongAttemptsAI(player));
                 aiDiedTooManyAttempts = true;
             }
 
@@ -502,16 +520,14 @@ public class GameManagerAT : NetworkBehaviour
                 }
             }
             player.gameManagerAT.currentHumanBotsAlive--;
-            if (!aiDiedTooManyAttempts) player.gameManagerAT.ValidateWinAndLoseState();
+            player.gameManagerAT.ValidateWinAndLoseState(10);
         }
 
-        IEnumerator WaitForTooManyWrongAttempts(NetworkGamePlayerAT player) {
-            UnityEngine.Debug.Log("hello this is the coroutine");
+        IEnumerator WaitForTooManyWrongAttemptsAI(NetworkGamePlayerAT player) {
             yield return new WaitForSeconds(5);
             player.gameManagerAT.messagesHandler.CloseMessage();
             player.gameManagerAT.messagesHandler.HandlePlayerDied(player.gameManagerAT.playerVisualPalletsList[player.playerVisualPalletID].playerDeadBig, newDeadPlayerRealName, "You have made too many attempts to connect and have been discovered. The investigators have terminated you.");
             player.SetIsDead(true);
-            player.gameManagerAT.ValidateWinAndLoseState();
         }
     }
   
@@ -536,8 +552,8 @@ public class GameManagerAT : NetworkBehaviour
 
     #region ValidateWinAndLoseState
 
-    IEnumerator ValidateWindLoseStateAsync() {
-        yield return new WaitForSeconds(5);
+    IEnumerator ValidateWindLoseStateAsync(float time) {
+        yield return new WaitForSeconds(time);
         if (minNeededConnectionsForAIToWin <= currentNrOfMadeAIConncetions) {
             // AI Players Win due to enough Connections
             ToggleAIWonVisual(true);
@@ -554,9 +570,9 @@ public class GameManagerAT : NetworkBehaviour
             ToggleAIWonVisual(true);
         }
     }
-    public void ValidateWinAndLoseState()
+    public void ValidateWinAndLoseState(float time)
     {
-        StartCoroutine(ValidateWindLoseStateAsync());
+        StartCoroutine(ValidateWindLoseStateAsync(time));
         //if(minNeededConnectionsForAIToWin <= currentNrOfMadeAIConncetions)
         //{
         //    // AI Players Win due to enough Connections
@@ -584,12 +600,16 @@ public class GameManagerAT : NetworkBehaviour
     public void StartStartScreen1()
     {
         StartCoroutine(StartScreen1());
-        StartCoroutine(CloseStartScreen2());
+        //StartCoroutine(CloseStartScreen2());
 
     }
+
+    bool startScreen1open = false;
+
     IEnumerator StartScreen1()
     {
-        if (isLocalPlayer) networkManagerAT.StartLoadingRoleMusic();
+        if (isLocalPlayer && !startScreen1open) networkManagerAT.StartLoadingRoleMusic();
+        startScreen1open = true;
         yield return new WaitForSeconds(0.5f);
         textStartScreenList[startScreenCounter].enabled = true;
         StartCoroutine(BuildText(textStartScreenList[startScreenCounter], DateTime.Now.ToString(),0.02f));

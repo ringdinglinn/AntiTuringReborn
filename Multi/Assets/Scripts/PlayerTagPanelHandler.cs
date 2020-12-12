@@ -12,6 +12,11 @@ public class PlayerTagPanelHandler : MonoBehaviour
     [SerializeField] private Image playerVisual;
     [SerializeField] private Sprite deadSprite;
 
+    private Sprite baseSprite;
+    private Sprite hoverSprite;
+
+    private bool dead = false;
+
     public int visualID;
     private TagManagement tagManagement;
     private string playerRealName;
@@ -20,6 +25,7 @@ public class PlayerTagPanelHandler : MonoBehaviour
         playerFakeName.text = newPlayerFakeName;
         playerRealName = newPlayerRealName;
         playerVisual.sprite = newPlayerSprite;
+        baseSprite = playerVisual.sprite;
         tagManagement = myManagement;
         this.visualID = visualID;
    }
@@ -32,11 +38,13 @@ public class PlayerTagPanelHandler : MonoBehaviour
    public void ActivateHiglightVisual()
    {
         playerVisual.sprite = tagManagement.gameManagerAT.playerVisualPalletsList[visualID].playerSmallHover;
+        if (dead) playerVisual.sprite = deadSprite;
 
-   }
+    }
     public void DeactivateHiglightVisual()
     {
         playerVisual.sprite = tagManagement.gameManagerAT.playerVisualPalletsList[visualID].playerSmall;
+        if (dead) playerVisual.sprite = deadSprite;
     }
 
     public void DisableButton()
@@ -46,6 +54,10 @@ public class PlayerTagPanelHandler : MonoBehaviour
 
     public void SwitchSpriteToDead() {
         playerVisual.sprite = deadSprite;
+        button.interactable = false;
+        baseSprite = deadSprite;
+        hoverSprite = baseSprite;
+        dead = true;
     }
 
     public void SetButtonDisabledColor(Color newColor)
