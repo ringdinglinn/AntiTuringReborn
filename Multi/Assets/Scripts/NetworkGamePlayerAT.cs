@@ -273,13 +273,13 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
     [ClientRpc]
     private void RpcOpenChatroom(int chatroomID, bool playerWhoCallsIsInvestigator, bool playerWhoCallsIsDead ) {
+        if (!isInvestigator && isLocalPlayer && playerIsDead == false) StartCoroutine(ToggleInputField(true));
         moveView.MoveViewRight();
 
         if (playerWhoCallsIsDead == false)
         {
             if (playerWhoCallsIsInvestigator == false)
             {
-                if (!isInvestigator && isLocalPlayer && playerIsDead == false) StartCoroutine(ToggleInputField(true));
                 if (!isLocalPlayer)
                 {
                     foreach (NetworkGamePlayerAT player in Room.GamePlayers)
@@ -309,7 +309,8 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     }
 
     IEnumerator ToggleInputField(bool state) {
-        yield return new WaitForSeconds(0.5f);
+        inputField.SetActive(!state);
+        yield return new WaitForSeconds(0.8f);
         inputField.SetActive(state);
         if (state) {
             Room.activateInputFieldSound.Play();
@@ -392,7 +393,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         {
             if (playerWhoCallsIsInvestigator == false)
             {
-                if (!isInvestigator && isLocalPlayer) StartCoroutine(ToggleInputField(false));
+                if (!isInvestigator && isLocalPlayer && !playerIsDead) StartCoroutine(ToggleInputField(false));
                 if (!isLocalPlayer)
                 {
                     foreach (NetworkGamePlayerAT player in Room.GamePlayers)

@@ -82,10 +82,6 @@ public class GameManagerMessagesHandler : MonoBehaviour
         attemptsField.SetActive(true);
         deadPlayerVisual.SetActive(true);
         failedConnectionVisual.SetActive(false);
-        if (localPlayer && newDeadPlayerName == networkGamePlayerAT.fakeName) {
-            Debug.Log("play dead sound");
-            gameManagerAT.networkManagerAT.botTerminated.Play();
-        }
     }
     #endregion
 
