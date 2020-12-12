@@ -34,10 +34,16 @@ public class PlayerTagPanelHandler : MonoBehaviour
     {
         tagManagement.PlayerInTagPanelHasBeenClickd(playerRealName, playerFakeName.text, visualID);
     }
-
-   public void ActivateHiglightVisual()
+    private void Update()
+    {
+      
+    }
+    public void ActivateHiglightVisual()
    {
-        playerVisual.sprite = tagManagement.gameManagerAT.playerVisualPalletsList[visualID].playerSmallHover;
+        if (button.interactable == true)
+        {
+            playerVisual.sprite = tagManagement.gameManagerAT.playerVisualPalletsList[visualID].playerSmallHover;
+        }
         if (dead) playerVisual.sprite = deadSprite;
 
     }
@@ -50,6 +56,7 @@ public class PlayerTagPanelHandler : MonoBehaviour
     public void DisableButton()
     {
         button.interactable =  false;
+        Debug.Log("DisableButton");
     }
 
     public void SwitchSpriteToDead() {
@@ -66,10 +73,7 @@ public class PlayerTagPanelHandler : MonoBehaviour
         newColorBlock.disabledColor = newColor;
         button.colors = newColorBlock;
     }
-    public void EnableButton()
-    {
-        button.interactable = true;
-    }
+   
 
     public string GetPlayerRealName()
     {

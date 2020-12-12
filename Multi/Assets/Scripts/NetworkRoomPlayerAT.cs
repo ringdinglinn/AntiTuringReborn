@@ -100,15 +100,15 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     public void HandleReadyStatusChanged(bool oldValue, bool newValue) {
-        Debug.Log("handle ready status changed");
-        Debug.Log("old value = " + oldValue + ", new value = " + newValue);
+     //   Debug.Log("handle ready status changed");
+    //    Debug.Log("old value = " + oldValue + ", new value = " + newValue);
         if (oldValue != newValue) {
-            Debug.Log("a value changed");
+       //     Debug.Log("a value changed");
             if (newValue) {
-                Debug.Log("a player is now ready");
+            //    Debug.Log("a player is now ready");
                 Room.isReadySound.Play();
             } else {
-                Debug.Log("a player is now not ready");
+              //  Debug.Log("a player is now not ready");
                 Room.isNotReadySound.Play();
             }
         }

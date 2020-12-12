@@ -137,13 +137,11 @@ public class TagManagement : NetworkBehaviour
     #region //Opening And Closing Tag Panel
     public void OpenTagPanel()
     {
-        // playerTagPanelHandlerList[0].transform.localPosition = 
-        //1.Wir brauchen eine Auswertung wieviele Tags Müssen angezeigt werden
         int totalNrOfPanelSlots = playerTagPanelHandlerList.Count + botsTagPanelHandlerList.Count;
-        //2. Anhange dieser Zahl festlegen wie die Konfiguration ist -> Spricht 4 Unter einander, oder 3Links 4 Rechtes, Diese Konfiguartion speichern
+    
         float neededXSize = 0;
         float neededYSize = 30; //10 für offset
-        Debug.Log("totalNrOfPanelSlots " + totalNrOfPanelSlots);
+  
         if (totalNrOfPanelSlots < 12)
         {
             neededXSize += playerTagPanelHandlerList[0].GetComponent<RectTransform>().rect.width;
@@ -161,40 +159,13 @@ public class TagManagement : NetworkBehaviour
                 neededXSize += playerTagPanelHandlerList[0].GetComponent<RectTransform>().rect.width * 2;
                 neededYSize += playerTagPanelHandlerList[0].GetComponent<RectTransform>().rect.height * ((totalNrOfPanelSlots / 2) +1);
             }
-
-
         }
-            Debug.Log("in");
-        
-        //3. Durch die Liste aller chatPanels Cyclen und ihnen eihne position geben. 
-      
-        //4. Sie alle anmachen sobald Tag Panel Offen
-        //5. Schauen, dass Verknüpfungen stimmen
-
-
-        Debug.Log("neededXSize " + neededXSize);
-
-        Debug.Log("neededYSize " + neededYSize);
-
         moveViewTagPanel.OpenTagPanel(neededXSize, neededYSize, totalNrOfPanelSlots, playerTagPanelHandlerList, botsTagPanelHandlerList);
         openTagPanelButton.SetActive(false);
         closeTagPanelButton.SetActive(true);
     }
     public void CloseTagPanel()
     {
-
-        foreach (PlayerTagPanelHandler x in playerTagPanelHandlerList)
-        {
-        //    x.gameObject.SetActive(false);
-        }
-
-        foreach (PlayerTagPanelHandler x in botsTagPanelHandlerList)
-        {
-         //   x.gameObject.SetActive(true);
-        }
-
-
-
         moveViewTagPanel.CloseTagPanel();
         openTagPanelButton.SetActive(true);
         closeTagPanelButton.SetActive(false);
@@ -326,7 +297,21 @@ public class TagManagement : NetworkBehaviour
 
     public void DisableAllTagButtons()
     {
+        Debug.Log("OrderToDisableAllButton");
         foreach (PlayerTagPanelHandler x in playerTagPanelHandlerList)
+        {
+            x.DisableButton();
+        }
+        foreach (PlayerTagPanelHandler x in botsTagPanelHandlerList)
+        {
+            x.DisableButton();
+        }
+
+        foreach (PlayerTagPanelHandler x in moveViewTagPanel.tagHandlerListLeftSide)
+        {
+            x.DisableButton();
+        }
+        foreach (PlayerTagPanelHandler x in moveViewTagPanel.tagHandlerListRightSide)
         {
             x.DisableButton();
         }

@@ -43,22 +43,6 @@ public class ChatBehaviour : NetworkBehaviour
 
     public TMP_InputField mainInputField;
 
-    public GameObject speechBubPrefab;
-
-    [Header("Speechbuble Spacing")]
-    public float spacingHeightLine1 = 0.6f;
-    public float spacingWidthLine1 = 0.8f;
-    public float spacingHeightLine2 = 0.6f;
-    public float spacingWidthLine2 = 0.8f;
-    public float spacingHeightLine3 = 0.6f;
-    public float spacingWidthLine3 = 0.8f;
-    public float spacingHeightLine4 = 0.6f;
-    public float spacingWidthLine4 = 0.8f;
-    public float spacingHeightLine5 = 0.6f;
-    public float spacingWidthLine5 = 0.8f;
-    public float spacingHeightLine6 = 0.6f;
-    public float spacingWidthLine6 = 0.8f;
-
     public override void OnStartAuthority()
     {
         chatbotRoomsIndex[0] = true;
@@ -443,7 +427,24 @@ public class ChatBehaviour : NetworkBehaviour
         {
             cdc.inputField.SetActive(false);
         }
-        StartCoroutine(BuildPreviewsTextInMainCanvas(id));
+
+        //Make sure dead Player or Investigator cannot write anything
+        if (networkPlayer.isInvestigator == false)
+        {
+            if (networkPlayer.playerIsDead == false)
+            {
+                mainInputField.gameObject.SetActive(true);
+            }
+            else
+            {
+                mainInputField.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            mainInputField.gameObject.SetActive(false);
+        }
+                StartCoroutine(BuildPreviewsTextInMainCanvas(id));
 
     }
 

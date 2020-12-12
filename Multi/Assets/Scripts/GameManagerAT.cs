@@ -35,7 +35,7 @@ public class GameManagerAT : NetworkBehaviour
     public int maxNrOfAllowedFailedConnectionAttemptsAIPlayers = 3;
     public int currentNrOfAiPlayerFailedConnectionsAttempts = 0;
 
-   public int investigatorsFailedConnections;
+    public int investigatorsFailedConnections;
     public int investigatorsMaxAllowedFailedConnections = 3;
 
 
@@ -79,6 +79,10 @@ public class GameManagerAT : NetworkBehaviour
     public TextMeshProUGUI aiRoleDescription;
     public TextMeshProUGUI aiFakeNameDes;
     public TextMeshProUGUI aiFakeName;
+
+
+    [Header("Typing Sound Effect")]
+    public StudioEventEmitter digitalLetterSound;
 
     #region Start Setup
     public override void OnStartClient()
@@ -428,12 +432,15 @@ public class GameManagerAT : NetworkBehaviour
     public void ShowYouDiedBecauseOfInvestigatorsWindow()
     {
         youDiedWindow.SetActive(true);
+       
     }
     public void YouDiedWindowWatchGameButton()
     {
+        UnityEngine.Debug.Log("Button Command to Disable Button");
         youDiedWindow.SetActive(false);
         youAreDeadLobbyText.SetActive(true);
-        tagManagement.DisableAllTagButtons();
+     //  tagManagement.DisableAllTagButtons();
+         
     }
 
     public void YouDiedWindowBackToLobbyButton()
@@ -635,10 +642,16 @@ public class GameManagerAT : NetworkBehaviour
 
     private IEnumerator BuildText(TextMeshProUGUI text, string message, float textSpeed)
     {
-     
+        int x = 0;
         for (int i = 0; i < message.Length; i++)
         {
             text.text = string.Concat(text.text, message[i]);
+            if (x % 3 == 0)
+            {
+                digitalLetterSound.Play();
+            }
+             x++;
+
             //Wait a certain amount of time, then continue with the for loop
             yield return new WaitForSeconds(textSpeed);
         }

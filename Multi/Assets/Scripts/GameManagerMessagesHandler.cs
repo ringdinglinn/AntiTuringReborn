@@ -66,6 +66,12 @@ public class GameManagerMessagesHandler : MonoBehaviour
     public void HandlePlayerDied(Sprite newDeadPlayerSprite, string newDeadPlayerName, string newMessage, string attemptsText, bool localPlayer)
     {
         CloseMessage();
+
+        if(localPlayer == true && newDeadPlayerName == networkGamePlayerAT.realName)
+        {
+            gameManagerAT.tagManagement.DisableAllTagButtons();
+        }
+
         mainBroadcastHolder.SetActive(true);
         deadPlayerVisual.SetActive(true);
         deadPlayerImage.sprite = newDeadPlayerSprite;
@@ -76,10 +82,10 @@ public class GameManagerMessagesHandler : MonoBehaviour
         attemptsField.SetActive(true);
         deadPlayerVisual.SetActive(true);
         failedConnectionVisual.SetActive(false);
-        //if (localPlayer) {
+        if (localPlayer && newDeadPlayerName == networkGamePlayerAT.fakeName) {
             Debug.Log("play dead sound");
             gameManagerAT.networkManagerAT.botTerminated.Play();
-        //}
+        }
     }
     #endregion
 

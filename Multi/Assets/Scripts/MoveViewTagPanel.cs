@@ -12,8 +12,8 @@ public class MoveViewTagPanel : MonoBehaviour
     float defaultY;
 
 
-    private List<PlayerTagPanelHandler> tagHandlerListRightSide = new List<PlayerTagPanelHandler>();
-    private List<PlayerTagPanelHandler> tagHandlerListLeftSid1 = new List<PlayerTagPanelHandler>();
+    public List<PlayerTagPanelHandler> tagHandlerListRightSide = new List<PlayerTagPanelHandler>();
+    public List<PlayerTagPanelHandler> tagHandlerListLeftSide = new List<PlayerTagPanelHandler>();
 
     public StudioEventEmitter toggleSound;
 
@@ -35,7 +35,7 @@ public class MoveViewTagPanel : MonoBehaviour
                 x.GetComponent<RectTransform>().anchoredPosition = new Vector3(374 + ( targetXPosition * 0), targetYPosition - 5, 0);
                 targetYPosition -= x.GetComponent<RectTransform>().rect.height;
               
-                tagHandlerListLeftSid1.Add(x);
+                tagHandlerListLeftSide.Add(x);
             }
             foreach (PlayerTagPanelHandler x in botsTagPanelHandlerList)
             {
@@ -43,7 +43,7 @@ public class MoveViewTagPanel : MonoBehaviour
                 x.GetComponent<RectTransform>().anchoredPosition = new Vector3(374 + (targetXPosition * 0), targetYPosition - 5, 0);
                 targetYPosition -= x.GetComponent<RectTransform>().rect.height;
             
-                tagHandlerListLeftSid1.Add(x);
+                tagHandlerListLeftSide.Add(x);
             }
         }
         else
@@ -60,7 +60,7 @@ public class MoveViewTagPanel : MonoBehaviour
                 {
                     x.GetComponent<RectTransform>().anchoredPosition = new Vector3(77f + (targetXPosition * 0), targetYPosition , 0);
                     targetYPosition -= x.GetComponent<RectTransform>().rect.height;              
-                    tagHandlerListLeftSid1.Add(x);
+                    tagHandlerListLeftSide.Add(x);
                 }
 
                 slotNr++;
@@ -76,7 +76,7 @@ public class MoveViewTagPanel : MonoBehaviour
                 {
                     x.GetComponent<RectTransform>().anchoredPosition = new Vector3(77f + (targetXPosition * 0), targetYPosition, 0);
                     targetYPosition -= x.GetComponent<RectTransform>().rect.height;                  
-                    tagHandlerListLeftSid1.Add(x);
+                    tagHandlerListLeftSide.Add(x);
 
                 }
                 slotNr++;
@@ -92,7 +92,7 @@ public class MoveViewTagPanel : MonoBehaviour
         StartCoroutine(OpenTagPanel(tagPanel.GetComponent<RectTransform>(), xSize, ySize, 50));
 
 
-        StartCoroutine(ToggleTagHandlerVisability(0.2f, 0.05f,tagHandlerListLeftSid1, true));
+        StartCoroutine(ToggleTagHandlerVisability(0.2f, 0.05f,tagHandlerListLeftSide, true));
         StartCoroutine(ToggleTagHandlerVisability(0.2f, 0.05f, tagHandlerListRightSide, true));
     }
 
@@ -101,7 +101,7 @@ public class MoveViewTagPanel : MonoBehaviour
 
     public void CloseTagPanel()
     {
-        StartCoroutine(ToggleTagHandlerVisability(0.001f, 0.05f, tagHandlerListLeftSid1, false));
+        StartCoroutine(ToggleTagHandlerVisability(0.001f, 0.05f, tagHandlerListLeftSide, false));
         StartCoroutine(ToggleTagHandlerVisability(0.002f, 0.05f, tagHandlerListRightSide, false));
         StartCoroutine(CloseTagPanel(tagPanel.GetComponent<RectTransform>(), 50,0.4f));
     
@@ -133,6 +133,7 @@ public class MoveViewTagPanel : MonoBehaviour
                 {
                     toggleSound.Play();
                     x.transform.gameObject.SetActive(true);
+                 
                     yield return new WaitForSeconds(toggleSpeed);
                 }
 

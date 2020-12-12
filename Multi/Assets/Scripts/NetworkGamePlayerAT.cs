@@ -45,7 +45,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
     public bool left;
 
-    public bool playerIsDead = true;
+    public bool playerIsDead = false;
 
    
 
@@ -191,7 +191,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
             chatroomID = roomID;
             if (chatroomID == roomID)
             {
-                RpcOpenChatroom(roomID);
+                RpcOpenChatroom(roomID, isInvestigator, playerIsDead);
                 GetComponent<ChatBehaviour>().RpcClearMainCanvas(roomID, chatroomStates[roomID].leftFree, chatroomStates[roomID].rightFree, chatroomStates[roomID].leftName, chatroomStates[roomID].rightName);
                 GetComponent<ChatBehaviour>().RpcFillUpMainCanvasTextAndUI(roomID, chatroomStates[roomID].leftFree, chatroomStates[roomID].rightFree, chatroomStates[roomID].leftName, chatroomStates[roomID].rightName, chatroomStates[roomID].leftVisualID, chatroomStates[roomID].rightVisualID);
                 RpcDisableInvestigatorButton(roomID, false);
@@ -214,7 +214,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
             if (chatroomID == roomID)
             {
-                RpcOpenChatroom(roomID);
+                RpcOpenChatroom(roomID, isInvestigator, playerIsDead);
                 GetComponent<ChatBehaviour>().RpcClearMainCanvas(roomID, chatroomStates[roomID].leftFree, chatroomStates[roomID].rightFree, chatroomStates[roomID].leftName, chatroomStates[roomID].rightName);
                 GetComponent<ChatBehaviour>().RpcFillUpMainCanvasTextAndUI(roomID, chatroomStates[roomID].leftFree, chatroomStates[roomID].rightFree, chatroomStates[roomID].leftName, chatroomStates[roomID].rightName, chatroomStates[roomID].leftVisualID, chatroomStates[roomID].rightVisualID);
                 RpcDeadPlayerToggleButtons(false);
@@ -226,7 +226,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         {
             if (!isChatbot)
             {
-                RpcOpenChatroom(roomID);
+                RpcOpenChatroom(roomID, isInvestigator, playerIsDead);
                 chatroomID = roomID;
             }
 
@@ -272,17 +272,33 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     }
 
     [ClientRpc]
-    private void RpcOpenChatroom(int chatroomID) {
+    private void RpcOpenChatroom(int chatroomID, bool playerWhoCallsIsInvestigator, bool playerWhoCallsIsDead ) {
         moveView.MoveViewRight();
-        if (!isInvestigator && isLocalPlayer) StartCoroutine(ToggleInputField(true));
-        if (!isLocalPlayer) {
-            foreach (NetworkGamePlayerAT player in Room.GamePlayers) {
-                if (player.isLocalPlayer) {
-                    if (player.chatroomID == chatroomID) {
-                        Room.otherPersonJoinsRoom.Play();
-                    }
-                    else {
-                        Room.othersJoinRooms.Play();
+
+        if (playerWhoCallsIsDead == false)
+        {
+            if (playerWhoCallsIsInvestigator == false)
+            {
+                if (!isInvestigator && isLocalPlayer && playerIsDead == false) StartCoroutine(ToggleInputField(true));
+                if (!isLocalPlayer)
+                {
+                    foreach (NetworkGamePlayerAT player in Room.GamePlayers)
+                    {
+                        if (playerIsDead == false || player.isInvestigator == false)
+                        {
+
+                            if (player.isLocalPlayer)
+                            {
+                                if (player.chatroomID == chatroomID)
+                                {
+                                    Room.otherPersonJoinsRoom.Play();
+                                }
+                                else
+                                {
+                                    Room.othersJoinRooms.Play();
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -310,7 +326,10 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     [Command]
     public void CmdLeaveChatroom(int ID, string fakeName)
     {
-        RpcCloseChatroom(ID);
+        if (ID != 99) // When ID = 99 it woul mean that the player is in no Chatroom when he died.
+        {
+            RpcCloseChatroom(ID,isInvestigator, playerIsDead);
+        }
         if (isInvestigator)
         {
             chatroomID = 99;
@@ -365,22 +384,35 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         }
     }
     [ClientRpc]
-    private void RpcCloseChatroom(int chatroomId) {
+    private void RpcCloseChatroom(int roomID, bool playerWhoCallsIsInvestigator, bool playerWhoCallsIsDead)
+    {
         moveView.MoveViewLeft();
-        if (!isInvestigator && isLocalPlayer) StartCoroutine(ToggleInputField(false));
-        if (!isLocalPlayer) {
-            foreach (NetworkGamePlayerAT player in Room.GamePlayers) {
-                if (player.isLocalPlayer) {
-                    if (player.chatroomID == chatroomId) {
-                        Room.otherPersonLeavesRoom.Play();
-                    } else {
-                        Room.othersLeaveRooms.Play();
+        if (playerWhoCallsIsDead == false)
+        {
+            if (playerWhoCallsIsInvestigator == false)
+            {
+                if (!isInvestigator && isLocalPlayer) StartCoroutine(ToggleInputField(false));
+                if (!isLocalPlayer)
+                {
+                    foreach (NetworkGamePlayerAT player in Room.GamePlayers)
+                    {
+                        if (player.isLocalPlayer)
+                        {
+                            if (player.chatroomID == roomID)
+                            {
+                                Room.otherPersonLeavesRoom.Play();
+                            }
+                            else
+                            {
+                                Room.othersLeaveRooms.Play();
+                            }
+                        }
                     }
                 }
             }
         }
-        chatBehaviour.chatDisplayContents[chatroomId].GetComponent<ChatDisplayContent>().joinButton.GetComponent<Image>().sprite = chatBehaviour.chatDisplayContents[chatroomID].GetComponent<ChatDisplayContent>().baseChatroomSprite;
-        chatroomId = 99;
+        chatBehaviour.chatDisplayContents[roomID].GetComponent<ChatDisplayContent>().joinButton.GetComponent<Image>().sprite = chatBehaviour.chatDisplayContents[roomID].GetComponent<ChatDisplayContent>().baseChatroomSprite;
+        this.chatroomID = 99;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   

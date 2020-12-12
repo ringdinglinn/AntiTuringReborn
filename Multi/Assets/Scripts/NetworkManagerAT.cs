@@ -206,12 +206,12 @@ public class NetworkManagerAT : NetworkManager {
     }
 
     public void StartRevealRoleMusic() {
-        UnityEngine.Debug.Log("Start Reveal Role Music");
+      //  UnityEngine.Debug.Log("Start Reveal Role Music");
         revealRoleMusic.Play();
     }
 
     public void StopRevealRoleMusic() {
-        UnityEngine.Debug.Log("Stop Reveal Role Music");
+     //   UnityEngine.Debug.Log("Stop Reveal Role Music");
         revealRoleMusic.Stop();
     }
 
