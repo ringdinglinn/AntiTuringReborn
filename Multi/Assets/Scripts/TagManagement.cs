@@ -232,6 +232,7 @@ public class TagManagement : NetworkBehaviour
 
     public void OpenConfirmWindow(string tagedPlayerRealName, string tagedPlayerFakeName, Sprite sprite)
     {
+        if (isLocalPlayer) networkManagerAT.openConfirmWindow.Play();
         confirmeWindow.SetActive(true);
         clickedPlayerPicture.sprite = sprite;
         playerFakeName.text = tagedPlayerFakeName;
@@ -254,6 +255,7 @@ public class TagManagement : NetworkBehaviour
     }
     public void CancleTagProcessCloseConfirmWindow()
     {
+        if (isLocalPlayer) networkManagerAT.closeConfirmWindow.Play();
         confirmeWindow.SetActive(false);
         tagedPlayerRealName = "";
     }
@@ -266,6 +268,7 @@ public class TagManagement : NetworkBehaviour
     }
     IEnumerator LoadingBar()
     {
+        if (isLocalPlayer) networkManagerAT.loadingBar.Play();
         foreach (GameObject x in loadingBars)
         {
             yield return new WaitForSeconds(loadingBarSpeed);
@@ -278,6 +281,7 @@ public class TagManagement : NetworkBehaviour
     }
     public void FinishLoadingResults()
     {
+        if (isLocalPlayer) networkManagerAT.loadingComplete.Play();
         loadingResultsWindow.SetActive(false);
         gameManagerAT.ValidateNewTagRequest(tagedPlayerRealName, networkGamePlayerAT.realName, networkGamePlayerAT.isInvestigator, taggedPlayerVisualID);
 

@@ -86,9 +86,9 @@ public class ChatbotAI : MonoBehaviour
             networkManager.GamePlayers[0].RequestJoinRoom(chatroomID, fakeName, true, playerVisualPalletID);
             currentSessionID = chatbotBehaviour.nextSessionID++;
             chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left);
+            networkManager.othersJoinRooms.Play();
         }
     }
-
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // In Chatroom
 
@@ -101,6 +101,7 @@ public class ChatbotAI : MonoBehaviour
 
     private void LeaveChatroom() {
         chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left);
+        networkManager.othersLeaveRooms.Play();
     }
 
 

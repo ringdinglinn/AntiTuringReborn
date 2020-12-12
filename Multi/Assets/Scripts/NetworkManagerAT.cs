@@ -24,6 +24,23 @@ public class NetworkManagerAT : NetworkManager {
     public StudioEventEmitter revealRoleMusic;
     public StudioEventEmitter invTheme;
     public StudioEventEmitter aiTheme;
+    public StudioEventEmitter activateInputFieldSound;
+    public StudioEventEmitter otherPersonJoinsRoom;
+    public StudioEventEmitter otherPersonLeavesRoom;
+    public StudioEventEmitter othersJoinRooms;
+    public StudioEventEmitter othersLeaveRooms;
+    public StudioEventEmitter openConfirmWindow;
+    public StudioEventEmitter closeConfirmWindow;
+    public StudioEventEmitter loadingBar;
+    public StudioEventEmitter loadingComplete;
+    public StudioEventEmitter taggingFailure;
+    public StudioEventEmitter ai_AIConnectionMade;
+    public StudioEventEmitter botTerminated;
+    public StudioEventEmitter inv_AIConnectionFailed;
+    public StudioEventEmitter inv_AIConnectionMade;
+    public StudioEventEmitter youDied;
+    public StudioEventEmitter victorySound;
+    public StudioEventEmitter defeatSound;
 
     [Header("Key Sounds")]
     public StudioEventEmitter normalKeyDownSound;
@@ -75,7 +92,7 @@ public class NetworkManagerAT : NetworkManager {
 
     //Visual Pallet List
     public List<PlayerVisualPallet> playerVisualPalletsList = new List<PlayerVisualPallet>();
-  
+
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public override void OnStartClient() {
         var spawnablePrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs");
@@ -189,10 +206,12 @@ public class NetworkManagerAT : NetworkManager {
     }
 
     public void StartRevealRoleMusic() {
+        UnityEngine.Debug.Log("Start Reveal Role Music");
         revealRoleMusic.Play();
     }
 
     public void StopRevealRoleMusic() {
+        UnityEngine.Debug.Log("Stop Reveal Role Music");
         revealRoleMusic.Stop();
     }
 

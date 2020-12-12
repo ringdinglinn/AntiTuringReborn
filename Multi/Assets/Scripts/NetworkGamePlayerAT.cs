@@ -33,6 +33,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     public List<GameObject> leaveButtonsList = new List<GameObject>();
 
     public MoveView moveView;
+    public GameObject inputField;
     public List<ChatroomStates> chatroomStates = new List<ChatroomStates>();
 
     public GameObject chatroomStatePrefab;
@@ -273,10 +274,32 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     [ClientRpc]
     private void RpcOpenChatroom(int chatroomID) {
         moveView.MoveViewRight();
+        if (!isInvestigator && isLocalPlayer) StartCoroutine(ToggleInputField(true));
+        if (!isLocalPlayer) {
+            foreach (NetworkGamePlayerAT player in Room.GamePlayers) {
+                if (player.isLocalPlayer) {
+                    if (player.chatroomID == chatroomID) {
+                        Room.otherPersonJoinsRoom.Play();
+                    }
+                    else {
+                        Room.othersJoinRooms.Play();
+                    }
+                }
+            }
+        }
         this.chatroomID = chatroomID;
         Debug.Log("Chatroom ID:" + chatroomID);
         chatBehaviour.chatDisplayContents[chatroomID].GetComponent<ChatDisplayContent>().joinButton.GetComponent<Image>().sprite = chatBehaviour.chatDisplayContents[chatroomID].GetComponent<ChatDisplayContent>().selectedChatroomSprite;
     }
+
+    IEnumerator ToggleInputField(bool state) {
+        yield return new WaitForSeconds(0.5f);
+        inputField.SetActive(state);
+        if (state) {
+            Room.activateInputFieldSound.Play();
+        }
+    }
+
     #endregion
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     //Start a Player Leaves a Chatroom logic 
@@ -344,6 +367,18 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     [ClientRpc]
     private void RpcCloseChatroom(int chatroomId) {
         moveView.MoveViewLeft();
+        if (!isInvestigator && isLocalPlayer) StartCoroutine(ToggleInputField(false));
+        if (!isLocalPlayer) {
+            foreach (NetworkGamePlayerAT player in Room.GamePlayers) {
+                if (player.isLocalPlayer) {
+                    if (player.chatroomID == chatroomId) {
+                        Room.otherPersonLeavesRoom.Play();
+                    } else {
+                        Room.othersLeaveRooms.Play();
+                    }
+                }
+            }
+        }
         chatBehaviour.chatDisplayContents[chatroomId].GetComponent<ChatDisplayContent>().joinButton.GetComponent<Image>().sprite = chatBehaviour.chatDisplayContents[chatroomID].GetComponent<ChatDisplayContent>().baseChatroomSprite;
         chatroomId = 99;
     }
@@ -375,7 +410,6 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         chatroomStates[id].rightName = rightName;
         chatroomStates[id].leftVisualID = leftVisualID;
         chatroomStates[id].rightVisualID = rightVisualID;
-      //  Debug.Log("Stage 4:" + "LeftVisualID:" + chatroomStates[id].leftVisualID + "rightVisualID:" + chatroomStates[id].rightVisualID);
         this.left = left;
         GetComponent<ChatBehaviour>().UpdateUI(id, leftFree, rightFree, leftName, rightName,  leftVisualID,  rightVisualID);
     }

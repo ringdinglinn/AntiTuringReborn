@@ -63,7 +63,7 @@ public class GameManagerMessagesHandler : MonoBehaviour
     #endregion
 
     #region//Visual Handling When a Player Died
-    public void HandlePlayerDied(Sprite newDeadPlayerSprite, string newDeadPlayerName, string newMessage, string attemptsText = "")
+    public void HandlePlayerDied(Sprite newDeadPlayerSprite, string newDeadPlayerName, string newMessage, string attemptsText, bool localPlayer)
     {
         CloseMessage();
         mainBroadcastHolder.SetActive(true);
@@ -76,11 +76,15 @@ public class GameManagerMessagesHandler : MonoBehaviour
         attemptsField.SetActive(true);
         deadPlayerVisual.SetActive(true);
         failedConnectionVisual.SetActive(false);
+        //if (localPlayer) {
+            Debug.Log("play dead sound");
+            gameManagerAT.networkManagerAT.botTerminated.Play();
+        //}
     }
     #endregion
 
     #region//Visual Handling When Human Player Connected With Another Human Player
-    public void HandleHumanPlayerConnectedWithAntoherHumanPlayer(string newTitle, string playerThatFoundTheOtherName, string tagedPlayerName, int numberOfConnections, string newMessage)
+    public void HandleHumanPlayerConnectedWithAntoherHumanPlayer(string newTitle, string playerThatFoundTheOtherName, string tagedPlayerName, int numberOfConnections, string newMessage, bool localPlayer)
     {
         CloseMessage();
         mainBroadcastHolder.SetActive(true);
@@ -95,13 +99,22 @@ public class GameManagerMessagesHandler : MonoBehaviour
 
         message.text = newMessage;
         messageField.SetActive(true);
-     
+
+        if (localPlayer) {
+            if (networkGamePlayerAT.isInvestigator) {
+                gameManagerAT.networkManagerAT.inv_AIConnectionMade.Play();
+            }
+            else {
+                gameManagerAT.networkManagerAT.ai_AIConnectionMade.Play();
+            }
+        }
     }
     #endregion
 
     #region//Visual Handling When Human Player Failed to connect to Another Human Player
-    public void HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer(string newTitle, string playerThatFoundTheOtherName, string tagedPlayerName, int numberOfConnections, string newMessage, string attemptsMessage = "")
+    public void HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer(string newTitle, string playerThatFoundTheOtherName, string tagedPlayerName, int numberOfConnections, string newMessage, string attemptsMessage, bool localPlayer)
     {
+        Debug.Log("attempt failed ai");
         CloseMessage();
         mainBroadcastHolder.SetActive(true);
         title.text = newTitle;
@@ -117,12 +130,16 @@ public class GameManagerMessagesHandler : MonoBehaviour
         message.text = newMessage;
         messageField.SetActive(true);
 
+        if (networkGamePlayerAT.isInvestigator && localPlayer) {
+            gameManagerAT.networkManagerAT.inv_AIConnectionFailed.Play();
+        }
     }
     #endregion
 
     #region Broadcast for investigators when they made too many wrong attempts
     public void HandleInvestigatorsMadeTooManyWrongAttempts(string message) {
         CloseMessage();
+        gameManagerAT.networkManagerAT.botTerminated.Play();
         mainBroadcastHolder.SetActive(true);
         messageField.SetActive(true);
         invFailed.SetActive(true);
