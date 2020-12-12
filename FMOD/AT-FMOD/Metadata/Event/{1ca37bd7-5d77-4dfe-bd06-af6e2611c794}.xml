@@ -5,7 +5,7 @@
 			<value>chatroom_send-message</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{0205ece3-599d-4979-acc2-dc71b043f5b1}</destination>
@@ -59,11 +59,18 @@
 	<object class="EventAutomatableProperties" id="{eff7a281-c16a-410b-99c8-7df0d18bcfbf}" />
 	<object class="MarkerTrack" id="{ed7edcf8-5205-4b57-88cc-a4b06cc810ab}" />
 	<object class="GroupTrack" id="{889d61d3-6f62-4011-b508-9d48f8ad28c2}">
+		<relationship name="modules">
+			<destination>{c26b9175-cb3e-4be4-856a-9d99f34eb1a6}</destination>
+		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{780400e2-5522-4ed0-925f-b9fff158d147}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{c95c867b-f95a-4fce-b058-17ceb8e943f4}" />
+	<object class="Timeline" id="{c95c867b-f95a-4fce-b058-17ceb8e943f4}">
+		<relationship name="modules">
+			<destination>{c26b9175-cb3e-4be4-856a-9d99f34eb1a6}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerMaster" id="{42a7001f-2963-4da4-b1bf-7a80c7c5ce35}">
 		<relationship name="effectChain">
 			<destination>{dd1e14c2-c910-4ec8-a24f-5bc11555fd2c}</destination>
@@ -81,6 +88,20 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{268ab94d-5e9d-4927-a0a4-2f296dfaee78}" />
+	<object class="SingleSound" id="{c26b9175-cb3e-4be4-856a-9d99f34eb1a6}">
+		<property name="length">
+			<value>0.60000000000000009</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>0.85000000000000009</value>
+		</property>
+		<property name="pitch">
+			<value>3.79999995</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{3b10e6f6-18a4-4ff2-ad56-af97c6c364c6}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerGroup" id="{780400e2-5522-4ed0-925f-b9fff158d147}">
 		<property name="name">
 			<value>Audio 1</value>

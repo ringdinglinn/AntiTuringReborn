@@ -61,6 +61,7 @@
 	<object class="GroupTrack" id="{e59de131-66d5-4f94-955a-cad1bee59d07}">
 		<relationship name="modules">
 			<destination>{e99c894d-318c-4966-a8a1-98c2013de384}</destination>
+			<destination>{44f666ca-dc2d-48bd-8e26-a8957b525b70}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{ff26486c-ce38-4469-886e-852e13b773fe}</destination>
@@ -69,6 +70,7 @@
 	<object class="Timeline" id="{1f37b5d9-a08e-46dd-be90-2f10c34ab379}">
 		<relationship name="modules">
 			<destination>{e99c894d-318c-4966-a8a1-98c2013de384}</destination>
+			<destination>{44f666ca-dc2d-48bd-8e26-a8957b525b70}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{1874e1bf-05c7-4246-9c3a-d1a3eb45ab86}">
@@ -90,13 +92,33 @@
 	<object class="MixerBusPanner" id="{24cb2335-d360-4e7f-b739-318fc5427866}" />
 	<object class="SingleSound" id="{e99c894d-318c-4966-a8a1-98c2013de384}">
 		<property name="length">
-			<value>1.5082291666666665</value>
+			<value>0.040000000000000001</value>
 		</property>
 		<property name="timelockedOffset">
 			<value>0.054075027533239964</value>
 		</property>
 		<property name="pitch">
-			<value>-1.80000007</value>
+			<value>17</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{6ced0573-ba4a-4cc0-a742-2dfcbb32ba94}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{44f666ca-dc2d-48bd-8e26-a8957b525b70}">
+		<property name="start">
+			<value>0.0496574429107021</value>
+		</property>
+		<property name="length">
+			<value>0.040000000000000001</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>0.054075027533239964</value>
+		</property>
+		<property name="volume">
+			<value>-8</value>
+		</property>
+		<property name="pitch">
+			<value>12</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{6ced0573-ba4a-4cc0-a742-2dfcbb32ba94}</destination>
@@ -104,7 +126,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{ff26486c-ce38-4469-886e-852e13b773fe}">
 		<property name="volume">
-			<value>-15.5</value>
+			<value>-7.5</value>
 		</property>
 		<property name="name">
 			<value>Audio 1</value>
