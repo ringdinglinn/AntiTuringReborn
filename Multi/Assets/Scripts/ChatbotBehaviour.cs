@@ -120,12 +120,28 @@ public class ChatbotBehaviour : MonoBehaviour {
 
     public void SendTextToChatbot(string text, int chatroomID, int chatbotID) {
         Debug.Log("ChatbotBehaviour, SendTextToChatbot, chatroom id = " + chatroomID);
+        Debug.Log("chatbotbehaviour, sendtexttochatbot, chatbot name = " + chatbotAIs[chatbotID].fakeName);
         int sessionID = chatbotAIs[chatbotID].currentSessionID;
         StartCoroutine(PandoraBotRequestCoRoutine(text, chatroomID, sessionID, chatbotID));
     }
 
-    private void SendResponseToServer(Response response) {
-        Debug.Log("ChatbotBehaviour, SendResponseToServer, chatroom id = " + response.chatroomID);    
-        networkManager.GamePlayers[0].ReceiveMessageFromChatbot(response.text, response.chatroomID, response.fakeName, response.visualPalletID);
+    public void SendResponseToServer(Response response) {
+        Debug.Log("ChatbotBehaviour, SendResponseToServer, chatroom id = " + response.chatroomID + ", message = " + response.text + "name = " + response.fakeName);
+        //networkManager.GamePlayers[0].ReceiveMessageFromChatbot(response.text, response.chatroomID, response.fakeName, response.visualPalletID);
+        //networkManager.GamePlayers[0].GetComponent<ChatBehaviour>().ChatbotSendsMessage(response.text, response.chatroomID, response.fakeName, response.visualPalletID);
+        StartCoroutine(WaitToSendResponse(response));
+    }
+
+    IEnumerator WaitToSendResponse(Response response) {
+        float waitTime;
+        string message = response.text;
+        waitTime = 0.1f * response.text.Length + response.text.Length * Random.Range(0f, 0.1f);
+        yield return new WaitForSeconds(waitTime);
+        Debug.Log("send message from chatbot, message = " + message);
+        networkManager.GamePlayers[0].GetComponent<ChatBehaviour>().ChatbotSendsMessage(message, response.chatroomID, response.fakeName, response.visualPalletID);
+    }
+
+    public void SendResponseToServerDirectly(Response response) {
+        networkManager.GamePlayers[0].GetComponent<ChatBehaviour>().ChatbotSendsMessage(response.text, response.chatroomID, response.fakeName, response.visualPalletID);
     }
 }

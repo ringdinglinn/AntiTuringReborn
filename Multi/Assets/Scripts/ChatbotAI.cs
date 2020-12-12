@@ -34,6 +34,14 @@ public class ChatbotAI : MonoBehaviour
     public int currentSessionID = 0;
 
     private bool left;
+    private bool conversationStarted = false;
+    private bool inChatroom;
+    private bool waitingToJoinChatroom;
+
+    private int waitTimeBeforeStartConvo;
+    private int startConvoCounter = 0;
+    private int maxWaitTimeStartConvo = 500;
+    private int minWaitTimeStartConvo = 100;
 
     private void Start() {
         networkManager = chatbotBehaviour.networkManager;
@@ -64,7 +72,9 @@ public class ChatbotAI : MonoBehaviour
     }
 
     IEnumerator WaitToJointCoroutine(float s) {
+        waitingToJoinChatroom = true;
         yield return new WaitForSeconds(s);
+        waitingToJoinChatroom = false;
         JoinChatroom();
     }
 
@@ -82,13 +92,57 @@ public class ChatbotAI : MonoBehaviour
         }
         if (indeces.Count > 0) {
             chatroomID = indeces[Random.Range(0, indeces.Count)];
+            //chatroomID = 0;
             left = chatroomStates[chatroomID].leftFree;
             networkManager.GamePlayers[0].RequestJoinRoom(chatroomID, fakeName, true, playerVisualPalletID);
             currentSessionID = chatbotBehaviour.nextSessionID++;
             chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left);
             networkManager.othersJoinRooms.Play();
+            conversationStarted = false;
+            inChatroom = true;
         }
     }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Start Conversation Logic
+
+    public void ConversationStarted() {
+        conversationStarted = true;
+    }
+    private bool evaluatingStartingConvo = false;
+
+    private void FixedUpdate() {
+        if (inChatroom && !evaluatingStartingConvo) {
+            if (!networkManager.GamePlayers[0].chatroomStates[chatroomID].leftFree && !networkManager.GamePlayers[0].chatroomStates[chatroomID].rightFree) {
+                evaluatingStartingConvo = true;
+                waitTimeBeforeStartConvo = Random.Range(minWaitTimeStartConvo, maxWaitTimeStartConvo);
+                Debug.Log("convo start logic, " + "id = " + chatbotAiID + " waitTimeTotal = " + waitTimeBeforeStartConvo);
+            }
+        }
+
+        if (evaluatingStartingConvo) {
+            if (!conversationStarted) {
+                Debug.Log("convo start logic, " + "id = " + chatbotAiID + " counter = " + startConvoCounter);
+                startConvoCounter++;
+                if (startConvoCounter >= waitTimeBeforeStartConvo) {
+                    conversationStarted = true;
+                    SendGreeting();
+                    startConvoCounter = 0;
+                }
+            }
+        }
+
+
+        if (!inChatroom && !waitingToJoinChatroom) {
+            StartCoroutine(WaitToJointCoroutine(Random.Range(minWaitTimeJoin, maxWaitTimeJoin)));
+        }
+    }
+
+    private void SendGreeting() {
+        ChatbotBehaviour.Response r = new ChatbotBehaviour.Response(chatroomID, "Hi, this is Linn's special conversation starter!", fakeName, playerVisualPalletID);
+        chatbotBehaviour.SendResponseToServerDirectly(r);
+    }
+
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // In Chatroom
 
@@ -102,21 +156,7 @@ public class ChatbotAI : MonoBehaviour
     private void LeaveChatroom() {
         chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left);
         networkManager.othersLeaveRooms.Play();
-    }
-
-
-    private void Update() {
-        switch (currentState) {
-            case (state.Idle): {
-                    break;
-                }
-            case (state.WaitToJoin): {
-                    break;
-                }
-            case (state.InChat): {
-                    break;
-                }
-        }
+        evaluatingStartingConvo = false;
     }
 
     //Destroy Bot

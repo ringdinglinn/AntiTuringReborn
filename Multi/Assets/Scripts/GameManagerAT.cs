@@ -262,6 +262,7 @@ public class GameManagerAT : NetworkBehaviour
             player.tagManagement.ChangePlayerTagToDead(newDeadBotName);
         
         }
+        networkManagerAT.botTerminated.Play();
         DestroyBot(newVIsualID);
     }
     public void DestroyBot(int viusalId)
@@ -408,6 +409,7 @@ public class GameManagerAT : NetworkBehaviour
                 player.SetIsDead(true);
             }
 
+
             player.gameManagerAT.connectionDiagramManager.HandlePlayerDied(newDeadPlayerRealName);
             player.tagManagement.ChangePlayerTagToDead(newDeadPlayerRealName);
 
@@ -426,7 +428,7 @@ public class GameManagerAT : NetworkBehaviour
             player.gameManagerAT.currentHumanBotsAlive--;
             player.gameManagerAT.ValidateWinAndLoseState(8);
         }
-
+        networkManagerAT.botTerminated.Play();
       
     }
     public void ShowYouDiedBecauseOfInvestigatorsWindow()
@@ -503,12 +505,13 @@ public class GameManagerAT : NetworkBehaviour
             player.gameManagerAT.currentHumanBotsAlive--;
             if (newDeadPlayerRealName != player.realName)
             {
+                if (player.isLocalPlayer) networkManagerAT.botTerminated.Play();
                 player.gameManagerAT.messagesHandler.HandlePlayerDied(player.gameManagerAT.playerVisualPalletsList[visualID].playerDeadBig, newDeadPlayerRealName, "A sentient bot has been discovered due too many connection attempts. There are still: " + player.gameManagerAT. currentHumanBotsAlive + "sentient minds out there", "", isLocalPlayer);
             }
 
             if (newDeadPlayerRealName == player.realName)
             {
-                networkManagerAT.taggingFailure.Play();
+                if (player.isLocalPlayer) networkManagerAT.taggingFailure.Play();
                 player.gameManagerAT.messagesHandler.HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer("Connection failed!", player.realName, "?", 1, "This bot is not sentient. Connection unsuccessful.", "Remaining attempts before termination: " + (maxNrOfAllowedFailedConnectionAttemptsAIPlayers - currentNrOfAiPlayerFailedConnectionsAttempts), true);
                 StartCoroutine(WaitForTooManyWrongAttemptsAI(player));
                 aiDiedTooManyAttempts = true;
@@ -536,6 +539,7 @@ public class GameManagerAT : NetworkBehaviour
         IEnumerator WaitForTooManyWrongAttemptsAI(NetworkGamePlayerAT player) {
             yield return new WaitForSeconds(5);
             player.gameManagerAT.messagesHandler.CloseMessage();
+            if (player.isLocalPlayer) networkManagerAT.botTerminated.Play();
             player.gameManagerAT.messagesHandler.HandlePlayerDied(player.gameManagerAT.playerVisualPalletsList[player.playerVisualPalletID].playerDeadBig, newDeadPlayerRealName, "You have made too many attempts to connect and have been discovered. The investigators have terminated you.", "", isLocalPlayer);
             player.SetIsDead(true);
         }
