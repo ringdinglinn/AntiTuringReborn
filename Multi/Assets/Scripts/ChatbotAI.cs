@@ -54,6 +54,8 @@ public class ChatbotAI : MonoBehaviour
     public bool typing = false;
     public bool typingVisual = false;
 
+    public List<string> conversationStaters;
+
     private void Start() {
         networkManager = chatbotBehaviour.networkManager;
         chatbotAiID = chatbotBehaviour.chatbotAIs.Count;
