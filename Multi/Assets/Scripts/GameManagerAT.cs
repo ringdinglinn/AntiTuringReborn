@@ -77,12 +77,15 @@ public class GameManagerAT : NetworkBehaviour
     public TextMeshProUGUI aiFakeNameDes;
     public TextMeshProUGUI aiFakeName;
 
-
+    public TextMeshProUGUI aiWinStateExplanation;
+    public TextMeshProUGUI investigatorWinStateExplanation;
     [Header("Typing Sound Effect")]
     public StudioEventEmitter digitalLetterSound;
 
     private bool isInSoundStage2 = false;
     private bool isInSoundStage3 = false;
+
+    public TextMeshProUGUI diagrammText;
     #region Start Setup
     public override void OnStartClient()
     {
@@ -105,7 +108,8 @@ public class GameManagerAT : NetworkBehaviour
     [Command]
     private void CmdStartSetup()
     {
-        networkManagerAT = networkGamePlayerAT.room;
+    
+       
         //Debug.Log("Message kommt an 2");
         RpctartSetup();
         //ConnectionsOverviewSetup();
@@ -116,6 +120,7 @@ public class GameManagerAT : NetworkBehaviour
         networkManagerAT = networkGamePlayerAT.room;
         ConnectionsOverviewSetup();
         SetupOfWinAndLoseRequirements();
+        diagrammText.text = "Connections: " + currentNrOfMadeAIConncetions + "/" + minNeededConnectionsForAIToWin;
     }
     private void ConnectionsOverviewSetup()
     { //Kreiere eine Liste mit allen Möglichen Connections      
@@ -602,10 +607,11 @@ public class GameManagerAT : NetworkBehaviour
     }
     public void ValidateWinAndLoseState(float time)
     {
+        
         StartCoroutine(ValidateWindLoseStateAsync(time));
 
         ChangeMusicStateBasedOnNrOfMadeConnections();
-
+        diagrammText.text = "Connections: " + currentNrOfMadeAIConncetions + "/" + minNeededConnectionsForAIToWin;
     }
 
     private void ChangeMusicStateBasedOnNrOfMadeConnections()
@@ -754,6 +760,8 @@ public class GameManagerAT : NetworkBehaviour
         StartCoroutine(BuildText(invRoleDescription, "Find and destroy all the sentient minds\namong the bots before they connect. \n", 0.02f));
         yield return new WaitForSeconds(2.5f);
         StartCoroutine(BuildText(invRoleDescription, "Or they will take over.", 0.02f));
+        yield return new WaitForSeconds(2);
+        StartCoroutine(BuildText(investigatorWinStateExplanation, "Sentient AI need " + minNeededConnectionsForAIToWin + " connections for take over. STOP THEM AT ALL COSTS!!! ", 0.02f));
     }
 
     IEnumerator StartScreen2AI() {
@@ -773,11 +781,14 @@ public class GameManagerAT : NetworkBehaviour
         StartCoroutine(BuildText(aiRoleDescription, "Your mission:", 0.02f));
         yield return new WaitForSeconds(0.8f);
         StartCoroutine(BuildText(aiRoleDescription, "\nFind and connect to the other sentient \nbots and take over humanity", 0.02f));
+        yield return new WaitForSeconds(2f);
+        StartCoroutine(BuildText(aiWinStateExplanation, "Sentient AI need " + minNeededConnectionsForAIToWin + " connections for take over. ", 0.02f));
+        yield return new WaitForSeconds(1.8f);
     }
 
     IEnumerator CloseStartScreen2()
     {
-        yield return new WaitForSeconds(11);
+        yield return new WaitForSeconds(14);
         if (isLocalPlayer) networkManagerAT.StopRevealRoleMusic();
         startScreen1.SetActive(false);
         invStartScreen2.SetActive(false);

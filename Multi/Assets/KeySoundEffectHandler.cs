@@ -24,6 +24,7 @@ public class KeySoundEffectHandler : NetworkBehaviour
     public StudioEventEmitter escapeDownSound;
     public StudioEventEmitter escapeUpSound;
 
+    
     private void Update()
     {
         List<KeyCode> pressedInput = new List<KeyCode>();
@@ -139,13 +140,14 @@ public class KeySoundEffectHandler : NetworkBehaviour
 
         if(isTyping == true)
         {
-            StartCoroutine(TypingCoolDown(2f));
+            StartCoroutine(TypingCoolDown(1.5f));
         }
     }
 
 
     IEnumerator TypingCoolDown(float coolDown)
     {
+       
         yield return new WaitForSeconds(coolDown);
         isTyping = false;
     }

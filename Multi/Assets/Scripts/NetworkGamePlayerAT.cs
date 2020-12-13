@@ -1,11 +1,9 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
-using TMPro;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System;
+using UnityEngine.UI;
 
 
 
@@ -56,7 +54,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
 
     public bool playerIsTyping = false;
-
+    private float tippingCounter = 3f;
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     private void InitializeChatroomStates() {
         for (int i = 0; i < chatBehaviour.chatDisplayContents.Count; i++) {
@@ -115,7 +113,12 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         realName = displayName;
 
         StartCoroutine(ShortDelayChatroomStates());
-        StartCoroutine (CheckIfPlayerIsTyping());
+        if (hasAuthority)
+        {
+            StartCoroutine(CheckIfPlayerIsTyping());
+          
+        }
+      
         pandoraBotsClientName = Room.chatbot.clientNameList[playerID];
     }
 
@@ -587,24 +590,47 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
    private IEnumerator CheckIfPlayerIsTyping()
    {
-        yield return new WaitForSeconds(0.5f);
+        Debug.Log("CheckIfPlayerIsTyping Running");
+        yield return new WaitForSeconds(0.1f);
         playerIsTyping = room.keySoundEffectHandler.isTyping;
 
+        if (playerIsTyping == true)
+        {
+            tippingCounter = 2f;
+            CheckIfPlayerIsCurrentlyInAChatroom();
+         
+        }
+        else
+        {
+            tippingCounter -= Random.Range(0.1f,0.2f);
+            if(tippingCounter < 0)
+            {
+                CheckIfPlayerIsCurrentlyInAChatroom();
+            }
+         
+        }
+
+          StartCoroutine(CheckIfPlayerIsTyping());
+        
    }
+   
     public void CheckIfPlayerIsCurrentlyInAChatroom()
     {
         if(chatroomID != 99)
         {
-            CmdUpdateYourTypingVisualInYouChatroom(playerIsTyping);
+           
+                CmdUpdateYourTypingVisualInYouChatroom(playerIsTyping);
+           
         }
         else
         {
+            
             //Player Is Not in A Chatroom
         }
     }
 
     [Command]
-    private void CmdUpdateYourTypingVisualInYouChatroom(bool isTypingStatus)
+    public void CmdUpdateYourTypingVisualInYouChatroom(bool isTypingStatus)
     {
         RpcUpdateYourTypingVisualInYouChatroom(isTypingStatus);
     }
@@ -612,8 +638,9 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     [ClientRpc]
     private void RpcUpdateYourTypingVisualInYouChatroom(bool isTypingStatus)
     {
+        Debug.Log("RpC Arrives in Game Player Running");
         this.playerIsTyping = isTypingStatus;
-
+         
         chatBehaviour.UpdateTypingVisualOfAPlayer(chatroomID, fakeName, isTypingStatus);
 
 
