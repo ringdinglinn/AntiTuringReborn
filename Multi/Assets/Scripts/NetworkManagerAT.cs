@@ -142,7 +142,6 @@ public class NetworkManagerAT : NetworkManager {
     public override void OnServerAddPlayer(NetworkConnection conn) {      
         if ("Assets/Scenes/" + SceneManager.GetActiveScene().name + ".unity" == menuScene) {
             bool isLeader = RoomPlayers.Count == 0;
-            Debug.Log(isLeader);
             NetworkRoomPlayerAT roomPlayerInstance = Instantiate(roomPlayerPrefab);
             NetworkServer.AddPlayerForConnection(conn, roomPlayerInstance.gameObject);
             roomPlayerInstance.SetLeader(isLeader);
@@ -242,7 +241,6 @@ public class NetworkManagerAT : NetworkManager {
                 DontDestroyOnLoad(gamePlayerInstance.gameObject);        
             }
             for (int i = 0; i < nrOfChatbots; i++) {
-                Debug.Log("instantiate chatbot");
                 var chatbotAIinstance = Instantiate(chatbotAIPrefab);
                 chatbotAIinstance.GetComponent<ChatbotAI>().chatbotBehaviour = chatbot;
                 DontDestroyOnLoad(chatbotAIinstance);

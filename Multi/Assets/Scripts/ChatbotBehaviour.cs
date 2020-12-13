@@ -64,14 +64,10 @@ public class ChatbotBehaviour : MonoBehaviour {
     }
 
     public void ChangeChatroomBotIndex(int chatroomID, int chatbotID, bool left, bool isJoining) {
-        Debug.Log("change chatroom bot index, chatroomID = " + chatroomID + ", chatbotID = " + chatbotID + ", left = " + left + ", isJoining = " + isJoining);
         int i = 0;
         if (!left) i = 1;
         chatroomBotIndex[chatroomID][i] = chatbotID;
         if (!isJoining) chatroomBotIndex[chatroomID][i] = -1;
-
-        Debug.Log("change chatroom bot index 2, chatroomID = " + chatroomID + ", chatbotID = " + chatroomBotIndex[chatroomID][i]);
-
     }
 
     public void InitiateChabotAI() {
@@ -97,14 +93,12 @@ public class ChatbotBehaviour : MonoBehaviour {
 
     private IEnumerator PandoraBotRequestCoRoutine(string text, int chatroomID, int sessionID, int chatbotID, string clientName, int id) {
 
-        Debug.Log("text 1 = " + text);
         Regex rx = new Regex(@"[\.!\?]");             //make sure only one sentence is sent to pandora
         foreach (Match match in rx.Matches(text)) {
             int i = match.Index;
             text = text.Remove(i);
             break;
         }
-        Debug.Log("text 2 = " + text);
 
 
         string url = "https://api.pandorabots.com/talk?botkey=RssstjtodsmGn5b1IstcJtNZI9khFR8B6xS0_Qvmtrrq5dalb0KYSIeonmRa15PUOL2I-8EtsPdp9rI_1dsWOQ~~&input=";
@@ -134,7 +128,6 @@ public class ChatbotBehaviour : MonoBehaviour {
             r = Regex.Replace(r, @"\\", "");
             r = Regex.Replace(r, "\"", "");
 
-            Debug.Log(r);
             //r = r.Remove(0, 1);
             //r = r.Remove(r.Length - 1, 1);
 
@@ -164,9 +157,7 @@ public class ChatbotBehaviour : MonoBehaviour {
     }
 
     public void SendTextToChatbot(string text, int chatroomID, int chatbotID, bool fromChatbot, int playerID) {
-        Debug.Log("SendMessageToChatbot1");
         messagesSentToBotCounter++;
-        Debug.Log("SendMessageToChatbot2");
         int sessionID = chatbotAIs[chatbotID].currentSessionID;
         string clientName = "";
         if (fromChatbot) {
@@ -176,7 +167,6 @@ public class ChatbotBehaviour : MonoBehaviour {
         } else {
             clientName = clientNameList[playerID];
         }
-        Debug.Log("SendMessageToChatbot6, text = " + text + ", chatroomID = " + chatroomID + ", chatbotID = " + chatbotID + ", clientName = " + clientName);
         StartCoroutine(PandoraBotRequestCoRoutine(text, chatroomID, sessionID, chatbotID, clientName, messagesSentToBotCounter));
     }
 

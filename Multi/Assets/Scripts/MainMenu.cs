@@ -30,12 +30,6 @@ public class MainMenu : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKey(KeyCode.S)) Debug.Log("S pressed");
-        if (Input.GetKey(KeyCode.LeftShift)) Debug.Log("SHIFT pressed");
-        if (Input.GetKey(KeyCode.LeftAlt)) Debug.Log("ALT pressed");
-        if (Input.GetKey(KeyCode.LeftCommand)) Debug.Log("COMMAND pressed");
-        Debug.Log("_______________");
-
         if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.LeftShift) && (Input.GetKey(KeyCode.LeftCommand) || Input.GetKey(KeyCode.LeftControl))){
             StartNewServer();
         }

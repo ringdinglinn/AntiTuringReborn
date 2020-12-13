@@ -100,15 +100,10 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     public void HandleReadyStatusChanged(bool oldValue, bool newValue) {
-     //   Debug.Log("handle ready status changed");
-    //    Debug.Log("old value = " + oldValue + ", new value = " + newValue);
         if (oldValue != newValue) {
-       //     Debug.Log("a value changed");
             if (newValue) {
-            //    Debug.Log("a player is now ready");
                 Room.isReadySound.Play();
             } else {
-              //  Debug.Log("a player is now not ready");
                 Room.isNotReadySound.Play();
             }
         }
@@ -166,10 +161,8 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
     [Command]
     public void CmdStartGame() {
         DistributeRoles();
-        Debug.Log("start game");
         // Server ensures that this client connection is the leader
         if (Room.RoomPlayers[0].connectionToClient != connectionToClient) return;
-        Debug.Log("start game 2");
 
         Room.StartGame();
     }

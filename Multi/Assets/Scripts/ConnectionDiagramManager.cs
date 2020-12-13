@@ -39,7 +39,6 @@ public class ConnectionDiagramManager : NetworkBehaviour
     public void ActivateConnectionDiagramBasedOnNrOfPlayer()
     {
         connectionDiagramsList[tagManagement.allTagableHumanPlayersList.Count-1].SetActive(true);
-        Debug.Log("Nr Of Players "  +  (tagManagement.allTagableHumanPlayersList.Count - 1));
         allPlayerRepresentationList = connectionDiagramsList[tagManagement.allTagableHumanPlayersList.Count - 1].GetComponent<ConnectionDiagramInformationHolder>().allPlayerRepresentationList;
         allArrownInDiagramList = connectionDiagramsList[tagManagement.allTagableHumanPlayersList.Count - 1].GetComponent<ConnectionDiagramInformationHolder>().allArrownInDiagramList;
 

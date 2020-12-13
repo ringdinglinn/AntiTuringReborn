@@ -303,7 +303,6 @@ public class TagManagement : NetworkBehaviour
 
     public void DisableAllTagButtons()
     {
-        Debug.Log("OrderToDisableAllButton");
         foreach (PlayerTagPanelHandler x in playerTagPanelHandlerList)
         {
             x.DisableButton();

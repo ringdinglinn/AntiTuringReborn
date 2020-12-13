@@ -116,7 +116,6 @@ public class GameManagerMessagesHandler : MonoBehaviour
     #region//Visual Handling When Human Player Failed to connect to Another Human Player
     public void HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer(string newTitle, string playerThatFoundTheOtherName, string tagedPlayerName, int numberOfConnections, string newMessage, string attemptsMessage, bool localPlayer)
     {
-        Debug.Log("attempt failed ai");
         CloseMessage();
         mainBroadcastHolder.SetActive(true);
         title.text = newTitle;

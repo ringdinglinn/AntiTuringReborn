@@ -62,7 +62,6 @@ public class ChatbotAI : MonoBehaviour
         playerID = chatbotAiID + networkManager.nrAwareAI;
         GetStartSetupNameAndVisuals();
         StartWaitToJoin();
-        Debug.Log("GAME START, id = " + chatbotAiID);
     }
 
     private void GetStartSetupNameAndVisuals() {
@@ -77,7 +76,6 @@ public class ChatbotAI : MonoBehaviour
     private void StartWaitToJoin() {
         waitTime = Random.Range(minWaitTimeJoinInit, maxWaitTimeJoinInit);
         currentState = state.WaitToJoin;
-        Debug.Log("Start wait to join first time");
         StartCoroutine(WaitToJoinCoroutine(waitTime));
     }
 
@@ -112,7 +110,6 @@ public class ChatbotAI : MonoBehaviour
             currentSessionID = chatbotBehaviour.nextSessionID++;
             chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left, true);
             networkManager.othersJoinRooms.Play(); // wait, this will only play on server
-            Debug.Log("JOINS CHATROOM");
             conversationStarted = false;
             inChatroom = true;
             StartCoroutine(StartWaitToLeave());
@@ -122,9 +119,7 @@ public class ChatbotAI : MonoBehaviour
             left = chatroomStates[chatroomID].leftFree;
             networkManager.GamePlayers[0].RequestJoinRoom(chatroomID, fakeName, true, playerVisualPalletID);
             currentSessionID = chatbotBehaviour.nextSessionID++;
-            chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left, true);
             networkManager.othersJoinRooms.Play(); // wait, this will only play on server
-            Debug.Log("JOINS CHATROOM");
             conversationStarted = false;
             inChatroom = true;
             StartCoroutine(StartWaitToLeave());
@@ -183,7 +178,6 @@ public class ChatbotAI : MonoBehaviour
     // Leave Chatroom
 
     private void LeaveChatroom() {
-        Debug.Log("leave chatroom");
         networkManager.othersLeaveRooms.Play(); // only plays on server :(
         evaluatingStartingConvo = false;
         inChatroom = false;

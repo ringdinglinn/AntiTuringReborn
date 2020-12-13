@@ -63,7 +63,6 @@ public class PlayerTagPanelHandler : MonoBehaviour
     public void DisableButton()
     {
         button.interactable =  false;
-        Debug.Log("DisableButton");
     }
 
     public void SwitchSpriteToDead() {

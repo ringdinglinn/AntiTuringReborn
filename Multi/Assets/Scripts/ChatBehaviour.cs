@@ -163,7 +163,6 @@ public class ChatBehaviour : NetworkBehaviour
     private void HandleNewMessage(string message, string name, int chatroomID, int visualIDOfPlayerWhoSendMessage)
     {
 
-        Debug.Log("new message = " + message + ", from = " + name);
         //Create and add new Messag   
         GameObject newMessage1 = Instantiate(textPrefab);
         newMessage1.transform.SetParent(chatDisplayContents[chatroomID].GetComponent<ChatDisplayContent>().scrollPanelContent.transform);
