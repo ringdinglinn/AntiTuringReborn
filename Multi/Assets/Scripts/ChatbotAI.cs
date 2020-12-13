@@ -125,6 +125,7 @@ public class ChatbotAI : MonoBehaviour
             chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left, true);
             networkManager.othersJoinRooms.Play(); // wait, this will only play on server
             conversationStarted = false;
+            conversationStartedExternally = false;
             inChatroom = true;
             StartCoroutine(StartWaitToLeave());
         } else if (indeces.Count > 0) {
@@ -136,6 +137,7 @@ public class ChatbotAI : MonoBehaviour
             chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left, true);
             networkManager.othersJoinRooms.Play(); // wait, this will only play on server
             conversationStarted = false;
+            conversationStartedExternally = false;
             inChatroom = true;
             StartCoroutine(StartWaitToLeave());
         } else {
@@ -234,6 +236,11 @@ public class ChatbotAI : MonoBehaviour
     }
 
     public void StartTyping() {
+        StartCoroutine(WaitToStartTypingAfterDelay(1f));
+    }
+
+    IEnumerator WaitToStartTypingAfterDelay(float time) {
+        yield return new WaitForSeconds(time);
         typing = true;
         networkManager.GamePlayers[0].RpcUpdateYourTypingVisualInYouChatroom(chatroomID, fakeName, true, true);
     }
