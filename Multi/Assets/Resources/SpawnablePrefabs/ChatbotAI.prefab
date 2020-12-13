@@ -45,6 +45,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chatbotBehaviour: {fileID: 0}
+  fakeName: 
+  pandoraBotsClientName: 
+  playerVisualPalletID: 0
+  playerAliveBig: {fileID: 0}
+  playerAliveDead: {fileID: 0}
+  playerSmall: {fileID: 0}
+  playerColor: {r: 0, g: 0, b: 0, a: 0}
+  chatroomID: 99
+  currentSessionID: 0
+  left: 0
+  typing: 0
+  typingVisual: 0
+  conversationStaters:
+  - Hey
+  - Hi
+  - Whats up?
+  - How is it going?
+  - Moin moin
+  - Hello
+  - 'Hey Hey '
+  - Truth Or Dare?
+  - Are you a bot?
+  - What's the best place you've ever travelled to?
+  - What's your star sign?
+  - Hello!
+  - Bro
+  - Yo
+  - Jo
+  - How is it going?
+  - xD
+  - ^^
+  - Hey :-)
+  - Hey dear
+  - Hello :-)
+  - I like food
+  - Hiya
+  - Howdy
+  - Hi there
+  - Hey there
+  - Hi there!
+  - G-day to you
+  - Bonjour
+  - Greetings
+  - Ehhm hey
+  - Hola
+  - How goes it?
+  - Hows it going?
+  - Nice to see you
+  - Hey What`s happening
+  - 'Hey Hey '
 --- !u!114 &2568546821183974650
 MonoBehaviour:
   m_ObjectHideFlags: 0
