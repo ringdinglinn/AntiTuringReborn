@@ -245,11 +245,12 @@ public class TagManagement : NetworkBehaviour
     }
     IEnumerator LoadingBar()
     {
-        if (isLocalPlayer) networkManagerAT.loadingBar.Play();
+     
         foreach (GameObject x in loadingBars)
         {
-            yield return new WaitForSeconds(loadingBarSpeed);
+            yield return new WaitForSeconds(Random.Range(0.1f,0.3f));
             x.SetActive(true);
+            if (isLocalPlayer) networkManagerAT.loadingBar.Play();
         }
         FinishLoadingResults();
         foreach (GameObject x in loadingBars) {
