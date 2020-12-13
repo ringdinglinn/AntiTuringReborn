@@ -87,16 +87,19 @@ public class ChatbotBehaviour : MonoBehaviour {
 
     private IEnumerator PandoraBotRequestCoRoutine(string text, int chatroomID, int sessionID, int chatbotID, string clientName, int id) {
 
-        Regex rx = new Regex(@"[\.!\?(\\n)]");             //make sure only one sentence is sent to pandora
+        Debug.Log("text 1 = " + text);
+        Regex rx = new Regex(@"[\.!\?]");             //make sure only one sentence is sent to pandora
         foreach (Match match in rx.Matches(text)) {
             int i = match.Index;
             text = text.Remove(i);
             break;
         }
+        Debug.Log("text 2 = " + text);
+
 
         string url = "https://api.pandorabots.com/talk?botkey=RssstjtodsmGn5b1IstcJtNZI9khFR8B6xS0_Qvmtrrq5dalb0KYSIeonmRa15PUOL2I-8EtsPdp9rI_1dsWOQ~~&input=";
-        url += UnityWebRequest.EscapeURL(text + "&client_name=" + clientName + "&sessionid=" + sessionID.ToString());
-
+        url += UnityWebRequest.EscapeURL(text);
+        url += "&client_name=" + clientName + "&sessionid=" + sessionID.ToString();
 
 
         UnityWebRequest wr = UnityWebRequest.Post(url, ""); //You cannot do POST with empty post data, new byte is just dummy data to solve this problem
