@@ -39,7 +39,7 @@ public class ChatBehaviour : NetworkBehaviour
 
     private bool left;
 
-    public NetworkManagerAT networkManagerAT;
+    public NetworkGamePlayerAT gamePlayerAT;
 
     public TMP_InputField mainInputField;
 
@@ -66,8 +66,8 @@ public class ChatBehaviour : NetworkBehaviour
 
 
         StartCoroutine(ShortDelay());
-       // CmdServerAddNetworkPlayerAndShit();
-
+        // CmdServerAddNetworkPlayerAndShit();
+     
 
     }
 
@@ -258,6 +258,7 @@ public class ChatBehaviour : NetworkBehaviour
         Clear();
         CmdSendMessage(message, chatroomID, networkPlayer.fakeName, networkPlayer.playerVisualPalletID, networkPlayer.playerID);
         mainInputField.text = "";
+        networkPlayer.CmdUpdateYourTypingVisualInYouChatroom(false);
         //inputFields[chatroomID].text = string.Empty;        
     }
     public void Clear()
@@ -680,15 +681,18 @@ public class ChatBehaviour : NetworkBehaviour
 
     public void UpdateTypingVisualOfAPlayer(int chatroomID, string playerFakeName, bool typingStatus)
     {
-       foreach ( NetworkGamePlayerAT x in  networkManagerAT.GamePlayers )
+        Debug.Log("Typing Command Arrives in ChatBehavrior");
+        foreach ( NetworkGamePlayerAT x in gamePlayerAT.room.GamePlayers )
         {
-            if(x.chatroomID == chatroomID)
+            Debug.Log("In For each");
+            if (x.chatroomID == chatroomID)
             {
-                if(x.chatBehaviour.mainChatDisplay.GetComponent<ChatDisplayContent>().leftName.ToString() == playerFakeName && playerFakeName != x.fakeName)                   
+                Debug.Log("in Same Room");
+                if (x.chatBehaviour.mainChatDisplay.GetComponent<ChatDisplayContent>().leftName.text== playerFakeName && playerFakeName != x.fakeName)                   
                 {
                     x.chatBehaviour.mainChatDisplay.GetComponent<ChatDisplayContent>().typingLeft.enabled = typingStatus;
                 }
-                if (x.chatBehaviour.mainChatDisplay.GetComponent<ChatDisplayContent>().rightName.ToString() == playerFakeName && playerFakeName != x.fakeName)
+                if (x.chatBehaviour.mainChatDisplay.GetComponent<ChatDisplayContent>().rightName.text == playerFakeName && playerFakeName != x.fakeName)
                 {
                     x.chatBehaviour.mainChatDisplay.GetComponent<ChatDisplayContent>().typingRight.enabled = typingStatus;
                 }
