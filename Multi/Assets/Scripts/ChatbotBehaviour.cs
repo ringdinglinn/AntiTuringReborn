@@ -87,16 +87,19 @@ public class ChatbotBehaviour : MonoBehaviour {
 
     private IEnumerator PandoraBotRequestCoRoutine(string text, int chatroomID, int sessionID, int chatbotID, string clientName, int id) {
 
-        Regex rx = new Regex(@"[\.!\?(\\n)]");             //make sure only one sentence is sent to pandora
+        Debug.Log("text 1 = " + text);
+        Regex rx = new Regex(@"[\.!\?]");             //make sure only one sentence is sent to pandora
         foreach (Match match in rx.Matches(text)) {
             int i = match.Index;
             text = text.Remove(i);
             break;
         }
+        Debug.Log("text 2 = " + text);
+
 
         string url = "https://api.pandorabots.com/talk?botkey=RssstjtodsmGn5b1IstcJtNZI9khFR8B6xS0_Qvmtrrq5dalb0KYSIeonmRa15PUOL2I-8EtsPdp9rI_1dsWOQ~~&input=";
-        url += UnityWebRequest.EscapeURL(text + "&client_name=" + clientName + "&sessionid=" + sessionID.ToString());
-
+        url += UnityWebRequest.EscapeURL(text);
+        url += "&client_name=" + clientName + "&sessionid=" + sessionID.ToString();
 
 
         UnityWebRequest wr = UnityWebRequest.Post(url, ""); //You cannot do POST with empty post data, new byte is just dummy data to solve this problem
@@ -150,12 +153,20 @@ public class ChatbotBehaviour : MonoBehaviour {
         public int id;
     }
 
-    public void SendTextToChatbot(string text, int chatroomID, int chatbotID) {
+    public void SendTextToChatbot(string text, int chatroomID, int chatbotID, bool fromChatbot, int playerID) {
+        Debug.Log("SendMessageToChatbot1");
         messagesSentToBotCounter++;
+        Debug.Log("SendMessageToChatbot2");
         int sessionID = chatbotAIs[chatbotID].currentSessionID;
-        int convoPartnerID = chatroomBotIndex[chatroomID][0];
-        if (convoPartnerID == chatbotID) convoPartnerID = chatroomBotIndex[chatroomID][1];
-        string clientName = chatbotAIs[convoPartnerID].pandoraBotsClientName;
+        string clientName = "";
+        if (fromChatbot) {
+            int convoPartnerID = chatroomBotIndex[chatroomID][0];
+            if (convoPartnerID == chatbotID) convoPartnerID = chatroomBotIndex[chatroomID][1];
+            clientName = chatbotAIs[convoPartnerID].pandoraBotsClientName;
+        } else {
+            clientName = clientNameList[playerID];
+        }
+        Debug.Log("SendMessageToChatbot6, text = " + text + ", chatroomID = " + chatroomID + ", chatbotID = " + chatbotID + ", clientName = " + clientName);
         StartCoroutine(PandoraBotRequestCoRoutine(text, chatroomID, sessionID, chatbotID, clientName, messagesSentToBotCounter));
     }
 

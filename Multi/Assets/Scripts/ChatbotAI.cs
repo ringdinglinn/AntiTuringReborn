@@ -100,8 +100,8 @@ public class ChatbotAI : MonoBehaviour
             }
         }
         if (indeces.Count > 0) {
-            chatroomID = indeces[Random.Range(0, indeces.Count)];
-            //chatroomID = 0;
+            //chatroomID = indeces[Random.Range(0, indeces.Count)];
+            chatroomID = 0;
             left = chatroomStates[chatroomID].leftFree;
             networkManager.GamePlayers[0].RequestJoinRoom(chatroomID, fakeName, true, playerVisualPalletID);
             currentSessionID = chatbotBehaviour.nextSessionID++;
