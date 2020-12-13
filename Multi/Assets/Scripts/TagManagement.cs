@@ -125,7 +125,7 @@ public class TagManagement : NetworkBehaviour
         newBotTagPanelObj.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
         PlayerTagPanelHandler botTagPanelHandler = newBotTagPanelObj.GetComponent<PlayerTagPanelHandler>();
        
-        botTagPanelHandler.StartSetup(botFakeName, realName, gameManagerAT.playerVisualPalletsList[botVisualPalletID].playerSmall, this, botVisualPalletID);
+        botTagPanelHandler.StartSetup(botFakeName, realName, gameManagerAT.playerVisualPalletsList[botVisualPalletID].playerSmall, this, botVisualPalletID, false);
 
        
         botsTagPanelHandlerList.Add(botTagPanelHandler);
@@ -180,13 +180,19 @@ public class TagManagement : NetworkBehaviour
             GameObject newPlayerTagPanelObj = Instantiate(playerTagPanelPrefab, tagPanelParent.transform);
             newPlayerTagPanelObj.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
             PlayerTagPanelHandler playerTagPanelHandler = newPlayerTagPanelObj.GetComponent<PlayerTagPanelHandler>();
-         
-            playerTagPanelHandler.StartSetup(gamePlayerAT.fakeName, gamePlayerAT.realName, gameManagerAT.playerVisualPalletsList[gamePlayerAT.playerVisualPalletID].playerSmall, this, gamePlayerAT.playerVisualPalletID);
 
+         
             if (gamePlayerAT.realName == networkGamePlayerAT.realName) //So I can not accuse myself
             {
                 playerTagPanelHandler.DisableButton();
+                playerTagPanelHandler.StartSetup(gamePlayerAT.fakeName, gamePlayerAT.realName, gameManagerAT.playerVisualPalletsList[gamePlayerAT.playerVisualPalletID].playerSmall, this, gamePlayerAT.playerVisualPalletID, true);
             }
+            else
+            {
+                playerTagPanelHandler.StartSetup(gamePlayerAT.fakeName, gamePlayerAT.realName, gameManagerAT.playerVisualPalletsList[gamePlayerAT.playerVisualPalletID].playerSmall, this, gamePlayerAT.playerVisualPalletID, false);
+
+            }
+
             playerTagPanelHandlerList.Add(playerTagPanelHandler);
         }
     }

@@ -20,9 +20,16 @@ public class PlayerTagPanelHandler : MonoBehaviour
     public int visualID;
     private TagManagement tagManagement;
     private string playerRealName;
-   public void StartSetup(string newPlayerFakeName, string newPlayerRealName, Sprite newPlayerSprite, TagManagement myManagement, int visualID)
+   public void StartSetup(string newPlayerFakeName, string newPlayerRealName, Sprite newPlayerSprite, TagManagement myManagement, int visualID, bool isLocalPlayer)
    {
-        playerFakeName.text = newPlayerFakeName;
+        if (isLocalPlayer)
+        {
+            playerFakeName.text = "(" + newPlayerFakeName + ")";
+        }
+        else
+        {
+            playerFakeName.text =  newPlayerFakeName ;
+        }
         playerRealName = newPlayerRealName;
         playerVisual.sprite = newPlayerSprite;
         baseSprite = playerVisual.sprite;
@@ -67,12 +74,7 @@ public class PlayerTagPanelHandler : MonoBehaviour
         dead = true;
     }
 
-    public void SetButtonDisabledColor(Color newColor)
-    {
-        var newColorBlock = button.colors;
-        newColorBlock.disabledColor = newColor;
-        button.colors = newColorBlock;
-    }
+
    
 
     public string GetPlayerRealName()
