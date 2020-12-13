@@ -96,7 +96,7 @@ public class ChatbotAI : MonoBehaviour
     // Join Chatroom
 
     private void JoinChatroom() {
-        Debug.Log("join chatroom");
+        Debug.Log("join chatroom,  chatbotID = " + chatbotAiID);
         chatroomStates = networkManager.GamePlayers[0].chatroomStates;
         List<int> indeces = new List<int>();
         List<int> higherPrioIndeces = new List<int>();
@@ -142,6 +142,7 @@ public class ChatbotAI : MonoBehaviour
     // Start Conversation Logic
 
     public void ConversationStarted() {
+        Debug.Log("conversation started, chatbotID = " + chatbotAiID);
         conversationStarted = true;
     }
     private bool evaluatingStartingConvo = false;
@@ -155,7 +156,6 @@ public class ChatbotAI : MonoBehaviour
         }
 
         if (evaluatingStartingConvo) {
-            //Debug.Log("converstation started = " + conversationStarted);
             if (!conversationStarted) {
                 startConvoCounter++;
                 if (startConvoCounter == waitTimeBeforeStartConvo) {
@@ -190,7 +190,7 @@ public class ChatbotAI : MonoBehaviour
     // Leave Chatroom
 
     private void LeaveChatroom() {
-        Debug.Log("leave chatroom");
+        Debug.Log("leave chatroom, chatbotID = " + chatbotAiID);
         networkManager.othersLeaveRooms.Play(); // only plays on server :(
         evaluatingStartingConvo = false;
         inChatroom = false;
