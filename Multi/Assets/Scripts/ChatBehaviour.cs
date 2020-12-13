@@ -258,7 +258,7 @@ public class ChatBehaviour : NetworkBehaviour
         Clear();
         CmdSendMessage(message, chatroomID, networkPlayer.fakeName, networkPlayer.playerVisualPalletID, networkPlayer.playerID);
         mainInputField.text = "";
-        networkPlayer.CmdUpdateYourTypingVisualInYouChatroom(false);
+        networkPlayer.CmdUpdateYourTypingVisualInYouChatroom(chatroomID, networkPlayer.fakeName, false, false);
         //inputFields[chatroomID].text = string.Empty;        
     }
     public void Clear()

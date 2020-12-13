@@ -109,11 +109,12 @@ public class GameManagerAT : NetworkBehaviour
     private void CmdStartSetup()
     {
     
-       
+       networkManagerAT = GameObject.Find("NetworkManager").GetComponent<NetworkManagerAT>();
         //Debug.Log("Message kommt an 2");
         RpctartSetup();
         //ConnectionsOverviewSetup();
     }
+
     [ClientRpc]
     private void RpctartSetup()
     {       
@@ -808,6 +809,8 @@ public class GameManagerAT : NetworkBehaviour
 
     [Command]
     private void CmdStartScreen2Over() {
+        UnityEngine.Debug.Log("networkManagerAt = " + networkManagerAT);
+        UnityEngine.Debug.Log("chatbot = " + networkManagerAT.chatbot);
         networkManagerAT.chatbot.InitiateChabotAI();
     }
 

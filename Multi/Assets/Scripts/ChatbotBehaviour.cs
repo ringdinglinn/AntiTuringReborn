@@ -177,7 +177,7 @@ public class ChatbotBehaviour : MonoBehaviour {
     }
 
     IEnumerator WaitToSendResponse(Response response) {
-        chatbotAIs[response.authorID].typing = true;
+        chatbotAIs[response.authorID].StartTyping();
         float waitTime;
         string message = response.text;
         waitTime = 0.1f * response.text.Length + response.text.Length * Random.Range(0f, 0.1f) + 1f;

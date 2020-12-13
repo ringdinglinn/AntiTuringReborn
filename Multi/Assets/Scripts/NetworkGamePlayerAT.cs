@@ -635,7 +635,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     }
 
     [ClientRpc]
-    private void RpcUpdateYourTypingVisualInYouChatroom(int chatroomID, string fakeName, bool isTypingStatus, bool isBotMessage)
+    public void RpcUpdateYourTypingVisualInYouChatroom(int chatroomID, string fakeName, bool isTypingStatus, bool isBotMessage)
     {
         Debug.Log("RpC Arrives in Game Player Running");
         if (isBotMessage == false)

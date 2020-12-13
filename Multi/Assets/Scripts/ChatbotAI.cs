@@ -19,8 +19,8 @@ public class ChatbotAI : MonoBehaviour
     private float maxWaitTimeJoinInit = 15f;
     private float minWaitTimeJoin = 2f;
     private float maxWaitTimeJoin = 10f;
-    private float minWaitTimeLeave = 2f;
-    private float maxWaitTimeLeave = 3f;
+    private float minWaitTimeLeave = 10f;
+    private float maxWaitTimeLeave = 30f;
 
     private List<ChatroomStates> chatroomStates = new List<ChatroomStates>();
 
@@ -52,6 +52,7 @@ public class ChatbotAI : MonoBehaviour
     private bool dead;
 
     public bool typing = false;
+    public bool typingVisual = false;
 
     private void Start() {
         networkManager = chatbotBehaviour.networkManager;
@@ -207,11 +208,17 @@ public class ChatbotAI : MonoBehaviour
         LeaveChatroom();
     }
 
+    public void StartTyping() {
+        typing = true;
+        networkManager.GamePlayers[0].RpcUpdateYourTypingVisualInYouChatroom(chatroomID, fakeName, true, true);
+    }
+
     public void StopTypingAfterDelay(float time) {
         StartCoroutine(WaitToStopTypingAfterDelay(time));
     }
 
     IEnumerator WaitToStopTypingAfterDelay(float time) {
+        networkManager.GamePlayers[0].RpcUpdateYourTypingVisualInYouChatroom(chatroomID, fakeName, false, true);
         yield return new WaitForSeconds(time/4f);
         typing = false;
     }
