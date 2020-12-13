@@ -43,12 +43,17 @@ public class ChatBehaviour : NetworkBehaviour
 
     public TMP_InputField mainInputField;
 
+    private bool botIsWaitingForMessage = false;
+
+    public Action<int> BuildTextDone;
+    private bool[] buildTextIsDoneInChatroomsList = new bool[8]; // hard coded nr of chatrooms
+
     public override void OnStartAuthority()
     {
         chatbotRoomsIndex[0] = true;
         chatUI.SetActive(true);
         OnMessage += HandleNewMessage;
-
+        BuildTextDone += HandleBuildTextIsDone;
 
         chatbotRoomsIndex[0] = true;
         chatbotRoomsIndex[1] = false;
@@ -62,6 +67,18 @@ public class ChatBehaviour : NetworkBehaviour
 
         StartCoroutine(ShortDelay());
        // CmdServerAddNetworkPlayerAndShit();
+
+
+    }
+
+    private void HandleBuildTextIsDone(int chatroomID) {
+        buildTextIsDoneInChatroomsList[chatroomID] = true;
+        CmdBuildTextIsDone(chatroomID);
+    }
+
+    [Command]
+    private void CmdBuildTextIsDone(int chatroomID) {
+        buildTextIsDoneInChatroomsList[chatroomID] = true;
     }
 
     IEnumerator ShortDelay()
@@ -166,7 +183,7 @@ public class ChatBehaviour : NetworkBehaviour
             newMessage1.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(230, 60);
             listOfChatroomLists[chatroomID].Add(newMessage1);
            // mainChatDisplayContentList.Add(newMessage1);
-            StartCoroutine(BuildText(newMessage1.GetComponent<Text>(), name + "\n"   + message  , 0.02f,false));
+            StartCoroutine(BuildText(newMessage1.GetComponent<Text>(), name + "\n"   + message  , 0.02f,false, chatroomID));
         }
 
         if (networkPlayer.chatroomStates[chatroomID].leftName == name)
@@ -175,7 +192,7 @@ public class ChatBehaviour : NetworkBehaviour
             newMessage1.GetComponent<Text>().fontSize = 12;
             newMessage1.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(230, 60);
             listOfChatroomLists[chatroomID].Add(newMessage1);
-            StartCoroutine(BuildText(newMessage1.GetComponent<Text>(), name + "\n"   + message , 0.02f,false));
+            StartCoroutine(BuildText(newMessage1.GetComponent<Text>(), name + "\n"   + message , 0.02f,false, chatroomID));
 
         }
             if (chatroomID == networkPlayer.chatroomID)
@@ -196,7 +213,7 @@ public class ChatBehaviour : NetworkBehaviour
                     newMessage2.GetComponent<Text>().rectTransform.anchoredPosition = new Vector3(0, 0, 0);
 
                  //   listOfChatroomLists[chatroomID].Add(newMessage2);
-                    StartCoroutine(BuildText(newMessage2.GetComponent<Text>(), name + "\n"   + message , 0.02f,true));
+                    StartCoroutine(BuildText(newMessage2.GetComponent<Text>(), name + "\n"   + message , 0.02f,true, chatroomID));
                 }
                 if (networkPlayer.chatroomStates[chatroomID].leftName == name)
                 {
@@ -204,13 +221,15 @@ public class ChatBehaviour : NetworkBehaviour
                     newMessage2.GetComponent<Text>().fontSize = 20;
                     newMessage2.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(230, 90);
                   //  listOfChatroomLists[chatroomID].Add(newMessage2);
-                    StartCoroutine(BuildText(newMessage2.GetComponent<Text>(), name + "\n"   + message  , 0.02f,true));
+                    StartCoroutine(BuildText(newMessage2.GetComponent<Text>(), name + "\n"   + message  , 0.02f,true, chatroomID));
                 }
                 mainChatDisplayContentList.Add(newMessage2);
             }
         
     }
-    private IEnumerator BuildText(Text text,  string message, float textSpeed, bool textForMainCanvas)
+
+
+    private IEnumerator BuildText(Text text,  string message, float textSpeed, bool textForMainCanvas, int chatroomID = 0)
     {
         int soundCounter = 0;
         for (int i = 0; i < message.Length; i++)
@@ -229,7 +248,9 @@ public class ChatBehaviour : NetworkBehaviour
                 }
                 yield return new WaitForSeconds(textSpeed);
             }
-        }           
+        }
+
+        BuildTextDone?.Invoke(chatroomID);
     }
     [Client]
     public void Send(string message)
@@ -276,32 +297,24 @@ public class ChatBehaviour : NetworkBehaviour
 
     [Server]
     public void ChatbotSendsMessage(string message, int chatroomID, string name, int visualIDOfPlayerWhoSendMessage) {
-        Debug.Log("Chatbot Sends Message, message = " + message + ", chatroomID = " + chatroomID + ", name = " + name);
         ProcessMessage(message, chatroomID, name, visualIDOfPlayerWhoSendMessage, true);
     }
 
     [Server]
     private void ProcessMessage(string message, int chatroomID, string name, int visualIDOfPlayerWhoSendMessage, bool comingFromChatbot) {
-        Debug.Log("Process Message, message = " + message + ", chatroomID = " + chatroomID + ", name = " + name);
         GameObject newMessage = Instantiate(textPrefab, chatDisplayContents[chatroomID].GetComponent<ChatDisplayContent>().scrollPanelContent.transform);
         newMessage.GetComponent<Text>().text = name + "" + message;
 
         listOfChatroomLists[chatroomID].Add(newMessage);
 
+        buildTextIsDoneInChatroomsList[chatroomID] = false;
         RpcHandleMessage(message, name, chatroomID, visualIDOfPlayerWhoSendMessage);
 
         var chatroomBotIndex = networkPlayer.Room.chatbot.chatroomBotIndex;
-        Debug.Log("chatroomID = " + chatroomID);
-        for (int i = 0; i < chatroomBotIndex.Count; i++) {
-            Debug.Log("chatroom = " + i + "left = " + chatroomBotIndex[i][0]);
-            Debug.Log("chatroom = " + i + "right = " + chatroomBotIndex[i][1]);
-        }
         if (chatroomBotIndex[chatroomID][0] != -1 || chatroomBotIndex[chatroomID][1] != -1) {
-            Debug.Log("chatbot is in this room");
             int chatbotID;
             if (!comingFromChatbot)
             {
-                Debug.Log("not coming from chatbot");
                 if (!networkPlayer.left)
                 {
                     chatbotID = chatroomBotIndex[chatroomID][0];
@@ -312,22 +325,26 @@ public class ChatBehaviour : NetworkBehaviour
                 }
             } else
             {
-                Debug.Log("coming from chatbot");
                 if (networkPlayer.chatroomStates[chatroomID].leftName == name)
                 {
-                    Debug.Log("from chatbot, case 1");
                     chatbotID = chatroomBotIndex[chatroomID][1];
                 } else
                 {
-                    Debug.Log("from chatbot, case 2");
                     chatbotID = chatroomBotIndex[chatroomID][0];
                 }
             }
-            Debug.Log("chatbot ID = " + chatbotID);
-            SendMessageToChatbot(message, chatbotID, chatroomID);
+            //SendMessageToChatbot(message, chatbotID, chatroomID);
+            networkPlayer.Room.chatbot.chatbotAIs[chatbotID].ConversationStarted();
+            StartCoroutine(WaitForBuildTextIsDone(message, chatbotID, chatroomID));
         } else {
-            Debug.Log("no chatbot in this room");
         }
+    }
+
+    IEnumerator WaitForBuildTextIsDone(string message, int chatbotID, int chatroomID) {
+        while (!buildTextIsDoneInChatroomsList[chatroomID]) {
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        SendMessageToChatbot(message, chatbotID, chatroomID);
     }
 
     [ClientRpc]
@@ -346,10 +363,8 @@ public class ChatBehaviour : NetworkBehaviour
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public void SendMessageToChatbot(string text, int chatbotID, int chatroomID)
     {
-        Debug.Log("Send Message To Chatbot, chatroomID = " + chatroomID);
         networkPlayer = GetComponent<NetworkGamePlayerAT>();
         networkPlayer.Room.chatbot.SendTextToChatbot(text, chatroomID, chatbotID);
-        networkPlayer.Room.chatbot.chatbotAIs[chatbotID].ConversationStarted();
     }
     [Command]
     public void CmdSendOutResponseFromChatbot(string r, int id, string chatbotName, int BotVisualId)

@@ -15,12 +15,18 @@ public class ChatbotAI : MonoBehaviour
 
     private float waitTime;
 
+    private float minWaitTimeJoinInit = 2f;
+    private float maxWaitTimeJoinInit = 10f;
     private float minWaitTimeJoin = 2f;
     private float maxWaitTimeJoin = 10f;
+    private float minWaitTimeLeave = 20f;
+    private float maxWaitTimeLeave = 60f;
 
     private List<ChatroomStates> chatroomStates = new List<ChatroomStates>();
 
     public string fakeName;
+
+    public string pandoraBotsClientName;
 
     //Chatbot Visual
     public int playerVisualPalletID;
@@ -48,12 +54,14 @@ public class ChatbotAI : MonoBehaviour
         chatbotAiID = chatbotBehaviour.chatbotAIs.Count;
         chatbotBehaviour.chatbotAIs.Add(this);
         GameStart();
+        pandoraBotsClientName = chatbotBehaviour.clientNameList[networkManager.GamePlayers.Count + chatbotAiID];
     }
 
     public void GameStart() {
         playerID = chatbotAiID + networkManager.nrAwareAI;
         GetStartSetupNameAndVisuals();
         StartWaitToJoin();
+        Debug.Log("GAME START, id = " + chatbotAiID);
     }
 
     private void GetStartSetupNameAndVisuals() {
@@ -66,12 +74,13 @@ public class ChatbotAI : MonoBehaviour
     // Wait to join
 
     private void StartWaitToJoin() {
-        waitTime = Random.Range(minWaitTimeJoin, maxWaitTimeJoin);
+        waitTime = Random.Range(minWaitTimeJoinInit, maxWaitTimeJoinInit);
         currentState = state.WaitToJoin;
-        StartCoroutine(WaitToJointCoroutine(waitTime));
+        Debug.Log("Start wait to join first time");
+        StartCoroutine(WaitToJoinCoroutine(waitTime));
     }
 
-    IEnumerator WaitToJointCoroutine(float s) {
+    IEnumerator WaitToJoinCoroutine(float s) {
         waitingToJoinChatroom = true;
         yield return new WaitForSeconds(s);
         waitingToJoinChatroom = false;
@@ -96,8 +105,9 @@ public class ChatbotAI : MonoBehaviour
             left = chatroomStates[chatroomID].leftFree;
             networkManager.GamePlayers[0].RequestJoinRoom(chatroomID, fakeName, true, playerVisualPalletID);
             currentSessionID = chatbotBehaviour.nextSessionID++;
-            chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left);
-            networkManager.othersJoinRooms.Play();
+            chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left, true);
+            networkManager.othersJoinRooms.Play(); // wait, this will only play on server
+            Debug.Log("JOINS CHATROOM");
             conversationStarted = false;
             inChatroom = true;
         }
@@ -116,16 +126,16 @@ public class ChatbotAI : MonoBehaviour
             if (!networkManager.GamePlayers[0].chatroomStates[chatroomID].leftFree && !networkManager.GamePlayers[0].chatroomStates[chatroomID].rightFree) {
                 evaluatingStartingConvo = true;
                 waitTimeBeforeStartConvo = Random.Range(minWaitTimeStartConvo, maxWaitTimeStartConvo);
-                Debug.Log("convo start logic, " + "id = " + chatbotAiID + " waitTimeTotal = " + waitTimeBeforeStartConvo);
             }
         }
 
         if (evaluatingStartingConvo) {
+            //Debug.Log("converstation started = " + conversationStarted);
             if (!conversationStarted) {
-                Debug.Log("convo start logic, " + "id = " + chatbotAiID + " counter = " + startConvoCounter);
                 startConvoCounter++;
-                if (startConvoCounter >= waitTimeBeforeStartConvo) {
+                if (startConvoCounter == waitTimeBeforeStartConvo) {
                     conversationStarted = true;
+                    Debug.Log("START GREETING from Update");
                     SendGreeting();
                     startConvoCounter = 0;
                 }
@@ -134,36 +144,44 @@ public class ChatbotAI : MonoBehaviour
 
 
         if (!inChatroom && !waitingToJoinChatroom) {
-            StartCoroutine(WaitToJointCoroutine(Random.Range(minWaitTimeJoin, maxWaitTimeJoin)));
+            Debug.Log("TRY TO JOIN AGAIN");
+            StartCoroutine(WaitToJoinCoroutine(Random.Range(minWaitTimeJoin, maxWaitTimeJoin)));
         }
     }
 
     private void SendGreeting() {
-        ChatbotBehaviour.Response r = new ChatbotBehaviour.Response(chatroomID, "Hi, this is Linn's special conversation starter!", fakeName, playerVisualPalletID);
+        Debug.Log("SEND GREETING");
+        ChatbotBehaviour.Response r = new ChatbotBehaviour.Response(chatroomID, "Hi, this is Linn's special conversation starter!", fakeName, playerVisualPalletID, 0);
         chatbotBehaviour.SendResponseToServerDirectly(r);
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // In Chatroom
 
-    private void StartWaitToLeave() {
-
+    IEnumerator StartWaitToLeave() {
+        float waitToLeaveTime = Random.Range(minWaitTimeLeave, maxWaitTimeLeave);
+        yield return new WaitForSeconds(waitToLeaveTime);
+        LeaveChatroom();
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Leave Chatroom
 
     private void LeaveChatroom() {
-        chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left);
-        networkManager.othersLeaveRooms.Play();
+        Debug.Log("leave chatroom");
+        chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left, false);
+        networkManager.othersLeaveRooms.Play(); // only plays on server :(
         evaluatingStartingConvo = false;
+        inChatroom = false;
+        networkManager.GamePlayers[0].LeaveChatroom(chatroomID, fakeName);
+        float waitTime = Random.Range(minWaitTimeJoin, maxWaitTimeJoin);
+        StartCoroutine(WaitToJoinCoroutine(waitTime));
     }
 
     //Destroy Bot
     public void DestroyBot()
     {
         LeaveChatroom();
-        chatbotBehaviour.chatbotAIs.Remove(this);
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 }
