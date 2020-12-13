@@ -59,12 +59,12 @@ public class ChatbotAI : MonoBehaviour
         chatbotAiID = chatbotBehaviour.chatbotAIs.Count;
         chatbotBehaviour.chatbotAIs.Add(this);
         pandoraBotsClientName = chatbotBehaviour.clientNameList[networkManager.GamePlayers.Count + chatbotAiID];
+        playerID = chatbotAiID + networkManager.nrAwareAI;
+        GetStartSetupNameAndVisuals();
     }
 
     public void GameStart() {
         Debug.Log("chatbotAI: GameStart()");
-        playerID = chatbotAiID + networkManager.nrAwareAI;
-        GetStartSetupNameAndVisuals();
         StartWaitToJoin();
     }
 
