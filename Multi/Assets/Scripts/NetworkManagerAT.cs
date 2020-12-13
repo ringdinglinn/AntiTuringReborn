@@ -265,7 +265,7 @@ public class NetworkManagerAT : NetworkManager {
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Random name and color
     private int maxNrOfChatParticitpants = 16;
-    public List<string> randomNames = new List<string>() { "Hildebrand", "Neko", "Mica", "Jùlian",
+    public List<string> randomNames = new List<string>() { "Hildebrand", "Neko", "Mica", "Vladimir",
                                                            "Berthold", "Maximus", "Dirk", "Gaia",
                                                            "Veronica", "Bob", "Susan", "Bernard",
                                                            "Augustus", "Klaus", "Mortimer", "Yusuke" };

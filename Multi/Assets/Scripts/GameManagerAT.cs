@@ -617,6 +617,7 @@ public class GameManagerAT : NetworkBehaviour
         if (currentHumanBotsAlive == totalHumanBots && isInSoundStage2 == false && isInSoundStage3== false)
         {
             UnityEngine.Debug.Log("We are in Music Intensity Stage 1 because of Human Bots Alive ");
+            gameStage = 0;
             //If we already are in stage 1 music do nothing else change to stage 1 music
         }
         else if(currentHumanBotsAlive == currentHumanBotsAlive - 1 && isInSoundStage3 == false)
@@ -624,12 +625,14 @@ public class GameManagerAT : NetworkBehaviour
             isInSoundStage2 = true;
             UnityEngine.Debug.Log("We are in Music Intensity Stage 2 because of Human Bots Alive ");
             //If we already are in stage 2 music do nothing else change to stage 2 music
+            gameStage = 1;
         }
         else if (currentHumanBotsAlive == currentHumanBotsAlive - 2)
         {
             isInSoundStage3 = true;
             UnityEngine.Debug.Log("We are in Music Intensity Stage 3 because of Human Bots Alive ");
             //If we already are in stage 3 music do nothing else change to stage 3 music
+            gameStage = 2;
         }
 
         //Change Based onn Connections
@@ -638,18 +641,21 @@ public class GameManagerAT : NetworkBehaviour
           
             //If we already are in stage 1 music do nothing else change to stage 1 music
             UnityEngine.Debug.Log("We are in Music Intensity Stage 1 because of made connections");
+            gameStage = 0;
         }
         else if (currentNrOfMadeAIConncetions < stageCounter * 2 && isInSoundStage3 == false) // stage 2 still need 3 connections
         {
             isInSoundStage2 = true;
             //If we already are in stage 2 music do nothing else change to stage 2 music
             UnityEngine.Debug.Log("We are in Music Intensity Stage 2 of made connections");
+            gameStage = 1;
         }
         else if (currentNrOfMadeAIConncetions >= stageCounter * 2 )
         {
             isInSoundStage3 = false;
             //If we already are in stage 3 music do nothing else change to stage 3 music
             UnityEngine.Debug.Log("We are in Music Intensity Stage 3 because of made connections");
+            gameStage = 2;
         }
 
     }
