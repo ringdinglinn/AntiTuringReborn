@@ -19,7 +19,7 @@ public class ChatbotAI : MonoBehaviour
     private float maxWaitTimeJoinInit = 10f;
     private float minWaitTimeJoin = 2f;
     private float maxWaitTimeJoin = 10f;
-    private float minWaitTimeLeave = 20f;
+    private float minWaitTimeLeave = 10f;
     private float maxWaitTimeLeave = 60f;
 
     private List<ChatroomStates> chatroomStates = new List<ChatroomStates>();
@@ -39,7 +39,7 @@ public class ChatbotAI : MonoBehaviour
     public int chatroomID = 99;
     public int currentSessionID = 0;
 
-    private bool left;
+    public bool left;
     private bool conversationStarted = false;
     private bool inChatroom;
     private bool waitingToJoinChatroom;
@@ -49,11 +49,12 @@ public class ChatbotAI : MonoBehaviour
     private int maxWaitTimeStartConvo = 500;
     private int minWaitTimeStartConvo = 100;
 
+    private bool dead;
+
     private void Start() {
         networkManager = chatbotBehaviour.networkManager;
         chatbotAiID = chatbotBehaviour.chatbotAIs.Count;
         chatbotBehaviour.chatbotAIs.Add(this);
-        GameStart();
         pandoraBotsClientName = chatbotBehaviour.clientNameList[networkManager.GamePlayers.Count + chatbotAiID];
     }
 
@@ -93,15 +94,19 @@ public class ChatbotAI : MonoBehaviour
     private void JoinChatroom() {
         chatroomStates = networkManager.GamePlayers[0].chatroomStates;
         List<int> indeces = new List<int>();
+        List<int> higherPrioIndeces = new List<int>();
         left = false;
         for (int i = 0; i < chatroomStates.Count; i++) {
             if (chatroomStates[i].leftFree || chatroomStates[i].rightFree) {
                 indeces.Add(i);
+                if (!chatroomStates[i].leftFree || !chatroomStates[i].rightFree) {
+                    higherPrioIndeces.Add(i);
+                }
             }
         }
-        if (indeces.Count > 0) {
-            //chatroomID = indeces[Random.Range(0, indeces.Count)];
-            chatroomID = 0;
+        if (higherPrioIndeces.Count > 0) {
+            chatroomID = higherPrioIndeces[Random.Range(0, higherPrioIndeces.Count)];
+            //chatroomID = 0;
             left = chatroomStates[chatroomID].leftFree;
             networkManager.GamePlayers[0].RequestJoinRoom(chatroomID, fakeName, true, playerVisualPalletID);
             currentSessionID = chatbotBehaviour.nextSessionID++;
@@ -110,6 +115,19 @@ public class ChatbotAI : MonoBehaviour
             Debug.Log("JOINS CHATROOM");
             conversationStarted = false;
             inChatroom = true;
+            StartCoroutine(StartWaitToLeave());
+        } else if (indeces.Count > 0) {
+            chatroomID = indeces[Random.Range(0, indeces.Count)];
+            //chatroomID = 0;
+            left = chatroomStates[chatroomID].leftFree;
+            networkManager.GamePlayers[0].RequestJoinRoom(chatroomID, fakeName, true, playerVisualPalletID);
+            currentSessionID = chatbotBehaviour.nextSessionID++;
+            chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left, true);
+            networkManager.othersJoinRooms.Play(); // wait, this will only play on server
+            Debug.Log("JOINS CHATROOM");
+            conversationStarted = false;
+            inChatroom = true;
+            StartCoroutine(StartWaitToLeave());
         }
     }
 
@@ -135,7 +153,6 @@ public class ChatbotAI : MonoBehaviour
                 startConvoCounter++;
                 if (startConvoCounter == waitTimeBeforeStartConvo) {
                     conversationStarted = true;
-                    Debug.Log("START GREETING from Update");
                     SendGreeting();
                     startConvoCounter = 0;
                 }
@@ -144,13 +161,11 @@ public class ChatbotAI : MonoBehaviour
 
 
         if (!inChatroom && !waitingToJoinChatroom) {
-            Debug.Log("TRY TO JOIN AGAIN");
             StartCoroutine(WaitToJoinCoroutine(Random.Range(minWaitTimeJoin, maxWaitTimeJoin)));
         }
     }
 
     private void SendGreeting() {
-        Debug.Log("SEND GREETING");
         ChatbotBehaviour.Response r = new ChatbotBehaviour.Response(chatroomID, "Hi, this is Linn's special conversation starter!", fakeName, playerVisualPalletID, 0);
         chatbotBehaviour.SendResponseToServerDirectly(r);
     }
@@ -169,18 +184,19 @@ public class ChatbotAI : MonoBehaviour
 
     private void LeaveChatroom() {
         Debug.Log("leave chatroom");
-        chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left, false);
         networkManager.othersLeaveRooms.Play(); // only plays on server :(
         evaluatingStartingConvo = false;
         inChatroom = false;
-        networkManager.GamePlayers[0].LeaveChatroom(chatroomID, fakeName);
+        networkManager.GamePlayers[0].LeaveChatroom(chatroomID, fakeName, true);
+        chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left, false);
         float waitTime = Random.Range(minWaitTimeJoin, maxWaitTimeJoin);
-        StartCoroutine(WaitToJoinCoroutine(waitTime));
+        if (!dead) StartCoroutine(WaitToJoinCoroutine(waitTime));
     }
 
     //Destroy Bot
     public void DestroyBot()
     {
+        dead = true;
         LeaveChatroom();
         Destroy(gameObject);
     }

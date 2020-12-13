@@ -94,7 +94,7 @@ public class NetworkManagerAT : NetworkManager {
     public List<PlayerVisualPallet> playerVisualPalletsList = new List<PlayerVisualPallet>();
 
     //Nr of bots by nr of ai players
-    private int[,] botNrIndex = new int[,] { { 1, 3 }, { 2, 5 }, { 3, 7 }, { 4, 9 }, { 5, 10 }, { 6, 10 } };
+    private int[] botNrIndex = new int[] { 3 ,  5 ,  7, 9,  10 , 10, 10, 10 , 10 , 10, 10 , 10 };
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public override void OnStartClient() {
@@ -188,6 +188,7 @@ public class NetworkManagerAT : NetworkManager {
             nrPlayers = RoomPlayers.Count;
             nrOfWaitingClients = nrPlayers;
             nrAwareAI = nrPlayers - nrInvestigators;
+            nrOfChatbots = botNrIndex[nrAwareAI];
             nrOfChatbots = 1; // PLACE HOLDER: TO BE BALANCED!!!
             chatbot.GameStart();
             ServerChangeScene("SampleScene");

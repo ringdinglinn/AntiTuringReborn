@@ -790,6 +790,7 @@ public class GameManagerAT : NetworkBehaviour
                 networkManagerAT.StartAITheme();
             }
         }
+        if (networkGamePlayerAT.playerID == 0 && isLocalPlayer) networkManagerAT.chatbot.InitiateChabotAI();
     }
 
 

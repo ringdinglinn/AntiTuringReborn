@@ -64,10 +64,20 @@ public class ChatbotBehaviour : MonoBehaviour {
     }
 
     public void ChangeChatroomBotIndex(int chatroomID, int chatbotID, bool left, bool isJoining) {
+        Debug.Log("change chatroom bot index, chatroomID = " + chatroomID + ", chatbotID = " + chatbotID + ", left = " + left + ", isJoining = " + isJoining);
         int i = 0;
         if (!left) i = 1;
         chatroomBotIndex[chatroomID][i] = chatbotID;
         if (!isJoining) chatroomBotIndex[chatroomID][i] = -1;
+
+        Debug.Log("change chatroom bot index 2, chatroomID = " + chatroomID + ", chatbotID = " + chatroomBotIndex[chatroomID][i]);
+
+    }
+
+    public void InitiateChabotAI() {
+        foreach (ChatbotAI chatbotAI in chatbotAIs) {
+            chatbotAI.GameStart();
+        }
     }
 
 

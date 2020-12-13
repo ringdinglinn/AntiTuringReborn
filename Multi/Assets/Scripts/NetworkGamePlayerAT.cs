@@ -329,16 +329,20 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     [Command]
     public void CmdLeaveChatroom(int ID, string fakeName)
     {
-        LeaveChatroom(ID, fakeName);
+        LeaveChatroom(ID, fakeName, false);
     }
 
     [Server]
-    public void LeaveChatroom(int ID, string fakeName) {
+    public void LeaveChatroom(int ID, string fakeName, bool isChatbot) {
         if (ID != 99) // When ID = 99 it woul mean that the player is in no Chatroom when he died.
         {
-            RpcCloseChatroom(ID, isInvestigator, playerIsDead);
+            if (!isChatbot) {
+                RpcCloseChatroom(ID, isInvestigator, playerIsDead);
+            }
         }
-        if (isInvestigator) {
+
+        if (isInvestigator && !isChatbot) {
+            Debug.Log("leave in player, case 1");
             chatroomID = 99;
             RpcDisableInvestigatorButton(ID, true);
             GetComponent<ChatBehaviour>().RpcClearMainCanvas(ID, chatroomStates[ID].leftFree, chatroomStates[ID].rightFree, chatroomStates[ID].leftName, chatroomStates[ID].rightName);
@@ -352,11 +356,43 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
                 }
             }
         }
-        else if (playerIsDead) {
+        else if (playerIsDead && !isChatbot) {
+            Debug.Log("leave in player, case 2");
             RpcDeadPlayerToggleButtons(true);
             GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, chatroomStates[ID].leftFree, chatroomStates[ID].rightFree, chatroomStates[ID].leftName, chatroomStates[ID].rightName);
+        } else if (isChatbot) {
+            Debug.Log("leave in player, case 2");
+            Debug.Log("leave, chatbotID left = " + Room.chatbot.chatroomBotIndex[ID][0]);
+            Debug.Log("leave, chatbotID right = " + Room.chatbot.chatroomBotIndex[ID][1]);
+            Debug.Log("leave, chatbot ais = " + Room.chatbot.chatbotAIs.Count);
+            bool chatbotIsLeft = true;
+            if (Room.chatbot.chatroomBotIndex[ID][0] == -1) {
+                chatbotIsLeft = false;
+            } else if (Room.chatbot.chatbotAIs[Room.chatbot.chatroomBotIndex[ID][0]].fakeName != fakeName) {
+                chatbotIsLeft = false;
+            }
+            if (chatbotIsLeft) {
+                Debug.Log("leave in player, chatbot is left");
+                foreach (NetworkGamePlayerAT player in room.GamePlayers) {
+                    player.UpdateChatroomStatesEvent(ID, true, chatroomStates[ID].rightFree, "", chatroomStates[ID].rightName, Room.chatbot.chatbotAIs[Room.chatbot.chatroomBotIndex[ID][0]].left, 99, player.chatroomStates[ID].rightVisualID);
+                    player.RpcUpdateChatroomStates(ID, true, player.chatroomStates[ID].rightFree, "", player.chatroomStates[ID].rightName, Room.chatbot.chatbotAIs[Room.chatbot.chatroomBotIndex[ID][0]].left, 99, player.chatroomStates[ID].rightVisualID);
+                    if (player.chatroomID == ID) {
+                        player.GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, true, player.chatroomStates[ID].rightFree, "", player.chatroomStates[ID].rightName);
+                    }
+                }
+            } else {
+                Debug.Log("leave in player, chatbot is right");
+                foreach (NetworkGamePlayerAT player in room.GamePlayers) {
+                    player.UpdateChatroomStatesEvent(ID, chatroomStates[ID].leftFree, true, chatroomStates[ID].leftName, "", Room.chatbot.chatbotAIs[Room.chatbot.chatroomBotIndex[ID][1]].left, player.chatroomStates[ID].leftVisualID, 99);
+                    player.RpcUpdateChatroomStates(ID, player.chatroomStates[ID].leftFree, true, player.chatroomStates[ID].leftName, "", Room.chatbot.chatbotAIs[Room.chatbot.chatroomBotIndex[ID][1]].left, player.chatroomStates[ID].leftVisualID, 99);
+                    if (player.chatroomID == ID) {
+                        player.GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, player.chatroomStates[ID].leftFree, true, player.chatroomStates[ID].leftName, "");
+                    }
+                }
+            }
         }
         else if (ID != 99 && chatroomStates[ID].leftName == fakeName) {
+            Debug.Log("leave in player, case 3");
             foreach (NetworkGamePlayerAT player in room.GamePlayers) {
                 player.UpdateChatroomStatesEvent(ID, true, chatroomStates[ID].rightFree, "", chatroomStates[ID].rightName, player.left, 99, player.chatroomStates[ID].rightVisualID);
                 player.RpcUpdateChatroomStates(ID, true, player.chatroomStates[ID].rightFree, "", player.chatroomStates[ID].rightName, player.left, 99, player.chatroomStates[ID].rightVisualID);
@@ -368,6 +404,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
             GetComponent<ChatBehaviour>().RpcClearMainCanvas(ID, true, chatroomStates[ID].rightFree, "", chatroomStates[ID].rightName);
         }
         else if (ID != 99 && chatroomStates[ID].rightName == fakeName) {
+            Debug.Log("leave in player, case 4");
             foreach (NetworkGamePlayerAT player in room.GamePlayers) {
                 player.UpdateChatroomStatesEvent(ID, chatroomStates[ID].leftFree, true, chatroomStates[ID].leftName, "", player.left, player.chatroomStates[ID].leftVisualID, 99);
                 player.RpcUpdateChatroomStates(ID, player.chatroomStates[ID].leftFree, true, player.chatroomStates[ID].leftName, "", player.left, player.chatroomStates[ID].leftVisualID, 99);
