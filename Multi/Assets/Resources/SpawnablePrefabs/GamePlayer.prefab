@@ -5251,6 +5251,7 @@ MonoBehaviour:
   playerID: 0
   left: 0
   playerIsDead: 0
+  pandoraBotsClientName: 
   playerVisualPalletID: 0
 --- !u!114 &5066766018890470629
 MonoBehaviour:
@@ -9097,7 +9098,7 @@ MonoBehaviour:
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
-  m_ChildControlHeight: 0
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
 --- !u!1 &4437387574545475579
