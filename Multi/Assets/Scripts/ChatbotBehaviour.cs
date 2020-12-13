@@ -91,7 +91,7 @@ public class ChatbotBehaviour : MonoBehaviour {
     }
 
 
-    private IEnumerator PandoraBotRequestCoRoutine(string text, int chatroomID, int sessionID, int chatbotID, string clientName, int id) {
+    private IEnumerator PandoraBotRequestCoRoutine(string text, int chatroomID, int sessionID, int chatbotID, string clientName) {
 
         Regex rx = new Regex(@"[\.!\?]");             //make sure only one sentence is sent to pandora
         foreach (Match match in rx.Matches(text)) {
@@ -131,7 +131,7 @@ public class ChatbotBehaviour : MonoBehaviour {
             //r = r.Remove(0, 1);
             //r = r.Remove(r.Length - 1, 1);
 
-            Response response = new Response(chatroomID, r, chatbotAIs[chatbotID].fakeName, chatbotAIs[chatbotID].playerVisualPalletID, id);
+            Response response = new Response(chatroomID, r, chatbotAIs[chatbotID].fakeName, chatbotAIs[chatbotID].playerVisualPalletID, chatbotID);
             responses.Add(response);
             SendResponseToServer(response);
             pandoraBotsRequestCounter++;
@@ -142,18 +142,18 @@ public class ChatbotBehaviour : MonoBehaviour {
     }
 
     public struct Response {
-        public Response(int id, string t, string n, int visID, int responseID) {
+        public Response(int id, string t, string n, int visID, int convoPartnerID) {
             chatroomID = id;
             text = t;
             fakeName = n;
             visualPalletID = visID;
-            this.id = responseID;
+            this.authorID = convoPartnerID;
         }
         public int chatroomID;
         public string text;
         public string fakeName;
         public int visualPalletID;
-        public int id;
+        public int authorID;
     }
 
     public void SendTextToChatbot(string text, int chatroomID, int chatbotID, bool fromChatbot, int playerID) {
@@ -167,7 +167,7 @@ public class ChatbotBehaviour : MonoBehaviour {
         } else {
             clientName = clientNameList[playerID];
         }
-        StartCoroutine(PandoraBotRequestCoRoutine(text, chatroomID, sessionID, chatbotID, clientName, messagesSentToBotCounter));
+        StartCoroutine(PandoraBotRequestCoRoutine(text, chatroomID, sessionID, chatbotID, clientName));
     }
 
     public void SendResponseToServer(Response response) {
@@ -177,15 +177,18 @@ public class ChatbotBehaviour : MonoBehaviour {
     }
 
     IEnumerator WaitToSendResponse(Response response) {
+        chatbotAIs[response.authorID].typing = true;
         float waitTime;
         string message = response.text;
         waitTime = 0.1f * response.text.Length + response.text.Length * Random.Range(0f, 0.1f) + 1f;
         yield return new WaitForSeconds(waitTime);
         networkManager.GamePlayers[0].GetComponent<ChatBehaviour>().ChatbotSendsMessage(message, response.chatroomID, response.fakeName, response.visualPalletID);
         waitToRespondRoutineCounter++;
+        chatbotAIs[response.authorID].StopTypingAfterDelay(waitTime);
     }
 
     public void SendResponseToServerDirectly(Response response) {
-        networkManager.GamePlayers[0].GetComponent<ChatBehaviour>().ChatbotSendsMessage(response.text, response.chatroomID, response.fakeName, response.visualPalletID);
+        StartCoroutine(WaitToSendResponse(response));
+        //networkManager.GamePlayers[0].GetComponent<ChatBehaviour>().ChatbotSendsMessage(response.text, response.chatroomID, response.fakeName, response.visualPalletID);
     }
 }

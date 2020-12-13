@@ -310,31 +310,44 @@ public class ChatBehaviour : NetworkBehaviour
         RpcHandleMessage(message, name, chatroomID, visualIDOfPlayerWhoSendMessage);
 
         var chatroomBotIndex = networkPlayer.Room.chatbot.chatroomBotIndex;
+        Debug.Log("ProcessMessage1, chatbotID 1 = " + chatroomBotIndex[chatroomID][0]);
+        Debug.Log("ProcessMessage1, chatbotID 2 = " + chatroomBotIndex[chatroomID][1]);
         if (chatroomBotIndex[chatroomID][0] != -1 || chatroomBotIndex[chatroomID][1] != -1) {
             int chatbotID;
             if (!comingFromChatbot)
             {
-                if (!networkPlayer.left)
+                if (networkPlayer.chatroomStates[chatroomID].leftName != name)
                 {
+                    Debug.Log("is right");
                     chatbotID = chatroomBotIndex[chatroomID][0];
+                    Debug.Log("assigned chatbotID = " + chatbotID);
                 }
                 else
                 {
+                    Debug.Log("is left");
                     chatbotID = chatroomBotIndex[chatroomID][1];
+                    Debug.Log("assigned chatbotID = " + chatbotID);
+
                 }
             } else
             {
                 if (networkPlayer.chatroomStates[chatroomID].leftName == name)
                 {
+                    Debug.Log("chatbot is left");
                     chatbotID = chatroomBotIndex[chatroomID][1];
-                } else
+                    Debug.Log("assigned chatbotID = " + chatbotID);
+                }
+                else
                 {
+                    Debug.Log("chatbot is right");
                     chatbotID = chatroomBotIndex[chatroomID][0];
+                    Debug.Log("assigned chatbotID = " + chatbotID);
                 }
             }
-            //SendMessageToChatbot(message, chatbotID, chatroomID);
-            networkPlayer.Room.chatbot.chatbotAIs[chatbotID].ConversationStarted();
-            StartCoroutine(WaitForBuildTextIsDone(message, chatbotID, chatroomID, comingFromChatbot, playerID));
+            Debug.Log("ProcessMessage, chatbotID = " + chatbotID);
+            Debug.Log("ProcessMessage3, chatbotAIs = " + networkPlayer.Room.chatbot.chatbotAIs.Count);
+            if (chatbotID != -1) networkPlayer.Room.chatbot.chatbotAIs[chatbotID].ConversationStarted();
+            if (chatbotID != -1) StartCoroutine(WaitForBuildTextIsDone(message, chatbotID, chatroomID, comingFromChatbot, playerID));
         } else {
         }
     }

@@ -790,7 +790,14 @@ public class GameManagerAT : NetworkBehaviour
                 networkManagerAT.StartAITheme();
             }
         }
-        if (networkGamePlayerAT.playerID == 0 && isLocalPlayer) networkManagerAT.chatbot.InitiateChabotAI();
+        if (networkGamePlayerAT.playerID == 0 && isLocalPlayer) {
+            CmdStartScreen2Over();
+        }
+    }
+
+    [Command]
+    private void CmdStartScreen2Over() {
+        networkManagerAT.chatbot.InitiateChabotAI();
     }
 
 

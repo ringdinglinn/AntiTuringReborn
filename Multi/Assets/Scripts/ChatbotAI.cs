@@ -15,12 +15,12 @@ public class ChatbotAI : MonoBehaviour
 
     private float waitTime;
 
-    private float minWaitTimeJoinInit = 2f;
-    private float maxWaitTimeJoinInit = 10f;
+    private float minWaitTimeJoinInit = 5f;
+    private float maxWaitTimeJoinInit = 15f;
     private float minWaitTimeJoin = 2f;
     private float maxWaitTimeJoin = 10f;
-    private float minWaitTimeLeave = 10f;
-    private float maxWaitTimeLeave = 60f;
+    private float minWaitTimeLeave = 2f;
+    private float maxWaitTimeLeave = 3f;
 
     private List<ChatroomStates> chatroomStates = new List<ChatroomStates>();
 
@@ -46,10 +46,12 @@ public class ChatbotAI : MonoBehaviour
 
     private int waitTimeBeforeStartConvo;
     private int startConvoCounter = 0;
-    private int maxWaitTimeStartConvo = 500;
-    private int minWaitTimeStartConvo = 100;
+    private int maxWaitTimeStartConvo = 200;
+    private int minWaitTimeStartConvo = 10;
 
     private bool dead;
+
+    public bool typing = false;
 
     private void Start() {
         networkManager = chatbotBehaviour.networkManager;
@@ -59,6 +61,7 @@ public class ChatbotAI : MonoBehaviour
     }
 
     public void GameStart() {
+        Debug.Log("chatbotAI: GameStart()");
         playerID = chatbotAiID + networkManager.nrAwareAI;
         GetStartSetupNameAndVisuals();
         StartWaitToJoin();
@@ -74,12 +77,14 @@ public class ChatbotAI : MonoBehaviour
     // Wait to join
 
     private void StartWaitToJoin() {
+        Debug.Log("start wait to join");
         waitTime = Random.Range(minWaitTimeJoinInit, maxWaitTimeJoinInit);
         currentState = state.WaitToJoin;
         StartCoroutine(WaitToJoinCoroutine(waitTime));
     }
 
     IEnumerator WaitToJoinCoroutine(float s) {
+        Debug.Log("wait to join routine");
         waitingToJoinChatroom = true;
         yield return new WaitForSeconds(s);
         waitingToJoinChatroom = false;
@@ -90,6 +95,7 @@ public class ChatbotAI : MonoBehaviour
     // Join Chatroom
 
     private void JoinChatroom() {
+        Debug.Log("join chatroom");
         chatroomStates = networkManager.GamePlayers[0].chatroomStates;
         List<int> indeces = new List<int>();
         List<int> higherPrioIndeces = new List<int>();
@@ -102,6 +108,8 @@ public class ChatbotAI : MonoBehaviour
                 }
             }
         }
+        Debug.Log("high priority indeces = " + higherPrioIndeces.Count);
+        Debug.Log("indeces = " + indeces.Count);
         if (higherPrioIndeces.Count > 0) {
             chatroomID = higherPrioIndeces[Random.Range(0, higherPrioIndeces.Count)];
             //chatroomID = 0;
@@ -119,10 +127,13 @@ public class ChatbotAI : MonoBehaviour
             left = chatroomStates[chatroomID].leftFree;
             networkManager.GamePlayers[0].RequestJoinRoom(chatroomID, fakeName, true, playerVisualPalletID);
             currentSessionID = chatbotBehaviour.nextSessionID++;
+            chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left, true);
             networkManager.othersJoinRooms.Play(); // wait, this will only play on server
             conversationStarted = false;
             inChatroom = true;
             StartCoroutine(StartWaitToLeave());
+        } else {
+            StartCoroutine(WaitToJoinCoroutine(Random.Range(minWaitTimeJoin, maxWaitTimeJoin)));
         }
     }
 
@@ -155,9 +166,9 @@ public class ChatbotAI : MonoBehaviour
         }
 
 
-        if (!inChatroom && !waitingToJoinChatroom) {
-            StartCoroutine(WaitToJoinCoroutine(Random.Range(minWaitTimeJoin, maxWaitTimeJoin)));
-        }
+        //if (!inChatroom && !waitingToJoinChatroom) {
+        //    StartCoroutine(WaitToJoinCoroutine(Random.Range(minWaitTimeJoin, maxWaitTimeJoin)));
+        //}
     }
 
     private void SendGreeting() {
@@ -171,13 +182,14 @@ public class ChatbotAI : MonoBehaviour
     IEnumerator StartWaitToLeave() {
         float waitToLeaveTime = Random.Range(minWaitTimeLeave, maxWaitTimeLeave);
         yield return new WaitForSeconds(waitToLeaveTime);
-        LeaveChatroom();
+        StartCoroutine(WaitToLeaveTillMessageIsSent());
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Leave Chatroom
 
     private void LeaveChatroom() {
+        Debug.Log("leave chatroom");
         networkManager.othersLeaveRooms.Play(); // only plays on server :(
         evaluatingStartingConvo = false;
         inChatroom = false;
@@ -185,6 +197,23 @@ public class ChatbotAI : MonoBehaviour
         chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left, false);
         float waitTime = Random.Range(minWaitTimeJoin, maxWaitTimeJoin);
         if (!dead) StartCoroutine(WaitToJoinCoroutine(waitTime));
+    }
+
+    IEnumerator WaitToLeaveTillMessageIsSent() {
+        Debug.Log("start to leave till message is sent");
+        while (typing) {
+            yield return new WaitForEndOfFrame();
+        }
+        LeaveChatroom();
+    }
+
+    public void StopTypingAfterDelay(float time) {
+        StartCoroutine(WaitToStopTypingAfterDelay(time));
+    }
+
+    IEnumerator WaitToStopTypingAfterDelay(float time) {
+        yield return new WaitForSeconds(time);
+        typing = false;
     }
 
     //Destroy Bot
