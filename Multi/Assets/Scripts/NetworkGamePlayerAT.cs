@@ -614,13 +614,12 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         
    }
    
+ 
     public void CheckIfPlayerIsCurrentlyInAChatroom()
     {
         if(chatroomID != 99)
-        {
-           
-                CmdUpdateYourTypingVisualInYouChatroom(playerIsTyping);
-           
+        {        
+           CmdUpdateYourTypingVisualInYouChatroom(chatroomID, fakeName,  playerIsTyping, false);          
         }
         else
         {
@@ -630,16 +629,19 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     }
 
     [Command]
-    public void CmdUpdateYourTypingVisualInYouChatroom(bool isTypingStatus)
+    public void CmdUpdateYourTypingVisualInYouChatroom(int chatroomID, string fakeName, bool isTypingStatus, bool isBotMessage)
     {
-        RpcUpdateYourTypingVisualInYouChatroom(isTypingStatus);
+        RpcUpdateYourTypingVisualInYouChatroom(chatroomID, fakeName, isTypingStatus, isBotMessage);
     }
 
     [ClientRpc]
-    private void RpcUpdateYourTypingVisualInYouChatroom(bool isTypingStatus)
+    private void RpcUpdateYourTypingVisualInYouChatroom(int chatroomID, string fakeName, bool isTypingStatus, bool isBotMessage)
     {
         Debug.Log("RpC Arrives in Game Player Running");
-        this.playerIsTyping = isTypingStatus;
+        if (isBotMessage == false)
+        {
+            this.playerIsTyping = isTypingStatus;
+        }
          
         chatBehaviour.UpdateTypingVisualOfAPlayer(chatroomID, fakeName, isTypingStatus);
 
