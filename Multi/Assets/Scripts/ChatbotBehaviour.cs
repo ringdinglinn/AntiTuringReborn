@@ -153,12 +153,20 @@ public class ChatbotBehaviour : MonoBehaviour {
         public int id;
     }
 
-    public void SendTextToChatbot(string text, int chatroomID, int chatbotID) {
+    public void SendTextToChatbot(string text, int chatroomID, int chatbotID, bool fromChatbot, int playerID) {
+        Debug.Log("SendMessageToChatbot1");
         messagesSentToBotCounter++;
+        Debug.Log("SendMessageToChatbot2");
         int sessionID = chatbotAIs[chatbotID].currentSessionID;
-        int convoPartnerID = chatroomBotIndex[chatroomID][0];
-        if (convoPartnerID == chatbotID) convoPartnerID = chatroomBotIndex[chatroomID][1];
-        string clientName = chatbotAIs[convoPartnerID].pandoraBotsClientName;
+        string clientName = "";
+        if (fromChatbot) {
+            int convoPartnerID = chatroomBotIndex[chatroomID][0];
+            if (convoPartnerID == chatbotID) convoPartnerID = chatroomBotIndex[chatroomID][1];
+            clientName = chatbotAIs[convoPartnerID].pandoraBotsClientName;
+        } else {
+            clientName = clientNameList[playerID];
+        }
+        Debug.Log("SendMessageToChatbot6, text = " + text + ", chatroomID = " + chatroomID + ", chatbotID = " + chatbotID + ", clientName = " + clientName);
         StartCoroutine(PandoraBotRequestCoRoutine(text, chatroomID, sessionID, chatbotID, clientName, messagesSentToBotCounter));
     }
 

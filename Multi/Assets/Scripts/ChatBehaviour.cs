@@ -257,7 +257,7 @@ public class ChatBehaviour : NetworkBehaviour
     {
         if (string.IsNullOrWhiteSpace(message)) return;
         Clear();
-        CmdSendMessage(message, chatroomID, networkPlayer.fakeName, networkPlayer.playerVisualPalletID);
+        CmdSendMessage(message, chatroomID, networkPlayer.fakeName, networkPlayer.playerVisualPalletID, networkPlayer.playerID);
         mainInputField.text = "";
         //inputFields[chatroomID].text = string.Empty;        
     }
@@ -266,7 +266,7 @@ public class ChatBehaviour : NetworkBehaviour
         mainInputField.text = "";
     }
     [Command]
-    private void CmdSendMessage(string message, int chatroomID, string name, int visualIDOfPlayerWhoSendMessage)
+    private void CmdSendMessage(string message, int chatroomID, string name, int visualIDOfPlayerWhoSendMessage, int playerID)
     {
         //Add new Messege on Sever Entity
 
@@ -292,16 +292,16 @@ public class ChatBehaviour : NetworkBehaviour
         //    SendMessageToChatbot(message, chatroomID, chatbotID);
         //}
 
-        ProcessMessage(message, chatroomID, name, visualIDOfPlayerWhoSendMessage, false);
+        ProcessMessage(message, chatroomID, name, visualIDOfPlayerWhoSendMessage, false, playerID);
     }
 
     [Server]
     public void ChatbotSendsMessage(string message, int chatroomID, string name, int visualIDOfPlayerWhoSendMessage) {
-        ProcessMessage(message, chatroomID, name, visualIDOfPlayerWhoSendMessage, true);
+        ProcessMessage(message, chatroomID, name, visualIDOfPlayerWhoSendMessage, true, -1);
     }
 
     [Server]
-    private void ProcessMessage(string message, int chatroomID, string name, int visualIDOfPlayerWhoSendMessage, bool comingFromChatbot) {
+    private void ProcessMessage(string message, int chatroomID, string name, int visualIDOfPlayerWhoSendMessage, bool comingFromChatbot, int playerID) {
         GameObject newMessage = Instantiate(textPrefab, chatDisplayContents[chatroomID].GetComponent<ChatDisplayContent>().scrollPanelContent.transform);
         newMessage.GetComponent<Text>().text = name + "" + message;
 
@@ -335,16 +335,16 @@ public class ChatBehaviour : NetworkBehaviour
             }
             //SendMessageToChatbot(message, chatbotID, chatroomID);
             networkPlayer.Room.chatbot.chatbotAIs[chatbotID].ConversationStarted();
-            StartCoroutine(WaitForBuildTextIsDone(message, chatbotID, chatroomID));
+            StartCoroutine(WaitForBuildTextIsDone(message, chatbotID, chatroomID, comingFromChatbot, playerID));
         } else {
         }
     }
 
-    IEnumerator WaitForBuildTextIsDone(string message, int chatbotID, int chatroomID) {
+    IEnumerator WaitForBuildTextIsDone(string message, int chatbotID, int chatroomID, bool fromChatbot, int playerID) {
         while (!buildTextIsDoneInChatroomsList[chatroomID]) {
             yield return new WaitForSeconds(Time.deltaTime);
         }
-        SendMessageToChatbot(message, chatbotID, chatroomID);
+        SendMessageToChatbot(message, chatbotID, chatroomID, fromChatbot, playerID);
     }
 
     [ClientRpc]
@@ -361,10 +361,10 @@ public class ChatBehaviour : NetworkBehaviour
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    public void SendMessageToChatbot(string text, int chatbotID, int chatroomID)
+    public void SendMessageToChatbot(string text, int chatbotID, int chatroomID, bool fromChatbot, int playerID)
     {
         networkPlayer = GetComponent<NetworkGamePlayerAT>();
-        networkPlayer.Room.chatbot.SendTextToChatbot(text, chatroomID, chatbotID);
+        networkPlayer.Room.chatbot.SendTextToChatbot(text, chatroomID, chatbotID, fromChatbot, playerID);
     }
     [Command]
     public void CmdSendOutResponseFromChatbot(string r, int id, string chatbotName, int BotVisualId)
