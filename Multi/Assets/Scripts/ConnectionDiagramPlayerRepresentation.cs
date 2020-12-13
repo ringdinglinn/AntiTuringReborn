@@ -21,7 +21,7 @@ public class ConnectionDiagramPlayerRepresentation : MonoBehaviour
         visualRepresentationAlive.enabled = false;
         visualRepresentationDead.enabled = true;
 
-        playerRealName.color = Color.red;
+      
     }
   
     public string GetRealPlayerName()
