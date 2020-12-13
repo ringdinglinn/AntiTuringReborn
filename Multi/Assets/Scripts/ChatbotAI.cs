@@ -212,7 +212,7 @@ public class ChatbotAI : MonoBehaviour
     }
 
     IEnumerator WaitToStopTypingAfterDelay(float time) {
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(time/4f);
         typing = false;
     }
 
