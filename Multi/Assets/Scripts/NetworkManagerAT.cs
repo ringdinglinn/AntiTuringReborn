@@ -93,6 +93,9 @@ public class NetworkManagerAT : NetworkManager {
     //Visual Pallet List
     public List<PlayerVisualPallet> playerVisualPalletsList = new List<PlayerVisualPallet>();
 
+    //Nr of bots by nr of ai players
+    private int[,] botNrIndex = new int[,] { { 1, 3 }, { 2, 5 }, { 3, 7 }, { 4, 9 }, { 5, 10 }, { 6, 10 } };
+
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public override void OnStartClient() {
         var spawnablePrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs");
