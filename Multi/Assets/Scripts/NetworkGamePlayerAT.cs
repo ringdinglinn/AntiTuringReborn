@@ -53,6 +53,10 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
    
     public int playerVisualPalletID;
+
+
+    public bool playerIsTyping = false;
+
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     private void InitializeChatroomStates() {
         for (int i = 0; i < chatBehaviour.chatDisplayContents.Count; i++) {
@@ -111,7 +115,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         realName = displayName;
 
         StartCoroutine(ShortDelayChatroomStates());
-
+        StartCoroutine (CheckIfPlayerIsTyping());
         pandoraBotsClientName = Room.chatbot.clientNameList[playerID];
     }
 
@@ -552,5 +556,44 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     {
         playerIsDead = status;
     }
+    #endregion
+
+
+    #region Typing Visual Sync
+
+   private IEnumerator CheckIfPlayerIsTyping()
+   {
+        yield return new WaitForSeconds(0.5f);
+        playerIsTyping = room.keySoundEffectHandler.isTyping;
+
+   }
+    public void CheckIfPlayerIsCurrentlyInAChatroom()
+    {
+        if(chatroomID != 99)
+        {
+            CmdUpdateYourTypingVisualInYouChatroom(playerIsTyping);
+        }
+        else
+        {
+            //Player Is Not in A Chatroom
+        }
+    }
+
+    [Command]
+    private void CmdUpdateYourTypingVisualInYouChatroom(bool isTypingStatus)
+    {
+        RpcUpdateYourTypingVisualInYouChatroom(isTypingStatus);
+    }
+
+    [ClientRpc]
+    private void RpcUpdateYourTypingVisualInYouChatroom(bool isTypingStatus)
+    {
+        this.playerIsTyping = isTypingStatus;
+
+        chatBehaviour.UpdateTypingVisualOfAPlayer(chatroomID, fakeName, isTypingStatus);
+
+
+    }
+
     #endregion
 }

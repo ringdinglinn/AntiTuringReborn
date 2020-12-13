@@ -1,15 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Mirror;
 using FMODUnity;
 
-public class KeySoundEffectHandler : MonoBehaviour
+public class KeySoundEffectHandler : NetworkBehaviour
 {
     [Header("Key Sounds")]
     protected List<KeyCode> m_activeInputs = new List<KeyCode>();
 
+    NetworkManagerAT networkManagerAT;
+    NetworkGamePlayerAT NetworkGamePlayerAT;
 
+
+    public bool isTyping = false;
 
     public StudioEventEmitter normalKeyDownSound;
     public StudioEventEmitter normalKeyUpSound;
@@ -33,15 +37,18 @@ public class KeySoundEffectHandler : MonoBehaviour
                 {
                     if (code == KeyCode.Space)
                     {
+                        isTyping = true;
                         //Play Space Key Down
-                       // Debug.Log("Space down ");
+                        // Debug.Log("Space down ");
                         spaceDownSound.Play();
+                        isTyping = true;
                     }
                     else if (code == KeyCode.Return)
                     {
                         //Play Enter Key Down
                      //   Debug.Log("Enter down ");
                         enterDownSound.Play();
+                       
                     }
                     else if (code == KeyCode.Mouse0 || code == KeyCode.Mouse1 || code == KeyCode.Mouse2)
                     {
@@ -51,12 +58,14 @@ public class KeySoundEffectHandler : MonoBehaviour
                     else if (code == KeyCode.Escape)
                     {
                         escapeDownSound.Play();
+                        isTyping = true;
                     }
                     else if (Input.GetKey(code))
                     {
                         //Play Normal Key Down
                     //    Debug.Log(code + " Key Down");
                         normalKeyDownSound.Play();
+                        isTyping = true;
                     }
                 }
             }
@@ -127,5 +136,20 @@ public class KeySoundEffectHandler : MonoBehaviour
         }
 
         m_activeInputs = releasedInput;
+
+        if(isTyping == true)
+        {
+            StartCoroutine(TypingCoolDown(2f));
+        }
     }
+
+
+    IEnumerator TypingCoolDown(float coolDown)
+    {
+        yield return new WaitForSeconds(coolDown);
+        isTyping = false;
+    }
+
+
+
 }
