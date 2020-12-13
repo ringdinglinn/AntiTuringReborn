@@ -608,7 +608,7 @@ public class ChatBehaviour : NetworkBehaviour
         cdc.rightPerson.gameObject.SetActive(!networkPlayer.chatroomStates[id].rightFree);
         cdc.leftName.text = networkPlayer.chatroomStates[id].leftName;
         cdc.rightName.text = networkPlayer.chatroomStates[id].rightName;
-
+    
         if (networkPlayer.isInvestigator == false)
         {
             cdc.investigatorVisual.SetActive(false);
@@ -623,7 +623,8 @@ public class ChatBehaviour : NetworkBehaviour
         cdc.rightPerson.gameObject.SetActive(!networkPlayer.chatroomStates[id].rightFree);
         cdc.leftName.text = networkPlayer.chatroomStates[id].leftName;
         cdc.rightName.text = networkPlayer.chatroomStates[id].rightName;
-
+        cdc.typingLeft.enabled = false;
+        cdc.typingRight.enabled = false;
         foreach (GameObject x in mainChatDisplayContentList)
         {
             Destroy(x);
