@@ -97,10 +97,6 @@ public class ChatbotBehaviour : MonoBehaviour {
         string url = "https://api.pandorabots.com/talk?botkey=RssstjtodsmGn5b1IstcJtNZI9khFR8B6xS0_Qvmtrrq5dalb0KYSIeonmRa15PUOL2I-8EtsPdp9rI_1dsWOQ~~&input=";
         url += UnityWebRequest.EscapeURL(text + "&client_name=" + clientName + "&sessionid=" + sessionID.ToString());
 
-        Debug.Log("url = " + url);
-        Debug.Log("url, session ID = " + sessionID);
-        Debug.Log("url, clientname = " + clientName);
-
 
 
         UnityWebRequest wr = UnityWebRequest.Post(url, ""); //You cannot do POST with empty post data, new byte is just dummy data to solve this problem
@@ -155,7 +151,6 @@ public class ChatbotBehaviour : MonoBehaviour {
     }
 
     public void SendTextToChatbot(string text, int chatroomID, int chatbotID) {
-        Debug.Log("send message to chatbot, message " + text + ", messageID = " + messagesSentToBotCounter);
         messagesSentToBotCounter++;
         int sessionID = chatbotAIs[chatbotID].currentSessionID;
         int convoPartnerID = chatroomBotIndex[chatroomID][0];
@@ -165,7 +160,6 @@ public class ChatbotBehaviour : MonoBehaviour {
     }
 
     public void SendResponseToServer(Response response) {
-        Debug.Log("send message to chatbot, message " + response.text + ", responseID = " + response.id);
         //networkManager.GamePlayers[0].ReceiveMessageFromChatbot(response.text, response.chatroomID, response.fakeName, response.visualPalletID);
         //networkManager.GamePlayers[0].GetComponent<ChatBehaviour>().ChatbotSendsMessage(response.text, response.chatroomID, response.fakeName, response.visualPalletID);
         StartCoroutine(WaitToSendResponse(response));
