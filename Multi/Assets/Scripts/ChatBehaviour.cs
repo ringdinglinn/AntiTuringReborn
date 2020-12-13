@@ -676,6 +676,26 @@ public class ChatBehaviour : NetworkBehaviour
             newCdc.joinButton.interactable = status;
         }
     }
+
+
+
+    public void UpdateTypingVisualOfAPlayer(int chatroomID, string playerFakeName, bool typingStatus)
+    {
+       foreach ( NetworkGamePlayerAT x in  networkManagerAT.GamePlayers )
+        {
+            if(x.chatroomID == chatroomID)
+            {
+                if(x.chatBehaviour.mainChatDisplay.GetComponent<ChatDisplayContent>().leftName.ToString() == playerFakeName && playerFakeName != x.fakeName)                   
+                {
+                    x.chatBehaviour.mainChatDisplay.GetComponent<ChatDisplayContent>().typingLeft.enabled = typingStatus;
+                }
+                if (x.chatBehaviour.mainChatDisplay.GetComponent<ChatDisplayContent>().rightName.ToString() == playerFakeName && playerFakeName != x.fakeName)
+                {
+                    x.chatBehaviour.mainChatDisplay.GetComponent<ChatDisplayContent>().typingRight.enabled = typingStatus;
+                }
+            }
+        }
+    }
 }
 
 

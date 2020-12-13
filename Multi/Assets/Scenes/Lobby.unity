@@ -2689,6 +2689,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 282a544ad5eb5b3439ddb8d73ff286d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  isTyping: 0
   normalKeyDownSound: {fileID: 261042055}
   normalKeyUpSound: {fileID: 601785280}
   spaceDownSound: {fileID: 1105673752}
@@ -3106,6 +3109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chatbotAIs: []
+  clientNameList: []
   nextSessionID: 0
   botid: rabidrosie
   appid: una2165008
@@ -6543,7 +6547,7 @@ MonoBehaviour:
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 8554961743567718814, guid: 51e13fd27bce34001bd007c778d2065e,
+  playerPrefab: {fileID: 3645035831029718623, guid: a2c1406bfa79341ad9f1b8e3ab15b0d5,
     type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
@@ -6583,6 +6587,7 @@ MonoBehaviour:
   enterUpSound: {fileID: 1423999703}
   escapeDownSound: {fileID: 1272611869}
   escapeUpSound: {fileID: 618417956}
+  keySoundEffectHandler: {fileID: 704005502}
   roomPlayerPrefab: {fileID: 1202318941606849389, guid: a2c1406bfa79341ad9f1b8e3ab15b0d5,
     type: 3}
   gamePlayerPrefab: {fileID: 2598132078515685881, guid: a3ec35a00c5be413db6e61f1a81b3c95,

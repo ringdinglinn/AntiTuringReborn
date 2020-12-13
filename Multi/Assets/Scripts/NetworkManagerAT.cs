@@ -52,6 +52,8 @@ public class NetworkManagerAT : NetworkManager {
     public StudioEventEmitter escapeDownSound;
     public StudioEventEmitter escapeUpSound;
 
+    public KeySoundEffectHandler keySoundEffectHandler;
+
     //Prefabs
     [Header("Room")]
     [SerializeField] private NetworkRoomPlayerAT roomPlayerPrefab;

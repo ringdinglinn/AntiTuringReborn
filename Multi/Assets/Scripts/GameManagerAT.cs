@@ -681,8 +681,8 @@ public class GameManagerAT : NetworkBehaviour
         yield return new WaitForSeconds(0.5f);
         textStartScreenList[startScreenCounter].enabled = true;
         StartCoroutine(BuildText(textStartScreenList[startScreenCounter], DateTime.Now.ToString(),0.02f));
-        yield return new WaitForSeconds(0.7f);
-        StartCoroutine(BuildText(textStartScreenList[startScreenCounter], " | " + startMessages[startScreenCounter], 0.02f));
+        yield return new WaitForSeconds(0.7f );
+        StartCoroutine(BuildText(textStartScreenList[startScreenCounter], " | " + startMessages[startScreenCounter], 0.02f ));
         startScreenCounter++;
         yield return new WaitForSeconds(0.6f);
 
@@ -713,7 +713,7 @@ public class GameManagerAT : NetworkBehaviour
             //Wait a certain amount of time, then continue with the for loop
             yield return new WaitForSeconds(textSpeed);
         }
-
+     
     }
 
 

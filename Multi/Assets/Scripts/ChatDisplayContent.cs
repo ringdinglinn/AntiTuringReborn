@@ -18,4 +18,7 @@ public class ChatDisplayContent : MonoBehaviour
     public GameObject investigatorVisual;
     public Sprite baseChatroomSprite;
     public Sprite selectedChatroomSprite;
+
+    public TMP_Text typingLeft;
+    public TMP_Text typingRight;
 }
