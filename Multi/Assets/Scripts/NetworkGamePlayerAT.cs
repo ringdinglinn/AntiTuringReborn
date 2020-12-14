@@ -47,7 +47,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
     public string pandoraBotsClientName;
 
-   
+    public GameObject joinChatroomPrompt;   
 
    
     public int playerVisualPalletID;
@@ -280,6 +280,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
     [ClientRpc]
     private void RpcOpenChatroom(int chatroomID, bool playerWhoCallsIsInvestigator, bool playerWhoCallsIsDead ) {
+        joinChatroomPrompt.SetActive(false);
         if (!isInvestigator && isLocalPlayer && playerIsDead == false) StartCoroutine(ToggleInputField(true));
         moveView.MoveViewRight();
 
