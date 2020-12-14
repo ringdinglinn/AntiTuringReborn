@@ -327,7 +327,10 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
     //Start a Player Leaves a Chatroom logic 
     public void CheckRequestFromLeaveButton() {
+        CmdUpdateYourTypingVisualInYouChatroom(chatroomID, fakeName, false, false);
         CmdLeaveChatroom(chatroomID, fakeName);
+        chatBehaviour.mainInputField.text = "";
+        
     }
 
     [Command]
@@ -342,6 +345,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         {
             if (!isChatbot) {
                 RpcCloseChatroom(ID, isInvestigator, playerIsDead);
+                
             }
         }
 
@@ -637,16 +641,12 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
     [ClientRpc]
     public void RpcUpdateYourTypingVisualInYouChatroom(int chatroomID, string fakeName, bool isTypingStatus, bool isBotMessage)
     {
-        Debug.Log("RpC Arrives in Game Player Running");
         if (isBotMessage == false)
         {
             this.playerIsTyping = isTypingStatus;
+
+            chatBehaviour.UpdateTypingVisualOfAPlayer(chatroomID, fakeName, isTypingStatus);
         }
-         
-        chatBehaviour.UpdateTypingVisualOfAPlayer(chatroomID, fakeName, isTypingStatus);
-
-
     }
-
     #endregion
 }

@@ -670,7 +670,6 @@ public class GameManagerAT : NetworkBehaviour
         }
 
     }
-
     #endregion
 
 
