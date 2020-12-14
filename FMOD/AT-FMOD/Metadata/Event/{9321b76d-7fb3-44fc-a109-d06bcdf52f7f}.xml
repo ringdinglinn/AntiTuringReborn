@@ -86,9 +86,6 @@
 	<object class="MarkerTrack" id="{24824998-9a01-474c-8181-a72172ee484c}" />
 	<object class="GroupTrack" id="{d68a85a1-39d4-40de-98b9-763a607fcd9f}">
 		<relationship name="modules">
-			<destination>{8827cd64-07d9-4153-8a29-bd9b82c0be23}</destination>
-			<destination>{ddfbf61e-ac2d-4cad-9a6e-be0acad2fc8a}</destination>
-			<destination>{bdbfa832-251b-425a-bd79-cc89a4fd8ec6}</destination>
 			<destination>{9c12782f-9605-4878-867b-6a3cd21707cb}</destination>
 			<destination>{08a2513b-1f58-4f72-801a-53407ec7f85e}</destination>
 			<destination>{6c45ad5e-c71b-452f-a0d1-35712979b7a5}</destination>
@@ -102,6 +99,9 @@
 			<destination>{fbb3c83a-f97c-474e-9348-22a137ca5afa}</destination>
 			<destination>{c6a6d93a-a0f1-467a-a712-39f4d42bdbb6}</destination>
 			<destination>{fd1f9618-0d0b-4070-bc80-8c6cdb2bd89e}</destination>
+			<destination>{9da7b33c-c3f2-4537-957b-f3abdc6387f0}</destination>
+			<destination>{b277202b-d93e-4da9-8883-f5619082bde9}</destination>
+			<destination>{148faba7-1d53-48ee-ada6-b230a64f6838}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{67aca866-516a-402c-a6e2-9b5bbfa8ad63}</destination>
@@ -149,12 +149,12 @@
 	</object>
 	<object class="Timeline" id="{a34bd55f-4e51-4091-b49f-d89e95b4c4e1}">
 		<relationship name="modules">
-			<destination>{8827cd64-07d9-4153-8a29-bd9b82c0be23}</destination>
-			<destination>{ddfbf61e-ac2d-4cad-9a6e-be0acad2fc8a}</destination>
-			<destination>{bdbfa832-251b-425a-bd79-cc89a4fd8ec6}</destination>
 			<destination>{f8e43782-cebe-4cf2-aa14-4f5083450241}</destination>
 			<destination>{bd293966-3620-4716-b8ca-6af755c75a12}</destination>
 			<destination>{9c12782f-9605-4878-867b-6a3cd21707cb}</destination>
+			<destination>{9da7b33c-c3f2-4537-957b-f3abdc6387f0}</destination>
+			<destination>{b277202b-d93e-4da9-8883-f5619082bde9}</destination>
+			<destination>{148faba7-1d53-48ee-ada6-b230a64f6838}</destination>
 		</relationship>
 		<relationship name="markers">
 			<destination>{d7bed3f6-0c82-4cb7-8a43-6dfd91c171b0}</destination>
@@ -291,39 +291,9 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{ecdf7963-f184-4aff-9467-1ec2c7039474}" />
-	<object class="SingleSound" id="{8827cd64-07d9-4153-8a29-bd9b82c0be23}">
-		<property name="length">
-			<value>13.714285714285714</value>
-		</property>
-		<relationship name="audioFile">
-			<destination>{44126fa3-d02a-4fe1-ab22-6e0deca17777}</destination>
-		</relationship>
-	</object>
-	<object class="SingleSound" id="{ddfbf61e-ac2d-4cad-9a6e-be0acad2fc8a}">
-		<property name="start">
-			<value>13.714285714285714</value>
-		</property>
-		<property name="length">
-			<value>27.285714285714285</value>
-		</property>
-		<relationship name="audioFile">
-			<destination>{db1e2158-d9fe-4111-a219-56e2c9cbe732}</destination>
-		</relationship>
-	</object>
-	<object class="SingleSound" id="{bdbfa832-251b-425a-bd79-cc89a4fd8ec6}">
-		<property name="start">
-			<value>44.460000000000001</value>
-		</property>
-		<property name="length">
-			<value>13.714285714285714</value>
-		</property>
-		<relationship name="audioFile">
-			<destination>{dba274a2-babd-43bd-9eac-f11096053ba6}</destination>
-		</relationship>
-	</object>
 	<object class="SingleSound" id="{9c12782f-9605-4878-867b-6a3cd21707cb}">
 		<property name="start">
-			<value>41</value>
+			<value>40.525458333333333</value>
 		</property>
 		<property name="length">
 			<value>3.4600000000000009</value>
@@ -412,6 +382,36 @@
 		<property name="length">
 			<value>0</value>
 		</property>
+	</object>
+	<object class="SingleSound" id="{9da7b33c-c3f2-4537-957b-f3abdc6387f0}">
+		<property name="length">
+			<value>13.714291666666666</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{84dfbb88-dd08-4c0c-b74a-102358fdc892}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{b277202b-d93e-4da9-8883-f5619082bde9}">
+		<property name="start">
+			<value>13.714291666666666</value>
+		</property>
+		<property name="length">
+			<value>26.811166666666665</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{2c6fdd2e-8441-48a6-ab0d-d1c09cb27d69}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{148faba7-1d53-48ee-ada6-b230a64f6838}">
+		<property name="start">
+			<value>43.985458333333334</value>
+		</property>
+		<property name="length">
+			<value>13.714291666666666</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{3ee09634-5108-4f5b-a1ec-0b80a5acf691}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{67aca866-516a-402c-a6e2-9b5bbfa8ad63}">
 		<property name="name">
@@ -664,7 +664,7 @@
 			<value>13.714285714285714</value>
 		</property>
 		<property name="length">
-			<value>27.285714285714285</value>
+			<value>26.811172619047618</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{a34bd55f-4e51-4091-b49f-d89e95b4c4e1}</destination>
@@ -678,7 +678,7 @@
 	</object>
 	<object class="LoopRegion" id="{4f955704-da26-4193-ad5b-e6c12adcf8cc}">
 		<property name="position">
-			<value>44.460000000000001</value>
+			<value>43.985458333333334</value>
 		</property>
 		<property name="length">
 			<value>13.714285714285715</value>
@@ -709,7 +709,7 @@
 	</object>
 	<object class="NamedMarker" id="{d953f23d-5cb2-4c79-a29e-31bd2e674e06}">
 		<property name="position">
-			<value>41</value>
+			<value>40.525458333333333</value>
 		</property>
 		<property name="name">
 			<value>Marker B</value>
@@ -924,7 +924,7 @@
 			<value>13.714285714285714</value>
 		</property>
 		<property name="length">
-			<value>27.285714285714285</value>
+			<value>26.811172619047618</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{a34bd55f-4e51-4091-b49f-d89e95b4c4e1}</destination>
@@ -944,7 +944,7 @@
 	</object>
 	<object class="TransitionRegion" id="{b525f85b-c68f-404e-8e7c-3a7946f3d284}">
 		<property name="position">
-			<value>41</value>
+			<value>40.525458333333333</value>
 		</property>
 		<property name="length">
 			<value>17.174285714285713</value>
