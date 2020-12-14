@@ -434,7 +434,7 @@ public class GameManagerAT : NetworkBehaviour
         networkManagerAT.botTerminated.Play();
       
     }
-    public void ShowYouDiedBecauseOfInvestigatorsWindow()
+    public void ShowYouDiedWindow()
     {
         youDiedWindow.SetActive(true);
        

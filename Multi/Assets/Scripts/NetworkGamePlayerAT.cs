@@ -47,8 +47,6 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
     public string pandoraBotsClientName;
 
-    public GameObject joinRoomPrompt;
-
    
 
    
@@ -282,7 +280,6 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
     [ClientRpc]
     private void RpcOpenChatroom(int chatroomID, bool playerWhoCallsIsInvestigator, bool playerWhoCallsIsDead ) {
-        joinRoomPrompt.SetActive(false);
         if (!isInvestigator && isLocalPlayer && playerIsDead == false) StartCoroutine(ToggleInputField(true));
         moveView.MoveViewRight();
 
@@ -594,7 +591,6 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
 
     #region Typing Visual Sync
-
    private IEnumerator CheckIfPlayerIsTyping()
    {
         Debug.Log("CheckIfPlayerIsTyping Running");
@@ -619,10 +615,8 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
           StartCoroutine(CheckIfPlayerIsTyping());
         
-   }
-   
- 
-    public void CheckIfPlayerIsCurrentlyInAChatroom()
+   }   
+   public void CheckIfPlayerIsCurrentlyInAChatroom()
     {
         if(chatroomID != 99)
         {        
@@ -634,13 +628,11 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
             //Player Is Not in A Chatroom
         }
     }
-
     [Command]
     public void CmdUpdateYourTypingVisualInYouChatroom(int chatroomID, string fakeName, bool isTypingStatus, bool isBotMessage)
     {
         RpcUpdateYourTypingVisualInYouChatroom(chatroomID, fakeName, isTypingStatus, isBotMessage);
     }
-
     [ClientRpc]
     public void RpcUpdateYourTypingVisualInYouChatroom(int chatroomID, string fakeName, bool isTypingStatus, bool isBotMessage)
     {
