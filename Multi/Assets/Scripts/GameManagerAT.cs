@@ -476,7 +476,7 @@ public class GameManagerAT : NetworkBehaviour
             {
                 player.gameManagerAT.messagesHandler.HandleHumanPlayerConnectedWithAntoherHumanPlayer("Players established a Connection", playerWhoTagedRealNamen, foundPlayerRealName, numberOfConnections, "You found " + foundPlayerRealName, isLocalPlayer);
             }
-            else if(playerWhoTagedRealNamen == player.realName)
+            else if(foundPlayerRealName == player.realName)
             {
                 player.gameManagerAT.messagesHandler.HandleHumanPlayerConnectedWithAntoherHumanPlayer("Players established a Connection", playerWhoTagedRealNamen, foundPlayerRealName, numberOfConnections, playerWhoTagedRealNamen + " found " + "you", isLocalPlayer);
             }
@@ -513,6 +513,10 @@ public class GameManagerAT : NetworkBehaviour
             if (newDeadPlayerRealName != player.realName)
             {
                 if (player.isLocalPlayer) networkManagerAT.botTerminated.Play();
+
+
+                //Hier geben wir dem Messeg Handler mit, ob das Spiel fertig ist oder nicht, wenn es fertig ist soll er nach dem Schliessen der Nachricht Fenster 
+
                 player.gameManagerAT.messagesHandler.HandlePlayerDied(player.gameManagerAT.playerVisualPalletsList[visualID].playerDeadBig, newDeadPlayerRealName, "A sentient bot has been discovered due too many connection attempts. There are still: " + player.gameManagerAT. currentHumanBotsAlive + "sentient minds out there", "", isLocalPlayer);
 
             }
@@ -520,6 +524,7 @@ public class GameManagerAT : NetworkBehaviour
             if (newDeadPlayerRealName == player.realName)
             {
                 if (player.isLocalPlayer) networkManagerAT.taggingFailure.Play();
+                
                 player.gameManagerAT.messagesHandler.HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer("Connection failed!", player.realName, "?", 1, "This bot is not sentient. Connection unsuccessful.", "Remaining attempts before termination: " + (maxNrOfAllowedFailedConnectionAttemptsAIPlayers - currentNrOfAiPlayerFailedConnectionsAttempts), true);
                 StartCoroutine(WaitForTooManyWrongAttemptsAI(player));
                 aiDiedTooManyAttempts = true;
@@ -614,6 +619,25 @@ public class GameManagerAT : NetworkBehaviour
     {
         
         StartCoroutine(ValidateWindLoseStateAsync(time));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         ChangeMusicStateBasedOnNrOfMadeConnections();
         diagrammText.text = "Connections: " + currentNrOfMadeAIConncetions + "/" + minNeededConnectionsForAIToWin;
