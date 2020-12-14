@@ -211,7 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: ../FMOD/AT-FMOD/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637435016128501593
+  lastModified: 637435030040000000
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -407,8 +407,8 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 8160106239288419843}
-  - {fileID: -1772083248146142967}
+  - {fileID: -1039079423182600519}
+  - {fileID: -1569222067939107253}
   MinDistance: 0
   MaxDistance: 0
   Length: 191571
@@ -1382,7 +1382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: ../FMOD/AT-FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637435016128651039
+  lastModified: 637433446960000000
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -2096,6 +2096,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-1569222067939107253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/AI_Theme/Investigator_Watching
+  m_EditorClassIdentifier: 
+  Name: Investigator_Watching
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-1535964717844872494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2162,6 +2182,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 422
+--- !u!114 &-1039079423182600519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/AI_Theme/Game_Stage
+  m_EditorClassIdentifier: 
+  Name: Game_Stage
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-917121952487528817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2534,7 +2574,7 @@ MonoBehaviour:
   - {fileID: -8222185339747427395}
   StringsBanks:
   - {fileID: -3502452591779404042}
-  stringsBankWriteTime: 637435016128651039
+  stringsBankWriteTime: 637433446960000000
   cacheVersion: 5
 --- !u!114 &196176737563106766
 MonoBehaviour:
@@ -3867,7 +3907,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 4104992302076875507}
+  - {fileID: 5711720958945578580}
   MinDistance: 0
   MaxDistance: 0
   Length: 133307
@@ -4623,6 +4663,26 @@ MonoBehaviour:
   Name: Investigator_Watching
   Min: 0
   Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
+--- !u!114 &5711720958945578580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Inv_Theme/Game_Stage
+  m_EditorClassIdentifier: 
+  Name: Game_Stage
+  Min: 0
+  Max: 2
   Default: 0
   ID:
     data1: 0

@@ -183,7 +183,7 @@ public class ChatbotAI : MonoBehaviour
 
     private void SendGreeting() {
         Debug.Log("send greeting, chatbotID = " + chatbotAiID);
-        ChatbotBehaviour.Response r = new ChatbotBehaviour.Response(chatroomID, "Hi, this is Linn's special conversation starter!", fakeName, playerVisualPalletID, 0, true);
+        ChatbotBehaviour.Response r = new ChatbotBehaviour.Response(chatroomID, conversationStaters[Random.Range(0,conversationStaters.Count)], fakeName, playerVisualPalletID, 0, true);
         SendStartMessage(r);
     }
 
