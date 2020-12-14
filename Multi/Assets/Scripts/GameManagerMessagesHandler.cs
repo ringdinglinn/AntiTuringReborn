@@ -15,9 +15,9 @@ public class GameManagerMessagesHandler : MonoBehaviour
     [SerializeField] private GameObject mainBroadcastHolder;
     [SerializeField] private GameObject messageField;
     [SerializeField] private GameObject attemptsField;
-    [SerializeField] private GameObject invFailed; 
-    
-    
+    [SerializeField] private GameObject invFailed;
+    [SerializeField] private GameObject closeScreenButtonObj;
+
     [Header("Component References")]
     public TextMeshProUGUI title;
     public TextMeshProUGUI message;
@@ -65,6 +65,8 @@ public class GameManagerMessagesHandler : MonoBehaviour
     #region//Visual Handling When a Player Died
     public void HandlePlayerDied(Sprite newDeadPlayerSprite, string newDeadPlayerName, string newMessage, string attemptsText, bool localPlayer)
     {
+
+
         CloseMessage();
 
         if(localPlayer == true && newDeadPlayerName == networkGamePlayerAT.realName)
@@ -116,6 +118,7 @@ public class GameManagerMessagesHandler : MonoBehaviour
     #region//Visual Handling When Human Player Failed to connect to Another Human Player
     public void HandleFailedHumanPlayerConnectedWithAntoherHumanPlayer(string newTitle, string playerThatFoundTheOtherName, string tagedPlayerName, int numberOfConnections, string newMessage, string attemptsMessage, bool localPlayer)
     {
+      
         CloseMessage();
         mainBroadcastHolder.SetActive(true);
         title.text = newTitle;
