@@ -15,12 +15,12 @@ public class ChatbotAI : MonoBehaviour
 
     private float waitTime;
 
-    private float minWaitTimeJoinInit = 5f;
-    private float maxWaitTimeJoinInit = 15f;
+    private float minWaitTimeJoinInit = 1f;
+    private float maxWaitTimeJoinInit = 12f;
     private float minWaitTimeJoin = 2f;
     private float maxWaitTimeJoin = 10f;
-    private float minWaitTimeLeave = 10f;
-    private float maxWaitTimeLeave = 30f;
+    private float minWaitTimeLeave = 50f;
+    private float maxWaitTimeLeave = 100f;
 
     private List<ChatroomStates> chatroomStates = new List<ChatroomStates>();
 
@@ -41,18 +41,21 @@ public class ChatbotAI : MonoBehaviour
 
     public bool left;
     private bool conversationStarted = false;
+    private bool conversationStartedExternally = false;
     private bool inChatroom;
     private bool waitingToJoinChatroom;
 
     private int waitTimeBeforeStartConvo;
     private int startConvoCounter = 0;
-    private int maxWaitTimeStartConvo = 200;
-    private int minWaitTimeStartConvo = 10;
+    private int maxWaitTimeStartConvo = 500;
+    private int minWaitTimeStartConvo = 0;
 
     private bool dead;
 
     public bool typing = false;
     public bool typingVisual = false;
+
+    public Coroutine waitToSendMessageRoutine;
 
     public List<string> conversationStaters;
 
@@ -122,6 +125,7 @@ public class ChatbotAI : MonoBehaviour
             chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left, true);
             networkManager.othersJoinRooms.Play(); // wait, this will only play on server
             conversationStarted = false;
+            conversationStartedExternally = false;
             inChatroom = true;
             StartCoroutine(StartWaitToLeave());
         } else if (indeces.Count > 0) {
@@ -133,6 +137,7 @@ public class ChatbotAI : MonoBehaviour
             chatbotBehaviour.ChangeChatroomBotIndex(chatroomID, chatbotAiID, left, true);
             networkManager.othersJoinRooms.Play(); // wait, this will only play on server
             conversationStarted = false;
+            conversationStartedExternally = false;
             inChatroom = true;
             StartCoroutine(StartWaitToLeave());
         } else {
@@ -145,7 +150,7 @@ public class ChatbotAI : MonoBehaviour
 
     public void ConversationStarted() {
         Debug.Log("conversation started, chatbotID = " + chatbotAiID);
-        conversationStarted = true;
+        conversationStartedExternally = true;
     }
     private bool evaluatingStartingConvo = false;
 
@@ -158,7 +163,9 @@ public class ChatbotAI : MonoBehaviour
         }
 
         if (evaluatingStartingConvo) {
-            if (!conversationStarted) {
+            Debug.Log("evaluatingStartingConvo, " + conversationStarted + ", " + conversationStartedExternally);
+            if (!conversationStarted && !conversationStartedExternally) {
+                Debug.Log("startconvocounter = " + startConvoCounter);
                 startConvoCounter++;
                 if (startConvoCounter == waitTimeBeforeStartConvo) {
                     conversationStarted = true;
@@ -175,8 +182,26 @@ public class ChatbotAI : MonoBehaviour
     }
 
     private void SendGreeting() {
-        ChatbotBehaviour.Response r = new ChatbotBehaviour.Response(chatroomID, "Hi, this is Linn's special conversation starter!", fakeName, playerVisualPalletID, 0);
-        chatbotBehaviour.SendResponseToServerDirectly(r);
+        Debug.Log("send greeting, chatbotID = " + chatbotAiID);
+        ChatbotBehaviour.Response r = new ChatbotBehaviour.Response(chatroomID, "Hi, this is Linn's special conversation starter!", fakeName, playerVisualPalletID, 0, true);
+        SendStartMessage(r);
+    }
+
+    public void SendStartMessage(ChatbotBehaviour.Response response) {
+        waitTime = 0.1f * response.text.Length + response.text.Length * Random.Range(0f, 0.1f) + 1f;
+        StartCoroutine(WaitToSendStartMessage(response, waitTime));
+    }
+
+    IEnumerator WaitToSendStartMessage(ChatbotBehaviour.Response response, float time) {
+        StartTyping();
+        yield return new WaitForSeconds(time);
+        if (conversationStartedExternally) {
+            StopTypingAfterDelay(time);
+            yield break;
+        }
+        chatbotBehaviour.SendResponseToServerDirectly(response);
+        conversationStarted = true;
+        StopTypingAfterDelay(time);
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -211,6 +236,11 @@ public class ChatbotAI : MonoBehaviour
     }
 
     public void StartTyping() {
+        StartCoroutine(WaitToStartTypingAfterDelay(1f));
+    }
+
+    IEnumerator WaitToStartTypingAfterDelay(float time) {
+        yield return new WaitForSeconds(time);
         typing = true;
         networkManager.GamePlayers[0].RpcUpdateYourTypingVisualInYouChatroom(chatroomID, fakeName, true, true);
     }

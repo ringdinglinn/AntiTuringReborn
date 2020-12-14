@@ -131,7 +131,7 @@ public class ChatbotBehaviour : MonoBehaviour {
             //r = r.Remove(0, 1);
             //r = r.Remove(r.Length - 1, 1);
 
-            Response response = new Response(chatroomID, r, chatbotAIs[chatbotID].fakeName, chatbotAIs[chatbotID].playerVisualPalletID, chatbotID);
+            Response response = new Response(chatroomID, r, chatbotAIs[chatbotID].fakeName, chatbotAIs[chatbotID].playerVisualPalletID, chatbotID, false);
             responses.Add(response);
             SendResponseToServer(response);
             pandoraBotsRequestCounter++;
@@ -142,18 +142,20 @@ public class ChatbotBehaviour : MonoBehaviour {
     }
 
     public struct Response {
-        public Response(int id, string t, string n, int visID, int convoPartnerID) {
+        public Response(int id, string t, string n, int visID, int convoPartnerID, bool isStartMessage) {
             chatroomID = id;
             text = t;
             fakeName = n;
             visualPalletID = visID;
             this.authorID = convoPartnerID;
+            this.isStartMessage = isStartMessage;
         }
         public int chatroomID;
         public string text;
         public string fakeName;
         public int visualPalletID;
         public int authorID;
+        public bool isStartMessage;
     }
 
     public void SendTextToChatbot(string text, int chatroomID, int chatbotID, bool fromChatbot, int playerID) {
@@ -188,7 +190,7 @@ public class ChatbotBehaviour : MonoBehaviour {
     }
 
     public void SendResponseToServerDirectly(Response response) {
-        StartCoroutine(WaitToSendResponse(response));
-        //networkManager.GamePlayers[0].GetComponent<ChatBehaviour>().ChatbotSendsMessage(response.text, response.chatroomID, response.fakeName, response.visualPalletID);
+        //StartCoroutine(WaitToSendResponse(response));
+        networkManager.GamePlayers[0].GetComponent<ChatBehaviour>().ChatbotSendsMessage(response.text, response.chatroomID, response.fakeName, response.visualPalletID);
     }
 }
