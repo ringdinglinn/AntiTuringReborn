@@ -291,4 +291,9 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
     public void RpcStartLobbyMusic() {
         Room.lobbyMusic.Play();
     }
+
+    [ClientRpc]
+    public void RpcPlayStartSound() {
+        Room.startGameSound.Play();
+    }
 }

@@ -185,7 +185,7 @@ public class NetworkManagerAT : NetworkManager {
             if (!IsReadyToStart()) return;
 
             StopLobbyMusic();
-            startGameSound.Play();
+            RoomPlayers[0].RpcPlayStartSound();
             nrPlayers = RoomPlayers.Count;
             nrOfWaitingClients = nrPlayers;
             nrAwareAI = nrPlayers - nrInvestigators;

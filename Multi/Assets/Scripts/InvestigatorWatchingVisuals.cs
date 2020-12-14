@@ -14,12 +14,17 @@ public class InvestigatorWatchingVisuals : MonoBehaviour {
     }
 
     private void OnEnable() {
-        eyeAnimator.SetTrigger("InvStartWatching");
         if (gameManager.isLocalPlayer && !gameManager.networkGamePlayerAT.isInvestigator) networkManager.aiTheme.SetParameter("Investigator_Watching", 1);
+        StartCoroutine(WaitForAnimation());
     }
 
     private void OnDisable() {
         if (gameManager.isLocalPlayer && !gameManager.networkGamePlayerAT.isInvestigator) networkManager.aiTheme.SetParameter("Investigator_Watching", 0);
+    }
+
+    IEnumerator WaitForAnimation() {
+        yield return new WaitForSeconds(1f);
+        eyeAnimator.SetTrigger("InvStartWatching");
     }
 }
 
