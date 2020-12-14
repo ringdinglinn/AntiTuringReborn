@@ -41,6 +41,12 @@ public class GameManagerMessagesHandler : MonoBehaviour
     #region//Open And Close The Message  
     public void CloseMessage()
     {
+
+        if (deadPlayerName.text == networkGamePlayerAT.realName)
+        {
+            gameManagerAT.ShowYouDiedWindow();
+        }
+
         title.gameObject.SetActive(false);
         messageField.SetActive(false);
         attemptsField.SetActive(false);
@@ -53,10 +59,9 @@ public class GameManagerMessagesHandler : MonoBehaviour
         deadPlayerName.text = "";
         invFailed.SetActive(false);
 
-        if(deadPlayerName.text == networkGamePlayerAT.realName)
-        {
-            gameManagerAT.ShowYouDiedBecauseOfInvestigatorsWindow();
-        }
+
+
+
 
         mainBroadcastHolder.SetActive(false);
     }
@@ -73,7 +78,7 @@ public class GameManagerMessagesHandler : MonoBehaviour
         {
             gameManagerAT.tagManagement.DisableAllTagButtons();
         }
-
+  
         mainBroadcastHolder.SetActive(true);
         deadPlayerVisual.SetActive(true);
         deadPlayerImage.sprite = newDeadPlayerSprite;
@@ -85,6 +90,8 @@ public class GameManagerMessagesHandler : MonoBehaviour
         deadPlayerVisual.SetActive(true);
         failedConnectionVisual.SetActive(false);
     }
+
+ 
     #endregion
 
     #region//Visual Handling When Human Player Connected With Another Human Player
