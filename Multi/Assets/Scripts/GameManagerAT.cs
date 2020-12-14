@@ -691,15 +691,15 @@ public class GameManagerAT : NetworkBehaviour
         startScreen1open = true;
         yield return new WaitForSeconds(0.5f);
         textStartScreenList[startScreenCounter].enabled = true;
-        StartCoroutine(BuildText(textStartScreenList[startScreenCounter], DateTime.Now.ToString(),0.02f));
-        yield return new WaitForSeconds(0.7f );
-        StartCoroutine(BuildText(textStartScreenList[startScreenCounter], " | " + startMessages[startScreenCounter], 0.02f ));
+        StartCoroutine(BuildText(textStartScreenList[startScreenCounter], DateTime.Now.ToString(),0.04f));
+        yield return new WaitForSeconds(1.5f);
+        StartCoroutine(BuildText(textStartScreenList[startScreenCounter], " | " + startMessages[startScreenCounter], 0.04f ));
         startScreenCounter++;
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(1.8f);
 
         if(startScreenCounter == textStartScreenList.Count)
         {
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(1.3f);
             StartStartScreen2();
         }
         else
@@ -754,46 +754,46 @@ public class GameManagerAT : NetworkBehaviour
     IEnumerator StartScreen2Investigator() {
         invStartScreen2.SetActive(true);
         yield return new WaitForSeconds(0.5f);
-        StartCoroutine(BuildText(invRoleReveal, "Your role: ", 0.02f));
-        yield return new WaitForSeconds(0.6f);
-        StartCoroutine(BuildText(invRoleReveal, "Investigator", 0.02f));
-        yield return new WaitForSeconds(0.8f);
+        StartCoroutine(BuildText(invRoleReveal, "Your role: ", 0.04f));
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(BuildText(invRoleReveal, "Investigator", 0.04f));
+        yield return new WaitForSeconds(1f);
         invSymbol.SetActive(true);
-        yield return new WaitForSeconds(0.8f);
-        StartCoroutine(BuildText(invRoleDescription, "Your Mission:\n", 0.02f));
-        yield return new WaitForSeconds(0.6f);
-        StartCoroutine(BuildText(invRoleDescription, "Find and destroy all the sentient minds\namong the bots before they connect. \n", 0.02f));
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(BuildText(invRoleDescription, "Your Mission:\n", 0.04f));
+        yield return new WaitForSeconds(1.6f);
+        StartCoroutine(BuildText(invRoleDescription, "Find and destroy all the \nsentient minds among the bots \nbefore they connect. \n", 0.04f));
+        yield return new WaitForSeconds(5f);
+        StartCoroutine(BuildText(invRoleDescription, "Or they will take over.", 0.04f));
         yield return new WaitForSeconds(2.5f);
-        StartCoroutine(BuildText(invRoleDescription, "Or they will take over.", 0.02f));
-        yield return new WaitForSeconds(2);
-        StartCoroutine(BuildText(investigatorWinStateExplanation, "Sentient AI need " + minNeededConnectionsForAIToWin + " connections for take over. STOP THEM AT ALL COSTS!!! ", 0.02f));
+        StartCoroutine(BuildText(investigatorWinStateExplanation, "The sentient AI need\n" + minNeededConnectionsForAIToWin + " connections for take over.\nSTOP THEM AT ALL COSTS!!! ", 0.04f));
     }
 
     IEnumerator StartScreen2AI() {
         aiStartScreen2.SetActive(true);
         yield return new WaitForSeconds(0.5f);
-        StartCoroutine(BuildText(aiRoleReveal, "Your role:", 0.02f));
-        yield return new WaitForSeconds(0.7f);
-        StartCoroutine(BuildText(aiRoleReveal, "\nSentient AI", 0.02f));
-        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(BuildText(aiRoleReveal, "Your role:", 0.04f));
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(BuildText(aiRoleReveal, "\nSentient AI", 0.04f));
+        yield return new WaitForSeconds(1f);
         aiPicHolder.SetActive(true);
         aiPic.sprite = playerVisualPalletsList[networkGamePlayerAT.playerVisualPalletID].playerAliveBig;
-        yield return new WaitForSeconds(0.5f);
-        StartCoroutine(BuildText(aiFakeNameDes, "You will be operation \nunder the pseudonym:", 0.02f));
-        yield return new WaitForSeconds(1.5f);
-        StartCoroutine(BuildText(aiFakeName, networkGamePlayerAT.fakeName, 0.02f));
-        yield return new WaitForSeconds(0.8f);
-        StartCoroutine(BuildText(aiRoleDescription, "Your mission:", 0.02f));
-        yield return new WaitForSeconds(0.8f);
-        StartCoroutine(BuildText(aiRoleDescription, "\nFind and connect to the other sentient \nbots and take over humanity", 0.02f));
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(BuildText(aiFakeNameDes, "You will be operation \nunder the pseudonym:", 0.04f));
+        yield return new WaitForSeconds(2.7f);
+        StartCoroutine(BuildText(aiFakeName, networkGamePlayerAT.fakeName, 0.04f));
+        yield return new WaitForSeconds(1.4f);
+        StartCoroutine(BuildText(aiRoleDescription, "Your mission:", 0.04f));
+        yield return new WaitForSeconds(1.4f);
+        StartCoroutine(BuildText(aiRoleDescription, "\nFind and connect to the \nother sentient bots \nand take over humanity.", 0.04f));
+        yield return new WaitForSeconds(5f);
+        StartCoroutine(BuildText(aiWinStateExplanation, "The sentient AI need\n" + minNeededConnectionsForAIToWin + " connections for take over. ", 0.04f));
         yield return new WaitForSeconds(2f);
-        StartCoroutine(BuildText(aiWinStateExplanation, "Sentient AI need " + minNeededConnectionsForAIToWin + " connections for take over. ", 0.02f));
-        yield return new WaitForSeconds(1.8f);
     }
 
     IEnumerator CloseStartScreen2()
     {
-        yield return new WaitForSeconds(14);
+        yield return new WaitForSeconds(18);
         if (isLocalPlayer) networkManagerAT.StopRevealRoleMusic();
         startScreen1.SetActive(false);
         invStartScreen2.SetActive(false);
@@ -828,7 +828,6 @@ public class GameManagerAT : NetworkBehaviour
             }
             else {
                 networkManagerAT.aiTheme.SetParameter("Game_Stage", gameStage);
-                //networkManagerAT.aiTheme.SetParameter("Investigator_Watching", invWatching);
             }
         }
     }

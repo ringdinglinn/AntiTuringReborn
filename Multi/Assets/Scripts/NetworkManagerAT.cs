@@ -189,8 +189,8 @@ public class NetworkManagerAT : NetworkManager {
             nrPlayers = RoomPlayers.Count;
             nrOfWaitingClients = nrPlayers;
             nrAwareAI = nrPlayers - nrInvestigators;
-            nrOfChatbots = botNrIndex[nrAwareAI];
-            nrOfChatbots = 7; // PLACE HOLDER: TO BE BALANCED!!!
+            //nrOfChatbots = botNrIndex[nrAwareAI];
+            //nrOfChatbots = 7; // PLACE HOLDER: TO BE BALANCED!!!
             chatbot.GameStart();
             ServerChangeScene("SampleScene");
         }     
