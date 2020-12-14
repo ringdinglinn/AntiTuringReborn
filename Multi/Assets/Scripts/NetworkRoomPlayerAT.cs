@@ -19,6 +19,7 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
     [SerializeField] private Sprite readySprite;
     [SerializeField] private Sprite notReadySprite;
     [SerializeField] private GameObject warningSymbol;
+    [SerializeField] private GameObject warningSymbol2;
 
     [Header("Logic")]
     [SyncVar(hook = nameof(HandleDisplayNameChanged))]
@@ -35,8 +36,11 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
 
     [SyncVar]
     public int nrOfPlayers;
+    [SyncVar]
+    public int nrOfBots;
     
     private NetworkManagerAT room;
+
 
    
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -198,12 +202,14 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
     public void ChangeNrInvestigators(string input) {
         if (isLeader) {
             if (int.TryParse(input, out int result)) {
-                CmdSetNrInvestigators(result);
-                warningSymbol.SetActive(false);
-                //nrInvestigatorsText.color = Color.white;
+                if ((nrOfPlayers - result + nrOfBots) <= 16) {
+                    CmdSetNrInvestigators(result);
+                    warningSymbol.SetActive(false);
+                } else {
+                    warningSymbol.SetActive(true);
+                }
             }
             else {
-                //nrInvestigatorsText.color = Color.white;
                 warningSymbol.SetActive(true);
             }
         }
@@ -214,6 +220,29 @@ public class NetworkRoomPlayerAT : NetworkBehaviour
     [Command]
     public void CmdSetNrInvestigators(int n) {
         nrInvestigators = n;
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
+    public void ChangeNrBots(string input) {
+        if (isLeader) {
+            if (int.TryParse(input, out int result)) {
+                if ((nrOfPlayers - nrInvestigators + result) <= 16) {
+                    CmdSetNrBots(result);
+                    warningSymbol2.SetActive(false);
+                } else {
+                    warningSymbol2.SetActive(true);
+                }
+            }
+            else {
+                warningSymbol2.SetActive(true);
+            }
+        }
+    }
+
+    [Command]
+    public void CmdSetNrBots(int n) {
+        nrOfBots = n;
+        Room.nrOfChatbots = n;
     }
 
 
