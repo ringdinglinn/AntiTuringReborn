@@ -738,7 +738,7 @@ public class GameManagerAT : NetworkBehaviour
         for (int i = 0; i < message.Length; i++)
         {
             text.text = string.Concat(text.text, message[i]);
-            if (x % 3 == 0)
+            if (x % 2 == 0)
             {
                 digitalLetterSound.Play();
             }

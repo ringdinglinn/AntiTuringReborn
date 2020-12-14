@@ -643,6 +643,10 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
 
             chatBehaviour.UpdateTypingVisualOfAPlayer(chatroomID, fakeName, isTypingStatus);
         }
+        else
+        {
+            chatBehaviour.UpdateTypingVisualOfAPlayer(chatroomID, fakeName, isTypingStatus);
+        }
     }
     #endregion
 }
