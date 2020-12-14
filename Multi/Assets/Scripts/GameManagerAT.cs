@@ -588,7 +588,7 @@ public class GameManagerAT : NetworkBehaviour
         }
 
 
-        if (currentHumanBotsAlive <= minHumanBotsNeededAliveToWin) {
+        if (currentHumanBotsAlive < minHumanBotsNeededAliveToWin) {
             //Investigators win due to enough dead AI Players
             ToggleInvestigatorWonVisual(true);
             if (networkGamePlayerAT.isInvestigator) {
