@@ -366,7 +366,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
         }
         else if (playerIsDead && !isChatbot) {
             RpcDeadPlayerToggleButtons(true);
-            GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, chatroomStates[ID].leftFree, chatroomStates[ID].rightFree, chatroomStates[ID].leftName, chatroomStates[ID].rightName);
+            GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, chatroomStates[ID].leftFree, chatroomStates[ID].rightFree, chatroomStates[ID].leftName, chatroomStates[ID].rightName, isChatbot);
         } else if (isChatbot) {
             bool chatbotIsLeft = true;
             if (Room.chatbot.chatroomBotIndex[ID][0] == -1) {
@@ -379,7 +379,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
                     player.UpdateChatroomStatesEvent(ID, true, chatroomStates[ID].rightFree, "", chatroomStates[ID].rightName, Room.chatbot.chatbotAIs[Room.chatbot.chatroomBotIndex[ID][0]].left, 99, player.chatroomStates[ID].rightVisualID);
                     player.RpcUpdateChatroomStates(ID, true, player.chatroomStates[ID].rightFree, "", player.chatroomStates[ID].rightName, Room.chatbot.chatbotAIs[Room.chatbot.chatroomBotIndex[ID][0]].left, 99, player.chatroomStates[ID].rightVisualID);
                     if (player.chatroomID == ID) {
-                        player.GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, true, player.chatroomStates[ID].rightFree, "", player.chatroomStates[ID].rightName);
+                        player.GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, true, player.chatroomStates[ID].rightFree, "", player.chatroomStates[ID].rightName, isChatbot);
                     }
                 }
             } else {
@@ -387,7 +387,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
                     player.UpdateChatroomStatesEvent(ID, chatroomStates[ID].leftFree, true, chatroomStates[ID].leftName, "", Room.chatbot.chatbotAIs[Room.chatbot.chatroomBotIndex[ID][1]].left, player.chatroomStates[ID].leftVisualID, 99);
                     player.RpcUpdateChatroomStates(ID, player.chatroomStates[ID].leftFree, true, player.chatroomStates[ID].leftName, "", Room.chatbot.chatbotAIs[Room.chatbot.chatroomBotIndex[ID][1]].left, player.chatroomStates[ID].leftVisualID, 99);
                     if (player.chatroomID == ID) {
-                        player.GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, player.chatroomStates[ID].leftFree, true, player.chatroomStates[ID].leftName, "");
+                        player.GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, player.chatroomStates[ID].leftFree, true, player.chatroomStates[ID].leftName, "", isChatbot);
                     }
                 }
             }
@@ -397,7 +397,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
                 player.UpdateChatroomStatesEvent(ID, true, chatroomStates[ID].rightFree, "", chatroomStates[ID].rightName, player.left, 99, player.chatroomStates[ID].rightVisualID);
                 player.RpcUpdateChatroomStates(ID, true, player.chatroomStates[ID].rightFree, "", player.chatroomStates[ID].rightName, player.left, 99, player.chatroomStates[ID].rightVisualID);
                 if (player.chatroomID == ID) {
-                    player.GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, true, player.chatroomStates[ID].rightFree, "", player.chatroomStates[ID].rightName);
+                    player.GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, true, player.chatroomStates[ID].rightFree, "", player.chatroomStates[ID].rightName, isChatbot);
                 }
             }
             chatroomID = 99;
@@ -408,7 +408,7 @@ public class NetworkGamePlayerAT : NetworkBehaviour {
                 player.UpdateChatroomStatesEvent(ID, chatroomStates[ID].leftFree, true, chatroomStates[ID].leftName, "", player.left, player.chatroomStates[ID].leftVisualID, 99);
                 player.RpcUpdateChatroomStates(ID, player.chatroomStates[ID].leftFree, true, player.chatroomStates[ID].leftName, "", player.left, player.chatroomStates[ID].leftVisualID, 99);
                 if (player.chatroomID == ID) {
-                    player.GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, player.chatroomStates[ID].leftFree, true, player.chatroomStates[ID].leftName, "");
+                    player.GetComponent<ChatBehaviour>().RpcLeaveMainCanvas(ID, player.chatroomStates[ID].leftFree, true, player.chatroomStates[ID].leftName, "", isChatbot);
                 }
             }
             chatroomID = 99;

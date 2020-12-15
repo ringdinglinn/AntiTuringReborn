@@ -607,7 +607,7 @@ public class ChatBehaviour : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RpcLeaveMainCanvas(int id, bool leftFree, bool rightFree, string leftName, string rightName)
+    public void RpcLeaveMainCanvas(int id, bool leftFree, bool rightFree, string leftName, string rightName, bool botCallsActions)
     {
         ChatDisplayContent cdc = mainChatDisplay.GetComponent<ChatDisplayContent>();
         cdc.leftPerson.gameObject.SetActive(!networkPlayer.chatroomStates[id].leftFree);
@@ -615,7 +615,7 @@ public class ChatBehaviour : NetworkBehaviour
         cdc.leftName.text = networkPlayer.chatroomStates[id].leftName;
         cdc.rightName.text = networkPlayer.chatroomStates[id].rightName;
        
-        if (networkPlayer.isInvestigator == false)
+        if (networkPlayer.isInvestigator == false && botCallsActions == false)
         {
             cdc.investigatorVisual.SetActive(false);
         }      
