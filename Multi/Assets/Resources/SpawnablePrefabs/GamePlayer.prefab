@@ -5573,7 +5573,7 @@ MonoBehaviour:
   currentNrOfAiPlayerFailedConnectionsAttempts: 0
   investigatorsFailedConnections: 0
   investigatorsMaxAllowedFailedConnections: 3
-  minConnectionsNeededForAIToWinList: 0f0000000f000000020000000200000006000000060000000c000000
+  minConnectionsNeededForAIToWinList: 0000000000000000020000000200000006000000060000000c000000
   minHumanBotsNeededAliveToStillWinList: 00000000010000000200000002000000030000000300000004000000
   youDiedWindow: {fileID: 4994990538320981479}
   youAreDeadLobbyText: {fileID: 248549551916437274}
