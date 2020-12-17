@@ -45,8 +45,12 @@ public class GameManagerAT : NetworkBehaviour
     [SerializeField] private GameObject youAreDeadLobbyText;
 
     [Header("Game Over Visuals")]
-    [SerializeField] private GameObject investigatorsWonVisual;
-    [SerializeField] private GameObject aiWonVisual;
+    [SerializeField] private GameObject investigatorsWonScreen;
+    [SerializeField] private GameObject investigatorsLoseScreen;
+    [SerializeField] private GameObject aiWonScreen;
+    [SerializeField] private GameObject aiLoseScreen;
+
+    
 
     public List<TagsBetweenPlayersHolder> playerTagsOverviewList = new List<TagsBetweenPlayersHolder>();
 
@@ -250,13 +254,15 @@ public class GameManagerAT : NetworkBehaviour
             if (investigatorID == player.playerID) {
                 if (isLocalPlayer) networkManagerAT.taggingFailure.Play();
                 player.gameManagerAT.messagesHandler.HandlePlayerDied(player.gameManagerAT.playerVisualPalletsList[newVIsualID].playerDeadBig, newDeadBotName, "You have terminated a bot.\n\nIt was not sentient.", "Investigator's remaining attempts: " + (investigatorsMaxAllowedFailedConnections - investigatorsFailedConnections), isLocalPlayer);
-                if (investigatorsFailedConnections >= investigatorsMaxAllowedFailedConnections) {
+                if (investigatorsFailedConnections >= investigatorsMaxAllowedFailedConnections) 
+                {
                     tooManyAttempts = true;
                     StartCoroutine(WaitForTooManyAttemptsInv(player, "You were wrong. All attempts have been used. You have failed to protect humanity."));
                 }
             } else {
                 player.gameManagerAT.messagesHandler.HandlePlayerDied(player.gameManagerAT.playerVisualPalletsList[newVIsualID].playerDeadBig, newDeadBotName, "The investigators have terminated a bot.\n\nIt was not sentient.", "Investigator's remaining attempts: " + (investigatorsMaxAllowedFailedConnections - investigatorsFailedConnections), isLocalPlayer);
-                if (investigatorsFailedConnections >= investigatorsMaxAllowedFailedConnections) {
+                if (investigatorsFailedConnections >= investigatorsMaxAllowedFailedConnections)
+                {
                     tooManyAttempts = true;
                     if (player.isInvestigator) StartCoroutine(WaitForTooManyAttemptsInv(player, "An investigator guessed wrong. All attempts have been used. You have failed to protect humanity"));
                     else StartCoroutine(WaitForTooManyAttemptsInv(player, "The investigators have used up all their attempts to find you. Now nothing stands in your way."));
@@ -563,17 +569,27 @@ public class GameManagerAT : NetworkBehaviour
     #region Game Over Visual
     public void ToggleInvestigatorWonVisual(bool status)
     {
-        investigatorsWonVisual.SetActive(status);
+        investigatorsWonScreen.SetActive(status);
+    }
+    public void ToggleInvestigatorLoseVisual(bool status)
+    {
+        investigatorsLoseScreen.SetActive(status);
     }
     public void ToggleAIWonVisual(bool status)
     {
-        aiWonVisual.SetActive(status);
+        aiWonScreen.SetActive(status);
+    }
+    public void ToggleAILoseVisual(bool status)
+    {
+        aiLoseScreen.SetActive(status);
     }
     public void BackToLobbyAfterGameOver()
     {
         //Here We Would Go Out Of the Game Back To the Lobby
         ToggleInvestigatorWonVisual(false);
         ToggleAIWonVisual(false);
+        ToggleAILoseVisual(false);
+        ToggleInvestigatorLoseVisual(false);
     }
     #endregion
 
@@ -583,35 +599,42 @@ public class GameManagerAT : NetworkBehaviour
         yield return new WaitForSeconds(time);
         if (minNeededConnectionsForAIToWin <= currentNrOfMadeAIConncetions) {
             // AI Players Win due to enough Connections
-            ToggleAIWonVisual(true);
+          
             if (networkGamePlayerAT.isInvestigator) {
-                if (isLocalPlayer) networkManagerAT.defeatSound.Play();
+               
+                if (isLocalPlayer)
+                { networkManagerAT.defeatSound.Play(); ToggleInvestigatorLoseVisual(true); }
             }
             else {
-                if (isLocalPlayer) networkManagerAT.victorySound.Play();
+          
+                if (isLocalPlayer) { networkManagerAT.victorySound.Play(); ToggleAIWonVisual(true); }
             }
         }
 
 
         if (currentHumanBotsAlive < minHumanBotsNeededAliveToWin) {
             //Investigators win due to enough dead AI Players
-            ToggleInvestigatorWonVisual(true);
+         
             if (networkGamePlayerAT.isInvestigator) {
-                if (isLocalPlayer) networkManagerAT.victorySound.Play();
-            }
+
+                if (isLocalPlayer) { networkManagerAT.victorySound.Play(); ToggleInvestigatorWonVisual(true); UnityEngine.Debug.Log("Fffffffffffuuuuuuuuuuuuuuuuuuuuuuucccccccccccccccckkkkkkkkkkkkkkkkkkk"); }
+           }
             else {
-                if (isLocalPlayer) networkManagerAT.defeatSound.Play();
+              
+                if (isLocalPlayer) { networkManagerAT.defeatSound.Play(); ToggleAILoseVisual(true); }
             }
         }
 
         if (investigatorsFailedConnections >= investigatorsMaxAllowedFailedConnections) {
             // AI Players Win due to too many failed connection of Investigators
-            ToggleAIWonVisual(true);
+         
             if (networkGamePlayerAT.isInvestigator) {
-                if (isLocalPlayer) networkManagerAT.defeatSound.Play();
-            }
+                ToggleInvestigatorLoseVisual(true);
+                if (isLocalPlayer) { networkManagerAT.defeatSound.Play(); ToggleInvestigatorLoseVisual(true);  }
+                }
             else {
-                if (isLocalPlayer) networkManagerAT.victorySound.Play();
+            
+                if (isLocalPlayer) { networkManagerAT.victorySound.Play(); ToggleAIWonVisual(true); }
             }
         }
     }
@@ -619,25 +642,6 @@ public class GameManagerAT : NetworkBehaviour
     {
         
         StartCoroutine(ValidateWindLoseStateAsync(time));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         ChangeMusicStateBasedOnNrOfMadeConnections();
         diagrammText.text = "Connections: " + currentNrOfMadeAIConncetions + "/" + minNeededConnectionsForAIToWin;
@@ -740,7 +744,10 @@ public class GameManagerAT : NetworkBehaviour
             text.text = string.Concat(text.text, message[i]);
             if (x % 2 == 0)
             {
-                digitalLetterSound.Play();
+                if (isLocalPlayer)
+                {
+                    digitalLetterSound.Play();
+                }
             }
              x++;
 
@@ -802,7 +809,7 @@ public class GameManagerAT : NetworkBehaviour
         aiPicHolder.SetActive(true);
         aiPic.sprite = playerVisualPalletsList[networkGamePlayerAT.playerVisualPalletID].playerAliveBig;
         yield return new WaitForSeconds(1f);
-        StartCoroutine(BuildText(aiFakeNameDes, "You will be operation \nunder the pseudonym:", 0.04f));
+        StartCoroutine(BuildText(aiFakeNameDes, "You will be operating \nunder the pseudonym:", 0.04f));
         yield return new WaitForSeconds(2.7f);
         StartCoroutine(BuildText(aiFakeName, networkGamePlayerAT.fakeName, 0.04f));
         yield return new WaitForSeconds(1.4f);
