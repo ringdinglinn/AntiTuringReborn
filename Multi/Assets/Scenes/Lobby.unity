@@ -1663,7 +1663,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'THANK YOU FOR HELPING US CARRY OUT SOME ASSESMENTS.
+  m_text: 'THANK YOU FOR HELPING US CARRY OUT SOME ASSESSMENTS.
 
 '
   m_isRightToLeft: 0
@@ -1735,7 +1735,7 @@ MonoBehaviour:
   m_margin: {x: -0.093881786, y: 0, z: 0.07235563, w: 3.7093284}
   m_textInfo:
     textComponent: {fileID: 431531640}
-    characterCount: 52
+    characterCount: 53
     spriteCount: 0
     spaceCount: 9
     wordCount: 9

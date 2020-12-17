@@ -809,7 +809,7 @@ public class GameManagerAT : NetworkBehaviour
         aiPicHolder.SetActive(true);
         aiPic.sprite = playerVisualPalletsList[networkGamePlayerAT.playerVisualPalletID].playerAliveBig;
         yield return new WaitForSeconds(1f);
-        StartCoroutine(BuildText(aiFakeNameDes, "You will be operation \nunder the pseudonym:", 0.04f));
+        StartCoroutine(BuildText(aiFakeNameDes, "You will be operating \nunder the pseudonym:", 0.04f));
         yield return new WaitForSeconds(2.7f);
         StartCoroutine(BuildText(aiFakeName, networkGamePlayerAT.fakeName, 0.04f));
         yield return new WaitForSeconds(1.4f);
