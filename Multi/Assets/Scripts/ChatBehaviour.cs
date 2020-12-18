@@ -48,6 +48,8 @@ public class ChatBehaviour : NetworkBehaviour
     public Action<int> BuildTextDone;
     private bool[] buildTextIsDoneInChatroomsList = new bool[8]; // hard coded nr of chatrooms
 
+    private string newMessage;
+
     public override void OnStartAuthority()
     {
         chatbotRoomsIndex[0] = true;
@@ -262,7 +264,8 @@ public class ChatBehaviour : NetworkBehaviour
        }
         if (string.IsNullOrWhiteSpace(message)) return;
         Clear();
-        CmdSendMessage(message, chatroomID, networkPlayer.fakeName, networkPlayer.playerVisualPalletID, networkPlayer.playerID);
+        newMessage = message;
+        CmdSendMessage(newMessage, chatroomID, networkPlayer.fakeName, networkPlayer.playerVisualPalletID, networkPlayer.playerID);
         mainInputField.text = "";
         networkPlayer.CmdUpdateYourTypingVisualInYouChatroom(chatroomID, networkPlayer.fakeName, false, false);
         //inputFields[chatroomID].text = string.Empty;        
