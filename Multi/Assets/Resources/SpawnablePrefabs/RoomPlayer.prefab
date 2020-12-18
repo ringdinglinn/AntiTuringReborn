@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2259532062170027315
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1413,7 +1413,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Nr. of non-sentinet bots generated:'
+  m_text: 'Nr. of non-sentient bots generated:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3d256459b1be24f95acb13963b165d8c, type: 2}
   m_sharedMaterial: {fileID: -6036592922730997365, guid: 3d256459b1be24f95acb13963b165d8c,
@@ -1594,7 +1594,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8252536643817048814
 RectTransform:
   m_ObjectHideFlags: 0

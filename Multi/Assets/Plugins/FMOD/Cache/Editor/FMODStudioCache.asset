@@ -131,6 +131,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-8899055882926952821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/AI_Theme/Investigator_Watching
+  m_EditorClassIdentifier: 
+  Name: Investigator_Watching
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-8857423974346495157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,7 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: ../FMOD/AT-FMOD/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637439119510000000
+  lastModified: 637439109419876810
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -447,8 +467,8 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 8872042307169708817}
-  - {fileID: 1147115907682970920}
+  - {fileID: -2250463237492907853}
+  - {fileID: -8899055882926952821}
   MinDistance: 0
   MaxDistance: 0
   Length: 198856
@@ -1371,6 +1391,26 @@ MonoBehaviour:
   - Name: Desktop
     Value: 3180
   Exists: 1
+--- !u!114 &-4154456162167067660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Inv_Theme/Game_Stage
+  m_EditorClassIdentifier: 
+  Name: Game_Stage
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-4116151368911460110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1562,7 +1602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: ../FMOD/AT-FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637435877480000000
+  lastModified: 637439109419966571
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -2044,6 +2084,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 30
+--- !u!114 &-2250463237492907853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/AI_Theme/Game_Stage
+  m_EditorClassIdentifier: 
+  Name: Game_Stage
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-2178583304717369951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2934,7 +2994,7 @@ MonoBehaviour:
   - {fileID: -8222185339747427395}
   StringsBanks:
   - {fileID: -3502452591779404042}
-  stringsBankWriteTime: 637435877480000000
+  stringsBankWriteTime: 637439109419966571
   cacheVersion: 5
 --- !u!114 &196176737563106766
 MonoBehaviour:
@@ -4407,7 +4467,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 7884416004691857018}
+  - {fileID: -4154456162167067660}
   MinDistance: 0
   MaxDistance: 0
   Length: 133714
