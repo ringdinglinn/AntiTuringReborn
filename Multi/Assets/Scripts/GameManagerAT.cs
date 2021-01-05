@@ -617,7 +617,7 @@ public class GameManagerAT : NetworkBehaviour
          
             if (networkGamePlayerAT.isInvestigator) {
 
-                if (isLocalPlayer) { networkManagerAT.victorySound.Play(); ToggleInvestigatorWonVisual(true); UnityEngine.Debug.Log("Fffffffffffuuuuuuuuuuuuuuuuuuuuuuucccccccccccccccckkkkkkkkkkkkkkkkkkk"); }
+                if (isLocalPlayer) { networkManagerAT.victorySound.Play(); ToggleInvestigatorWonVisual(true);  }
            }
             else {
               
@@ -659,14 +659,14 @@ public class GameManagerAT : NetworkBehaviour
             gameStage = 0;
             //If we already are in stage 1 music do nothing else change to stage 1 music
         }
-        else if(currentHumanBotsAlive == currentHumanBotsAlive - 1 && isInSoundStage3 == false)
+        else if(currentHumanBotsAlive == totalHumanBots - 1 && isInSoundStage3 == false)
         {
             isInSoundStage2 = true;
             //UnityEngine.Debug.Log("We are in Music Intensity Stage 2 because of Human Bots Alive ");
             //If we already are in stage 2 music do nothing else change to stage 2 music
             gameStage = 1;
         }
-        else if (currentHumanBotsAlive == currentHumanBotsAlive - 2)
+        else if (currentHumanBotsAlive == totalHumanBots - 2)
         {
             isInSoundStage3 = true;
             //UnityEngine.Debug.Log("We are in Music Intensity Stage 3 because of Human Bots Alive ");

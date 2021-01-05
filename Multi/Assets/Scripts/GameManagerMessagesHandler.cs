@@ -44,6 +44,7 @@ public class GameManagerMessagesHandler : MonoBehaviour
 
         if (deadPlayerName.text == networkGamePlayerAT.realName)
         {
+            Debug.Log("Going In");
             gameManagerAT.ShowYouDiedWindow();
         }
 
